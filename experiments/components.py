@@ -1,6 +1,9 @@
 class AbstractModel(object):
     def __init__(self, config):
         self.config=config
+        self.setup()
+    def setup(self):
+        pass
     def predict(self,x):
         pass
     def save(self):
@@ -9,12 +12,16 @@ class AbstractModel(object):
         pass
     def train(self):
         pass
-        
+
 class AbstractExperiment(object):
     def __init__(self, config):
         self.config = config
         self.setup()
     def setup(self):
+        pass
+    def set_data(self,data):
+        pass
+    def setup_directories(self):
         pass
     def predict(self):
         pass

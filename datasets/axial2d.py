@@ -1,4 +1,8 @@
+import numpy as np
+from tqdm import tqdm
 import modules.dataset as dataset
+from modules.io import load_yaml
+import modules.vascular_data as sv
 
 def read_T(id):
     meta_data = load_yaml(id)
@@ -15,7 +19,7 @@ def get_dataset(config, key="TRAIN"):
         key    - string - either TRAIN, VAL, or TEST
     """
 
-    files = open(config['FILES_LIST']).readlines()
+    files = open(config['FILE_LIST']).readlines()
     files = [s.replace('\n','') for s in files]
 
     if key == "TRAIN":
@@ -35,9 +39,11 @@ def get_dataset(config, key="TRAIN"):
     Yc   = [d[2] for d in data]
     meta = [d[3] for d in data]
 
+    points   = []
     contours = []
-    for yc in Yc:
-        c = sv.marchingSquares(yc[0,:,:,0], iso=0.5)
+    for i,yc in tqdm(enumerate(Yc)):
+
+        c = sv.marchingSquares(yc, iso=0.5)
         c = sv.reorder_contour(c)
 
         H = yc.shape[1]
@@ -54,7 +60,10 @@ def get_dataset(config, key="TRAIN"):
         c_dist = np.sqrt(np.sqrt(np.sum(c_reorient**2,axis=1)))
 
         p = (p+1)/2
-
+        points.append(p)
         contours.append(c_dist)
 
+    points   = np.array(points)
     contours = np.array(contours)
+
+    return X,contours,points,meta

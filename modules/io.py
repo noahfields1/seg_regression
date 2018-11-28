@@ -1,6 +1,10 @@
 import yaml
 import csv
 
+def mkdir(fn):
+    if not os.path.exists(os.path.abspath(fn)):
+        os.mkdir(os.path.abspath(fn))
+
 def read_lines(fn):
     f = open(fn,'r').readlines()
     f = [s.replace('\n','') for s in f]

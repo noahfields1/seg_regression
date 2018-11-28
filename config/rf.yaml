@@ -1,34 +1,20 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-EXPERIMENT_FILE: "experiments.NNapp"
-
-RESULTS_DIR: "./results/i2i_regression"
-LOG_DIR: "./results/i2i_regression/log"
-TRAIN_FILE_LIST: "./results/case1/train.txt"
-VAL_FILE_LIST: "./results/case1/val.txt"
-TEST_FILE_LIST: "./results/case1/test.txt"
-
-MODEL_DIR: "./results/i2i_regression/model"
-MODEL_NAME: "I2I"
-MODEL_TYPE: "I2INetRegression"
+NAME:       "rf2d"
+EXPERIMENT_FILE: "experiments.rf2d"
+EXPERIMENT_CLASS: "RF2DExperiment"
+DATASET:    "datasets.axial2d"
+RESULTS_DIR: "./results"
+MODEL_TYPE: "RFModel"
 
 SPACING: 0.029
 DIMS: 240
 CROP_DIMS: 160
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
-PATH_START: 2
-LOFT: false
-NORMALIZE: "LOCAL_NORM"
-ROTATE: true
-RANDOM_CROP: true
-PATH_PERTURB: 3
-CENTER_GT: false
-FC_LAYERS: 3
-HIDDEN_SIZE: 100
-INIT: 0.0001
-POOL: 4
+
+N_ESTIMATORS: 50
 
 VAL_PATTERNS:
   - OSMSC0110_CLEAN
