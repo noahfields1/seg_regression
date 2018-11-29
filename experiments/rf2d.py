@@ -1,7 +1,9 @@
-from experiments.components import AbstractExperiment, AbstractModel
-from sklearn.ensemble import RandomForestRegressor
 import joblib
 import numpy as np
+import os
+from sklearn.ensemble import RandomForestRegressor
+
+from experiments.components import AbstractExperiment, AbstractModel
 from modules.io import mkdir
 
 EPS = 1e-5
@@ -10,7 +12,7 @@ class RFModel(AbstractModel):
     def setup(self):
         n_estimators = self.config['N_ESTIMATORS']
         self.rf      = RandomForestRegressor(n_estimators=n_estimators)
-
+        self.name = self.config['NAME']
     def predict(self, x):
         """
         x - array [HxW] or [NxHxW]
@@ -38,10 +40,10 @@ class RFModel(AbstractModel):
         self.rf.fit(X_,Y)
 
     def save(self, path):
-        joblib.dump(self.rf,path)
+        joblib.dump(self.rf,path+'/{}.joblib'.format(self.name))
 
     def load(self, path):
-        self.rf = joblib.load(path)
+        self.rf = joblib.load(path+'/{}.joblib'.format(self.name))
 
 class RF2DExperiment(AbstractExperiment):
     def __init__(self, config):

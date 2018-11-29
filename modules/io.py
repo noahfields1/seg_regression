@@ -1,5 +1,6 @@
 import yaml
 import csv
+import os
 
 def mkdir(fn):
     if not os.path.exists(os.path.abspath(fn)):
