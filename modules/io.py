@@ -1,6 +1,7 @@
 import yaml
 import csv
 import os
+import json
 
 def mkdir(fn):
     if not os.path.exists(os.path.abspath(fn)):
@@ -38,3 +39,11 @@ def read_csv(filename):
             return d[0]
         else:
             return d
+
+def write_json(data,fn):
+    with open(fn,'w') as f:
+        json.dump(data,f, indent=2)
+
+def load_json(fn):
+    with open(fn,'r') as f:
+        return json.load(f)

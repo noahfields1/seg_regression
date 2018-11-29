@@ -83,7 +83,6 @@ def get_dataset(config, key="TRAIN"):
 
             c_dist = np.sqrt(np.sqrt(np.sum(c_reorient**2,axis=1)))
 
-            p = (p+1)/2
             points.append(p)
             contours.append(c_dist)
         except:
