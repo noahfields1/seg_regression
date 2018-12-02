@@ -21,6 +21,8 @@ class AbstractExperiment(object):
         pass
     def set_data(self,data):
         pass
+    def set_model(self,model):
+        self.model = model
     def setup_directories(self):
         pass
     def predict(self):
