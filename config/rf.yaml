@@ -2,8 +2,11 @@ DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
 NAME:       "rf2d"
-EXPERIMENT_FILE: "components.rf2d"
+EXPERIMENT_FILE:  "components.rf2d"
 EXPERIMENT_CLASS: "RF2DExperiment"
+EVALUATION_FILE:  "components.common"
+EVALUATION_CLASS: "BaseEvaluation"
+
 DATASET:    "components.datasets.axial2d"
 RESULTS_DIR: "./results"
 MODEL_TYPE: "RFModel"

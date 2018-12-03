@@ -5,7 +5,9 @@ from tqdm import tqdm
 from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 import pandas as pd
+from medpy.metric.binary import hd, assd, dc
 
+import modules.vascular_data as sv
 from modules.io import mkdir, write_json, load_json
 from modules.vessel_regression import pred_to_contour
 
@@ -128,15 +130,26 @@ class BaseEvaluation(AbstractEvaluation):
         preds = [load_json(f) for f in pred_files]
 
         results = []
+        SPACING = self.config['SPACING']
+        DIMS    = self.config['CROP_DIMS']
+        ORIGIN  = [0,0]
         for i,d in tqdm(enumerate(preds)):
             cpred = np.array(d['yhat_centered'])
             ctrue = np.array(d['c_centered'])
+
+            cp_seg = sv.contourToSeg(cpred, ORIGIN, DIMS, SPACING)
+            ct_seg = sv.contourToSeg(ctrue, ORIGIN, DIMS, SPACING)
 
             o = {}
             o['image'] = d['image']
             o['path_name'] = d['path_name']
             o['point'] = d['point']
             o['model_name'] = self.config['NAME']
+            o['HAUSDORFF'] = hd(cp_seg,ct_seg, SPACING)
+            o['ASSD'] = assd(cp_seg, ct_seg, SPACING)
+            o['dice'] = dc(cp_seg, ct_seg)
+
+            results.append(o)
             
         df = pd.dataframe(results)
         df_fn = os.path.join(self.out_dir,data_key,'.csv')
