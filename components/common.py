@@ -131,3 +131,7 @@ class BaseEvaluation(AbstractEvaluation):
         for i,d in tqdm(enumerate(preds)):
             cpred = np.array(d['yhat_centered'])
             ctrue = np.array(d['c_centered'])
+
+        df = pd.dataframe(results)
+        df_fn = os.path.join(self.out_dir,data_key,'.csv')
+        df.to_csv(df_fn)
