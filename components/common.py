@@ -115,7 +115,8 @@ class BaseEvaluation(AbstractEvaluation):
     def setup(self):
         self.results_dir = self.config['RESULTS_DIR']
     def evaluate(self, data_key):
-        self.out_dir    = os.path.join(self.results_dir, data_key.lower())
+        name = self.config['NAME']
+        self.out_dir    = os.path.join(self.results_dir, name,data_key.lower())
         self.pred_dir   = os.path.join(self.out_dir, 'predictions')
 
         if not os.path.isdir(self.out_dir):
@@ -150,7 +151,7 @@ class BaseEvaluation(AbstractEvaluation):
             o['dice'] = dc(cp_seg, ct_seg)
 
             results.append(o)
-            
+
         df = pd.dataframe(results)
         df_fn = os.path.join(self.out_dir,data_key,'.csv')
         df.to_csv(df_fn)
