@@ -132,6 +132,12 @@ class BaseEvaluation(AbstractEvaluation):
             cpred = np.array(d['yhat_centered'])
             ctrue = np.array(d['c_centered'])
 
+            o = {}
+            o['image'] = d['image']
+            o['path_name'] = d['path_name']
+            o['point'] = d['point']
+            o['model_name'] = self.config['NAME']
+            
         df = pd.dataframe(results)
         df_fn = os.path.join(self.out_dir,data_key,'.csv')
         df.to_csv(df_fn)
