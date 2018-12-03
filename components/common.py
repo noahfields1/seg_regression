@@ -4,11 +4,13 @@ import os
 from tqdm import tqdm
 from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
+import pandas as pd
 
-from modules.io import mkdir, write_json
+from modules.io import mkdir, write_json, load_json
 from modules.vessel_regression import pred_to_contour
 
 from base.experiment import AbstractExperiment
+from base.evaluation import AbstractEvaluation
 
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
@@ -106,3 +108,26 @@ class BaseExperiment(AbstractExperiment):
         self.model.save(self.model_dir)
     def load(self):
         self.model.load(self.model_dir)
+
+class BaseEvaluation(AbstractEvaluation):
+    def setup(self):
+        self.results_dir = self.config['RESULTS_DIR']
+    def evaluate(self, data_key):
+        self.out_dir    = os.path.join(self.results_dir, data_key.lower())
+        self.pred_dir   = os.path.join(self.out_dir, 'predictions')
+
+        if not os.path.isdir(self.out_dir):
+            raise RuntimeError("path doesnt exist {}".format(self.out_dir))
+
+        if not os.path.isdir(self.pred_dir):
+            raise RuntimeError("path doesnt exist {}".format(self.pred_dir))
+
+        pred_files = os.listdir(self.pred_dir)
+        pred_files = [os.path.join(self.pred_dir,f) for f in pred_files]
+
+        preds = [load_json(f) for f in pred_files]
+
+        results = []
+        for i,d in tqdm(enumerate(preds)):
+            cpred = np.array(d['yhat_centered'])
+            ctrue = np.array(d['c_centered'])

@@ -4,5 +4,5 @@ class AbstractEvaluation(object):
         self.setup()
     def setup(self):
         pass
-    def evaluate(self):
+    def evaluate(self, data_key):
         pass
