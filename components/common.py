@@ -5,10 +5,10 @@ from tqdm import tqdm
 from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 
-from experiments.components import AbstractExperiment, AbstractModel
 from modules.io import mkdir, write_json
 from modules.vessel_regression import pred_to_contour
-EPS = 1e-5
+
+from base.experiment import AbstractExperiment
 
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
@@ -43,48 +43,7 @@ def log_prediction(yhat,x,c,p,meta,path):
     plt.savefig(path+'/images/{}.png'.format(name),dpi=200)
     plt.close()
 
-class RFModel(AbstractModel):
-    def setup(self):
-        n_estimators = self.config['N_ESTIMATORS']
-        self.rf      = RandomForestRegressor(n_estimators=n_estimators)
-        self.name = self.config['NAME']
-    def predict(self, x):
-        """
-        x - array [HxW] or [NxHxW]
-        """
-        S = x.shape
-        if len(S) == 2:
-            return self._predict_single(x)
-        else:
-            return self._predict(x)
-
-    def _predict_single(self, x):
-        S  = x.shape
-        x_ = x.reshape([1,s[0]*s[1]])
-        p  = self.rf.predict(x_)
-        return p[0]
-
-    def _predict(self, X):
-        S  = X.shape
-        X_ = X.reshape([-1,S[1]*S[2]])
-        return self.rf.predict(X_)
-
-    def train(self, X, Y):
-        S  = X.shape
-        X_ = X.reshape([-1,S[1]*S[2]])
-        self.rf.fit(X_,Y)
-
-    def save(self, path):
-        joblib.dump(self.rf,path+'/{}.joblib'.format(self.name))
-
-    def load(self, path):
-        self.rf = joblib.load(path+'/{}.joblib'.format(self.name))
-
-class RF2DExperiment(AbstractExperiment):
-    def __init__(self, config):
-        self.config = config
-        self.setup()
-
+class BaseExperiment(AbstractExperiment):
     def setup_directories(self):
         mkdir(self.root)
         mkdir(self.log_dir)
@@ -113,8 +72,6 @@ class RF2DExperiment(AbstractExperiment):
         self.Xnorm = (self.X-mu)/sig
 
     def setup(self):
-        self.model = RFModel(self.config)
-
         res_dir = self.config['RESULTS_DIR']
         name    = self.config['NAME']
 
@@ -145,8 +102,6 @@ class RF2DExperiment(AbstractExperiment):
 
             log_prediction(yhat,x,c,p,meta,path)
 
-    def train(self):
-        self.model.train(self.Xnorm,self.C)
     def save(self):
         self.model.save(self.model_dir)
     def load(self):
