@@ -5,55 +5,45 @@ from tqdm import tqdm
 from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 
-from experiments.components import AbstractExperiment, AbstractModel
-from experiments.experiment import log_prediction
-
 from modules.io import mkdir, write_json
 from modules.vessel_regression import pred_to_contour
-EPS = 1e-5
 
-class RFModel(AbstractModel):
-    def setup(self):
-        n_estimators = self.config['N_ESTIMATORS']
-        self.rf      = RandomForestRegressor(n_estimators=n_estimators)
-        self.name = self.config['NAME']
-    def predict(self, x):
-        """
-        x - array [HxW] or [NxHxW]
-        """
-        S = x.shape
-        if len(S) == 2:
-            return self._predict_single(x)
-        else:
-            return self._predict(x)
+from base.experiment import AbstractExperiment
 
-    def _predict_single(self, x):
-        S  = x.shape
-        x_ = x.reshape([1,s[0]*s[1]])
-        p  = self.rf.predict(x_)
-        return p[0]
+def log_prediction(yhat,x,c,p,meta,path):
+    cpred = pred_to_contour(yhat)
+    ctrue = pred_to_contour(c)
 
-    def _predict(self, X):
-        S  = X.shape
-        X_ = X.reshape([-1,S[1]*S[2]])
-        return self.rf.predict(X_)
+    new_meta = {}
+    for k in meta: new_meta[k] = meta[k]
 
-    def train(self, X, Y):
-        S  = X.shape
-        X_ = X.reshape([-1,S[1]*S[2]])
-        self.rf.fit(X_,Y)
+    new_meta['center']   = p.tolist()
+    new_meta['yhat_raw'] = yhat.tolist()
+    new_meta['c_raw']    = c.tolist()
 
-    def save(self, path):
-        joblib.dump(self.rf,path+'/{}.joblib'.format(self.name))
+    new_meta['yhat_centered'] = cpred.tolist()
+    new_meta['c_centered']    = ctrue.tolist()
 
-    def load(self, path):
-        self.rf = joblib.load(path+'/{}.joblib'.format(self.name))
+    cpred_pos = cpred+p
+    ctrue_pos = ctrue+p
 
-class RF2DExperiment(AbstractExperiment):
-    def __init__(self, config):
-        self.config = config
-        self.setup()
+    new_meta['yhat_pos'] = cpred_pos.tolist()
+    new_meta['c_pos']    = ctrue_pos.tolist()
 
+    name = meta['image']+'.'+meta['path_name']+'.'+str(meta['point'])
+
+    write_json(new_meta, path+'/predictions/{}.json'.format(name))
+
+    plt.figure()
+    plt.imshow(x,cmap='gray',extent=[-1,1,1,-1])
+    plt.colorbar()
+    plt.scatter(cpred_pos[:,0], cpred_pos[:,1], color='r', label='predicted',s=4)
+    plt.scatter(ctrue_pos[:,0], ctrue_pos[:,1], color='y', label='true', s=4)
+    plt.legend()
+    plt.savefig(path+'/images/{}.png'.format(name),dpi=200)
+    plt.close()
+
+class BaseExperiment(AbstractExperiment):
     def setup_directories(self):
         mkdir(self.root)
         mkdir(self.log_dir)
@@ -82,8 +72,6 @@ class RF2DExperiment(AbstractExperiment):
         self.Xnorm = (self.X-mu)/sig
 
     def setup(self):
-        self.model = RFModel(self.config)
-
         res_dir = self.config['RESULTS_DIR']
         name    = self.config['NAME']
 
@@ -114,8 +102,6 @@ class RF2DExperiment(AbstractExperiment):
 
             log_prediction(yhat,x,c,p,meta,path)
 
-    def train(self):
-        self.model.train(self.Xnorm,self.C)
     def save(self):
         self.model.save(self.model_dir)
     def load(self):
