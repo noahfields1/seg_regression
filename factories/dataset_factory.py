@@ -1,4 +1,4 @@
-import components.datasets as datasets
+import components.datasets.axial2d as axial2d
 
 def get_dataset(config, key="TRAIN"):
     if not "DATASET" in config:
@@ -7,6 +7,6 @@ def get_dataset(config, key="TRAIN"):
     dset = config['DATASET']
 
     if dset == "axial2d":
-        return datasets.axial2d.get_dataset(config, key)
+        return axial2d.get_dataset(config, key)
     else:
         raise RuntimeError("Unrecognized dataset {}".format(dset))
