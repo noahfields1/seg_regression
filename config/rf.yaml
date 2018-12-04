@@ -7,7 +7,7 @@ EXPERIMENT_CLASS: "RF2DExperiment"
 EVALUATION_FILE:  "components.common"
 EVALUATION_CLASS: "BaseEvaluation"
 
-DATASET:    "components.datasets.axial2d"
+DATASET:    "axial2d"
 RESULTS_DIR: "./results"
 MODEL_TYPE: "RFModel"
 

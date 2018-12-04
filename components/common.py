@@ -132,7 +132,7 @@ class BaseEvaluation(AbstractEvaluation):
 
         results = []
         SPACING = self.config['SPACING']
-        DIMS    = self.config['CROP_DIMS']
+        DIMS    = [self.config['CROP_DIMS']]*2
         ORIGIN  = [0,0]
         for i,d in tqdm(enumerate(preds)):
             cpred = np.array(d['yhat_centered'])
