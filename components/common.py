@@ -14,6 +14,8 @@ from modules.vessel_regression import pred_to_contour
 from base.experiment import AbstractExperiment
 from base.evaluation import AbstractEvaluation
 
+EPS=1e-5
+
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
     ctrue = pred_to_contour(c)
