@@ -2,14 +2,13 @@ DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
 NAME:       "rf2d"
-EXPERIMENT:  "rf2d"
-
-EVALUATION_FILE:  "components.common"
-EVALUATION_CLASS: "BaseEvaluation"
-
-DATASET:    "axial2d"
-RESULTS_DIR: "./results"
+EXPERIMENT: "rf2d"
+EVALUATION: "base"
 MODEL: "rf2d"
+DATASET:    "axial2d"
+
+RESULTS_DIR: "./results"
+
 
 SPACING: 0.029
 DIMS: 240
