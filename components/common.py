@@ -131,9 +131,11 @@ class BaseEvaluation(AbstractEvaluation):
         preds = [load_json(f) for f in pred_files]
 
         results = []
-        SPACING = self.config['SPACING']
+
+        SPACING = [self.config['SPACING']]*2
         DIMS    = [self.config['CROP_DIMS']]*2
         ORIGIN  = [0,0]
+        
         for i,d in tqdm(enumerate(preds)):
             cpred = np.array(d['yhat_centered'])
             ctrue = np.array(d['c_centered'])
@@ -152,6 +154,6 @@ class BaseEvaluation(AbstractEvaluation):
 
             results.append(o)
 
-        df = pd.dataframe(results)
-        df_fn = os.path.join(self.out_dir,data_key,'.csv')
+        df = pd.DataFrame(results)
+        df_fn = os.path.join(self.out_dir,'{}.csv'.format(data_key))
         df.to_csv(df_fn)
