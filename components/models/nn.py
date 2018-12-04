@@ -26,15 +26,15 @@ class Model(AbstractModel):
         self.sess.run(self.train,{self.x:x,self.y:y})
 
     def save(self):
-        model_dir  = self.case_config['MODEL_DIR']
-        model_name = self.case_config['MODEL_NAME']
+        model_dir  = self.config['MODEL_DIR']
+        model_name = self.config['MODEL_NAME']
         self.saver.save(
             self.sess,model_dir+'/{}'.format(model_name))
 
     def load(self, model_path=None):
         if model_path == None:
-            model_dir  = self.case_config['MODEL_DIR']
-            model_name = self.case_config['MODEL_NAME']
+            model_dir  = self.config['MODEL_DIR']
+            model_name = self.config['MODEL_NAME']
             model_path = model_dir + '/' + model_name
         self.saver.restore(self.sess, model_path)
 
@@ -52,7 +52,7 @@ class Model(AbstractModel):
         self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
 
     def configure_trainer(self):
-        LEARNING_RATE = self.global_config["LEARNING_RATE"]
+        LEARNING_RATE = self.config["LEARNING_RATE"]
         self.global_step = tf.Variable(0, trainable=False)
         boundaries = [10000, 20000, 25000]
         values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000]
@@ -63,7 +63,7 @@ class Model(AbstractModel):
 
     def train(X,Y):
         for i in range(self.config['TRAIN_STEPS']):
-            x,y = get_batch(X,Y)
+            x,y = get_batch(X,Y, self.config['BATCH_SIZE'])
 
             self.train_step(x,y)
 
@@ -80,18 +80,18 @@ class Model(AbstractModel):
 
 class I2INetReg(Model):
     def build_model(self):
-        CROP_DIMS   = self.case_config['CROP_DIMS']
-        C           = self.case_config['NUM_CHANNELS']
-        LEAK        = self.global_config['LEAK']
-        NUM_FILTERS = self.global_config['NUM_FILTERS']
-        LAMBDA      = self.global_config['L2_REG']
-        INIT        = self.global_config['INIT']
-        if "INIT" in self.case_config:
-            INIT = self.case_config['INIT']
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        NUM_FILTERS = self.config['NUM_FILTERS']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+        if "INIT" in self.config:
+            INIT = self.config['INIT']
             print(INIT)
 
 
-        NUM_POINTS  = self.global_config['NUM_CONTOUR_POINTS']+2
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']+2
 
         leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
 
@@ -107,11 +107,11 @@ class I2INetReg(Model):
 
         o_vec = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
 
-        for i in range(self.case_config['FC_LAYERS']-1):
-            if "HIDDEN_SIZES" in self.case_config:
-                h = self.case_config['HIDDEN_SIZES'][i]
+        for i in range(self.config['FC_LAYERS']-1):
+            if "HIDDEN_SIZES" in self.config:
+                h = self.config['HIDDEN_SIZES'][i]
             else:
-                h = self.case_config['HIDDEN_SIZE']
+                h = self.config['HIDDEN_SIZE']
 
             o_vec = tf_util.fullyConnected(o_vec, h,
                 leaky_relu, std=INIT, scope='fc_'+str(i))
