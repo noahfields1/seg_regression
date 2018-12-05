@@ -26,29 +26,30 @@ class Model(AbstractModel):
 
         self.sess.run(self.train_op,{self.x:x,self.y:y})
 
-    def save(self):
-        model_dir  = self.config['MODEL_DIR']
-        model_name = self.config['MODEL_NAME']
-        self.saver.save(
-            self.sess,model_dir+'/{}'.format(model_name))
+    def save(self, model_path=None):
+        if model_path == None:
+            model_path = self.config['MODEL_DIR']+'/'+self.config['MODEL_NAME']
+        else:
+            model_path = model_path + '/' + self.config['MODEL_NAME']
+        self.saver.save(self.sess,model_path)
 
     def load(self, model_path=None):
         if model_path == None:
-            model_dir  = self.config['MODEL_DIR']
-            model_name = self.config['MODEL_NAME']
-            model_path = model_dir + '/' + model_name
+            model_path = self.config['MODEL_DIR']+'/'+self.config['MODEL_NAME']
+        else:
+            model_path = model_path+'/'+self.config['MODEL_NAME']
         self.saver.restore(self.sess, model_path)
 
     def predict(self,x):
         S = list(x.shape)
-        if len(S) == 3:
-            x_ = x.reshape([1]+S)
+        if len(S) == 2:
+            x_ = x.reshape([1]+S+[1])
             return self._predict(x_)[0]
         else:
             out = []
             for i in range(S[0]):
-                x_ = x.reshape([1]+S)
-                y_ = self._predict(x_)[0].copy()
+                x_ = x[i].reshape([1]+S[1:3]+[1])
+                y = self._predict(x_)[0].copy()
                 out.append(y)
             return np.array(out)
 
@@ -90,6 +91,8 @@ class Model(AbstractModel):
         f = open(self.config["LOG_FILE"],"a+")
         f.write("{}: loss={}\n".format(i,l))
         f.close()
+
+        self.save()
 
 class I2INetReg(Model):
     def build_model(self):
