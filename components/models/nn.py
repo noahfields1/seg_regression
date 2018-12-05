@@ -40,7 +40,17 @@ class Model(AbstractModel):
         self.saver.restore(self.sess, model_path)
 
     def predict(self,x):
-        return self.sess.run(self.yclass,{self.x:x})
+        S = list(x.shape)
+        if len(S) == 3:
+            x_ = x.reshape([1]+S)
+            return self._predict(x_)[0]
+        else:
+            out = []
+            for i in range(S[0]):
+                x_ = x.reshape([1]+S)
+                y_ = self._predict(x_)[0].copy()
+                out.append(y)
+            return np.array(out)
 
     def calculate_loss(self,x,y):
         return self.sess.run(self.loss,{self.x:x,self.y:y})
@@ -76,7 +86,7 @@ class Model(AbstractModel):
         l = self.calculate_loss(x,y)
 
         print("{}: loss={}\n".format(i,l))
-        
+
         f = open(self.config["LOG_FILE"],"a+")
         f.write("{}: loss={}\n".format(i,l))
         f.close()
@@ -130,8 +140,8 @@ class I2INetReg(Model):
         self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
         self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
 
-    def predict(self,xb):
-        return self.sess.run(self.yhat,{self.x:xb})
+    def _predict(self,x):
+        return self.sess.run(self.yhat,{self.x:x})
 
     def finalize(self):
         self.sess = tf.Session()
