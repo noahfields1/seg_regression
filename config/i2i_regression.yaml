@@ -7,13 +7,13 @@ EVALUATION: "base"
 MODEL: "I2INetReg"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/log/train.txt"
+LOG_FILE: "./results/I2INetReg/log/train.txt"
 
 MODEL_DIR: "./results/model"
 MODEL_NAME: "I2I"
 MODEL_TYPE: "I2INetRegression"
 
-PRINT_EVERY: 500
+LOG_STEP: 500
 LEAK: 0.2
 BATCH_SIZE: 4
 LEARNING_RATE: 0.0001

@@ -4,9 +4,10 @@ import tensorflow as tf
 import modules.layers as tf_util
 
 def get_batch(X,Y, batch_size=16):
-    ids = np.random.choice(X.shape[0])
+    ids = np.random.choice(X.shape[0], size=batch_size)
 
     x   = np.array([X[i] for i in ids])
+    x   = x[:,:,:,np.newaxis]
     y   = np.array([Y[i] for i in ids])
 
     return x,y
@@ -23,7 +24,7 @@ class Model(AbstractModel):
         if np.sum(np.isnan(x)) > 0: return
         if np.sum(np.isnan(y)) > 0: return
 
-        self.sess.run(self.train,{self.x:x,self.y:y})
+        self.sess.run(self.train_op,{self.x:x,self.y:y})
 
     def save(self):
         model_dir  = self.config['MODEL_DIR']
@@ -59,9 +60,9 @@ class Model(AbstractModel):
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
         self.opt = tf.train.AdamOptimizer(learning_rate)
-        self.train = self.opt.minimize(self.loss)
+        self.train_op = self.opt.minimize(self.loss)
 
-    def train(X,Y):
+    def train(self, X,Y):
         for i in range(self.config['TRAIN_STEPS']):
             x,y = get_batch(X,Y, self.config['BATCH_SIZE'])
 
@@ -74,6 +75,8 @@ class Model(AbstractModel):
     def log(self,i,x,y):
         l = self.calculate_loss(x,y)
 
+        print("{}: loss={}\n".format(i,l))
+        
         f = open(self.config["LOG_FILE"],"a+")
         f.write("{}: loss={}\n".format(i,l))
         f.close()
@@ -91,7 +94,7 @@ class I2INetReg(Model):
             print(INIT)
 
 
-        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']+2
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
 
         leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
 
