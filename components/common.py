@@ -36,6 +36,9 @@ def log_prediction(yhat,x,c,p,meta,path):
     new_meta['yhat_pos'] = cpred_pos.tolist()
     new_meta['c_pos']    = ctrue_pos.tolist()
 
+    new_meta['radius_pixels'] = meta['radius']
+    new_meta['radius'] = meta['radius']*meta['spacing']
+
     name = meta['image']+'.'+meta['path_name']+'.'+str(meta['point'])
 
     write_json(new_meta, path+'/predictions/{}.json'.format(name))
@@ -137,7 +140,7 @@ class BaseEvaluation(AbstractEvaluation):
         SPACING = [self.config['SPACING']]*2
         DIMS    = [self.config['CROP_DIMS']]*2
         ORIGIN  = [0,0]
-        
+
         for i,d in tqdm(enumerate(preds)):
             cpred = np.array(d['yhat_centered'])
             ctrue = np.array(d['c_centered'])
@@ -153,7 +156,7 @@ class BaseEvaluation(AbstractEvaluation):
             o['HAUSDORFF'] = hd(cp_seg,ct_seg, SPACING)
             o['ASSD'] = assd(cp_seg, ct_seg, SPACING)
             o['dice'] = dc(cp_seg, ct_seg)
-
+            o['radius'] = d['radius']
             results.append(o)
 
         df = pd.DataFrame(results)
