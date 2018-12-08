@@ -19,6 +19,7 @@ EPS=1e-5
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
     ctrue = pred_to_contour(c)
+    scale  = meta['dimensions']*meta['spacing']/2
 
     new_meta = {}
     for k in meta: new_meta[k] = meta[k]
@@ -27,11 +28,11 @@ def log_prediction(yhat,x,c,p,meta,path):
     new_meta['yhat_raw'] = yhat.tolist()
     new_meta['c_raw']    = c.tolist()
 
-    new_meta['yhat_centered'] = cpred.tolist()
-    new_meta['c_centered']    = ctrue.tolist()
+    new_meta['yhat_centered_unscaled'] = cpred.tolist()
+    new_meta['c_centered_unscaled']    = ctrue.tolist()
 
-    cpred_pos = cpred+p
-    ctrue_pos = ctrue+p
+    cpred_pos = (cpred+p)*scale
+    ctrue_pos = (ctrue+p)*scale
 
     new_meta['yhat_pos'] = cpred_pos.tolist()
     new_meta['c_pos']    = ctrue_pos.tolist()
@@ -44,7 +45,7 @@ def log_prediction(yhat,x,c,p,meta,path):
     write_json(new_meta, path+'/predictions/{}.json'.format(name))
 
     plt.figure()
-    plt.imshow(x,cmap='gray',extent=[-1,1,1,-1])
+    plt.imshow(x,cmap='gray',extent=[-scale,scale,scale,-scale])
     plt.colorbar()
     plt.scatter(cpred_pos[:,0], cpred_pos[:,1], color='r', label='predicted',s=4)
     plt.scatter(ctrue_pos[:,0], ctrue_pos[:,1], color='y', label='true', s=4)
