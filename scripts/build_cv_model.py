@@ -67,11 +67,11 @@ for path_id, path in path_dict.items():
     points = path['points']
     print( name)
 
-    f = open(os.path.join(args.o,name),'w')
+    f = open(os.path.join(group_dir, name),'w')
 
     for i,p in enumerate(points):
         c = path['contours_3d'][i]
-        pos = int(p[0])
+        pos = i
         f.write('/group/{}/{}\n'.format(name,pos))
         f.write(str(pos) +'\n')
         f.write('posId {}\n'.format(pos))
