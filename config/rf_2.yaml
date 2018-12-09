@@ -8,7 +8,7 @@ MODEL: "rf2d"
 DATASET:    "axial2d"
 
 RESULTS_DIR: "./results"
-
+MODEL_DIR: "/home/marsdenlab/projects/seg_regression/results/rf2d_2/model"
 
 SPACING: 0.029
 DIMS: 240

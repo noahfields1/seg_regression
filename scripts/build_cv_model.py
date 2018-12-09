@@ -8,6 +8,9 @@ import modules.sv_image as sv_image
 import modules.vascular_data as sv
 import modules.io as io
 import factories.model_factory as model_factory
+import modules.vessel_regression as vessel_regression
+
+import numpy as np
 
 parser = argparse.ArgumentParser()
 
@@ -43,15 +46,20 @@ for path_id, path in path_dict.items():
         v = [x[6:] for x in path_points]
 
         X = image.get_reslices(p,n,v)
-
-        C = model.predict(X)*config['CROP_DIMS']/2
-
+        mu = np.mean(X,axis=(1,2))[:,np.newaxis,np.newaxis]
+        std = np.std(X,axis=(1,2))[:,np.newaxis,np.newaxis]
+        X = (1.0*X-mu)/(std+1e-3)
+        
+        C = model.predict(X)
+        C = np.array([vessel_regression.pred_to_contour(c) for c in C])
+        C = C*config['CROP_DIMS']*config['SPACING']/2
+        
         path_dict[path_id]['contours_2d'] = C
 
-        C3 = [sv.denormalizeContour(c_,p_,n_,v_) for c_,p_,n_,v_ in zip(C,p,n,v)]
+        C3 = np.array([sv.denormalizeContour(c_,p_,n_,v_) for c_,p_,n_,v_ in zip(C,p,n,v)])
 
         path_dict[path_id]['contours_3d'] = C3
 
-for path_id, path in path_dict.items():
-    #TODO write to files
-    #TODO write groups toc file
+#for path_id, path in path_dict.items():
+#TODO write to files
+#TODO write groups toc file
