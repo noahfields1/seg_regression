@@ -34,8 +34,12 @@ class RFModel(AbstractModel):
         X_ = X.reshape([-1,S[1]*S[2]])
         self.rf.fit(X_,Y)
 
-    def save(self, path):
+    def save(self, path=None):
+        if path == None:
+            path = self.config['MODEL_DIR']
         joblib.dump(self.rf,path+'/{}.joblib'.format(self.name))
 
-    def load(self, path):
+    def load(self, path=None):
+        if path == None:
+            path = self.config['MODEL_DIR']
         self.rf = joblib.load(path+'/{}.joblib'.format(self.name))

@@ -30,7 +30,7 @@ name_dir   = os.path.join(output_dir, config['NAME'])
 group_dir  = os.path.join(name_dir, 'groups')
 
 model = model_factory.get_model(config)
-
+model.load()
 for p in [output_dir, name_dir, group_dir]:
     if not os.path.isdir(p): os.mkdir(p)
 
@@ -44,12 +44,13 @@ for path_id, path in path_dict.items():
 
         X = image.get_reslices(p,n,v)
 
-        C = model.predict(X)
+        C = model.predict(X)*config['CROP_DIMS']/2
 
         path_dict[path_id]['contours_2d'] = C
 
-for path_id, path in path_dict.items():
-    #TODO loft into 3d groups
+        C3 = [sv.denormalizeContour(c_,p_,n_,v_) for c_,p_,n_,v_ in zip(C,p,n,v)]
+
+        path_dict[path_id]['contours_3d'] = C3
 
 for path_id, path in path_dict.items():
     #TODO write to files
