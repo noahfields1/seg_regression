@@ -36,10 +36,10 @@ class RFModel(AbstractModel):
 
     def save(self, path=None):
         if path == None:
-            path = self.config['MODEL_DIR']
+            path = os.path.join(self.config['RESULTS_DIR'], self.name, 'model')
         joblib.dump(self.rf,path+'/{}.joblib'.format(self.name))
 
     def load(self, path=None):
         if path == None:
-            path = self.config['MODEL_DIR']
+            path = os.path.join(self.config['RESULTS_DIR'], self.name, 'model')
         self.rf = joblib.load(path+'/{}.joblib'.format(self.name))
