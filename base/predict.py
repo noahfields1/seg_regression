@@ -1,5 +1,5 @@
 class AbstractPredictor(object):
-    def __init__(self):
+    def __init__(self, config):
         self.config = config
         self.setup()
     def setup(self):

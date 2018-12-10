@@ -124,10 +124,11 @@ class BasePredictor(AbstractPredictor):
     def predict(self):
         predictions = self.model.predict(self.Xnorm)
 
+        path = self.config['RESULTS_DIR']+'/'+self.config['NAME']
         if self.data_key == "VAL":
-            path = self.val_dir
+            path = path+'/val'
         elif self.data_key == "TEST":
-            path = self.test_dir
+            path = path+'/test
 
         for i in tqdm(range(predictions.shape[0])):
             x = self.Xnorm[i]

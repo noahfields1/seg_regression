@@ -6,7 +6,7 @@ def get_predictor(config):
 
     predictor = config['PREDICTOR']
 
-    if predictor == "rf2d":
+    if predictor == "base":
         return common.BasePredictor(config)
     else:
         raise RuntimeError("Unrecognized predictor {}".format(predictor))

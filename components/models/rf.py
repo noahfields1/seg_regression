@@ -1,6 +1,6 @@
 from sklearn.ensemble import RandomForestRegressor
 import joblib
-
+import os
 from base.model import AbstractModel
 
 class RFModel(AbstractModel):
