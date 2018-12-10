@@ -38,4 +38,4 @@ for c in configs:
 
         subprocess.check_call('python build_cv_model.py -i {} -p {} -c {} -o {} -n {}'.format(
             image, paths, c_, RESULTS_DIR, name
-        ))
+        ), shell=True)
