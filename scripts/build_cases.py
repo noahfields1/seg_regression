@@ -1,8 +1,7 @@
 import os
 import sys
-sys.path.append(os.path.abspath('..'))
 import subprocess
-from modules import io
+import modules.io as io
 
 CASES_DIR = os.path.join('.','data', 'cases')
 RESULTS_DIR = os.path.join('.','results')
@@ -36,6 +35,6 @@ for c in configs:
 
         print("building {} - {}".format(name, c))
 
-        subprocess.check_call('python build_cv_model.py -i {} -p {} -c {} -o {} -n {}'.format(
+        subprocess.check_call('python scripts/build_cv_model.py -i {} -p {} -c {} -o {} -n {}'.format(
             image, paths, c_, RESULTS_DIR, name
         ), shell=True)
