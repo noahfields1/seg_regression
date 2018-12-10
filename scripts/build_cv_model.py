@@ -18,7 +18,7 @@ parser.add_argument('-i', help='medical image file')
 parser.add_argument('-p', help='.paths file')
 parser.add_argument('-c', help='model config file')
 parser.add_argument('-o', help='output directory')
-
+parser.add_argument('-n', help='identifier')
 args = parser.parse_args()
 
 image     = sv_image.Image(args.i)
@@ -31,10 +31,11 @@ image.set_reslice_ext(config['CROP_DIMS'])
 output_dir = os.path.abspath(args.o)
 name_dir   = os.path.join(output_dir, config['NAME'])
 group_dir  = os.path.join(name_dir, 'groups')
+model_dir  = os.path.join(group_dir, args.n)
 
 model = model_factory.get_model(config)
 model.load()
-for p in [output_dir, name_dir, group_dir]:
+for p in [output_dir, name_dir, group_dir, model_dir]:
     if not os.path.isdir(p): os.mkdir(p)
 
 for path_id, path in path_dict.items():
@@ -67,7 +68,7 @@ for path_id, path in path_dict.items():
     points = path['points']
     print( name)
 
-    f = open(os.path.join(group_dir, name),'w')
+    f = open(os.path.join(model_dir, name),'w')
 
     for i,p in enumerate(points):
         c = path['contours_3d'][i]
