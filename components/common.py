@@ -96,6 +96,9 @@ class BaseTrainer(AbstractTrainer):
         self.test_image_dir = os.path.join(self.root,'test','images')
         self.test_pred_dir  = os.path.join(self.root,'test','predictions')
 
+    def train(self):
+        self.model.train(self.Xnorm,self.C)
+
     def save(self):
         self.model.save()
     def load(self):
@@ -117,7 +120,7 @@ class BasePredictor(AbstractPredictor):
         mu         = 1.0*np.mean(self.X,axis=(1,2), keepdims=True)
         sig        = 1.0*np.std(self.X,axis=(1,2), keepdims=True)+EPS
         self.Xnorm = (self.X-mu)/sig
-        
+
     def predict(self):
         predictions = self.model.predict(self.Xnorm)
 

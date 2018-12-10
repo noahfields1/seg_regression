@@ -1,4 +1,4 @@
-import components.rf2d as rf2d
+import components.common as common
 
 def get_predictor(config):
     if not "PREDICTOR" in config:
@@ -7,6 +7,6 @@ def get_predictor(config):
     predictor = config['PREDICTOR']
 
     if predictor == "rf2d":
-        return rf2d.RF2DPredictor(config)
+        return common.BasePredictor(config)
     else:
         raise RuntimeError("Unrecognized predictor {}".format(predictor))

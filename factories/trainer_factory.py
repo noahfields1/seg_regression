@@ -1,4 +1,4 @@
-import components.rf2d as rf2d
+import components.common as common
 
 def get_trainer(config):
     if not "TRAINER" in config:
@@ -6,7 +6,7 @@ def get_trainer(config):
 
     train = config['TRAINER']
 
-    if train == "rf2d":
-        return rf2d.RF2DTrainer(config)
+    if train == "base":
+        return common.BaseTrainer(config)
     else:
         raise RuntimeError("Unrecognized trainer {}".format(train))
