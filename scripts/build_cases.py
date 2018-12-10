@@ -1,10 +1,11 @@
 import os
 import sys
 sys.path.append(os.path.abspath('..'))
-
+import subprocess
 from modules import io
 
-CASES_DIR = '../data/cases'
+CASES_DIR = os.path.join('..','data', 'cases')
+RESULTS_DIR = '..'
 
 configs = [
 'i2i_regression_ct.yaml',
@@ -14,7 +15,7 @@ configs = [
 ]
 
 for c in configs:
-    c_ = os.path.join('../config',c)
+    c_ = os.path.join('..','config',c)
 
     c_yml = io.load_yaml(c_)
 
@@ -32,3 +33,9 @@ for c in configs:
 
         for f in [image,paths]:
             if not os.path.exists(f): raise RuntimeError("{} does not exist".format(f))
+
+        print("building {} - {}".format(name, c))
+
+        subprocess.check_call('python build_cv_model.py -i {} -p {} -c {} -o {} -n {}'.format(
+            image, paths, c_, RESULTS_DIR, name
+        ))
