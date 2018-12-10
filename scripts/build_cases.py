@@ -4,8 +4,8 @@ sys.path.append(os.path.abspath('..'))
 import subprocess
 from modules import io
 
-CASES_DIR = os.path.join('..','data', 'cases')
-RESULTS_DIR = '..'
+CASES_DIR = os.path.join('.','data', 'cases')
+RESULTS_DIR = os.path.join('.','results')
 
 configs = [
 'i2i_regression_ct.yaml',
@@ -15,7 +15,7 @@ configs = [
 ]
 
 for c in configs:
-    c_ = os.path.join('..','config',c)
+    c_ = os.path.join('.','config',c)
 
     c_yml = io.load_yaml(c_)
 
