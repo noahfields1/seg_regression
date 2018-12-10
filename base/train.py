@@ -1,4 +1,4 @@
-class AbstractExperiment(object):
+class AbstractTrainer(object):
     def __init__(self, config):
         self.config = config
         self.setup()
@@ -9,8 +9,6 @@ class AbstractExperiment(object):
     def set_model(self,model):
         self.model = model
     def setup_directories(self):
-        pass
-    def predict(self):
         pass
     def train(self):
         pass
