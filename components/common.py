@@ -11,7 +11,8 @@ import modules.vascular_data as sv
 from modules.io import mkdir, write_json, load_json
 from modules.vessel_regression import pred_to_contour
 
-from base.experiment import AbstractExperiment
+from base.train import AbstractTrainer
+from base.predict import AbstractPredictor
 from base.evaluation import AbstractEvaluation
 
 EPS=1e-5
@@ -53,7 +54,7 @@ def log_prediction(yhat,x,c,p,meta,path):
     plt.savefig(path+'/images/{}.png'.format(name),dpi=200)
     plt.close()
 
-class BaseExperiment(AbstractExperiment):
+class BaseTrainer(AbstractTrainer):
     def setup_directories(self):
         mkdir(self.root)
         mkdir(self.log_dir)
@@ -95,6 +96,28 @@ class BaseExperiment(AbstractExperiment):
         self.test_image_dir = os.path.join(self.root,'test','images')
         self.test_pred_dir  = os.path.join(self.root,'test','predictions')
 
+    def save(self):
+        self.model.save()
+    def load(self):
+        self.model.load()
+
+class BasePredictor(AbstractPredictor):
+    def set_data(self, data, data_key):
+        """
+        data is a tuple (X,C,points,meta)
+        """
+        self.X      = data[0]
+        self.C      = data[1]
+        self.points = data[2]
+        self.meta   = data[3]
+        self.data_key = data_key
+
+        #normalize X
+        print("normalizing data")
+        mu         = 1.0*np.mean(self.X,axis=(1,2), keepdims=True)
+        sig        = 1.0*np.std(self.X,axis=(1,2), keepdims=True)+EPS
+        self.Xnorm = (self.X-mu)/sig
+        
     def predict(self):
         predictions = self.model.predict(self.Xnorm)
 
@@ -112,10 +135,8 @@ class BaseExperiment(AbstractExperiment):
 
             log_prediction(yhat,x,c,p,meta,path)
 
-    def save(self):
-        self.model.save(self.model_dir)
     def load(self):
-        self.model.load(self.model_dir)
+        self.model.load()
 
 class BaseEvaluation(AbstractEvaluation):
     def setup(self):
