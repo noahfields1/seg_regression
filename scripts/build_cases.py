@@ -30,5 +30,5 @@ for c in configs:
         name  = case['NAME']
         paths = case['PATHS']
 
-        for f in [image,name,paths]:
+        for f in [image,paths]:
             if not os.path.exists(f): raise RuntimeError("{} does not exist".format(f))
