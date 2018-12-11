@@ -128,7 +128,7 @@ class BasePredictor(AbstractPredictor):
         if self.data_key == "VAL":
             path = path+'/val'
         elif self.data_key == "TEST":
-            path = path+'/test
+            path = path+'/test'
 
         for i in tqdm(range(predictions.shape[0])):
             x = self.Xnorm[i]
