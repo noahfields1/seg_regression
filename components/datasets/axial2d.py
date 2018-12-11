@@ -1,9 +1,12 @@
 import numpy as np
 import random
 from tqdm import tqdm
+import skimage.filters as filters
 import modules.dataset as dataset
 from modules.io import load_yaml
 import modules.vascular_data as sv
+
+EPS=1e-5
 
 def read_T(id):
     meta_data = load_yaml(id)
@@ -57,6 +60,20 @@ def get_dataset(config, key="TRAIN"):
     cd   = int(config['CROP_DIMS']/2)
 
     X    = X[:,c-cd:c+cd,c-cd:c+cd]
+
+    if not 'IMAGE_TYPE' in config:
+        #normalize X
+        print("normalizing data")
+        mu  = 1.0*np.mean(X,axis=(1,2), keepdims=True)
+        sig = 1.0*np.std(X,axis=(1,2), keepdims=True)+EPS
+        X   = (X-mu)/sig
+    else:
+        if config['IMAGE_TYPE'] == 'EDGE':
+            print("calculating edges")
+            X = np.array([filters.sobel(x) for x in X])
+            ma = np.amax(X, axis=(1,2), keepdims=True)
+            mi = np.amin(X, axis=(1,2), keepdims=True)
+            X = (X-mi)/(ma-mi+EPS)
 
     Yc   = np.array([d[2] for d in data])
     Yc   = Yc[:,c-cd:c+cd,c-cd:c+cd]

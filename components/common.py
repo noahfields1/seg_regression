@@ -15,8 +15,6 @@ from base.train import AbstractTrainer
 from base.predict import AbstractPredictor
 from base.evaluation import AbstractEvaluation
 
-EPS=1e-5
-
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
     ctrue = pred_to_contour(c)
@@ -76,12 +74,6 @@ class BaseTrainer(AbstractTrainer):
         self.meta   = data[3]
         self.data_key = data_key
 
-        #normalize X
-        print("normalizing data")
-        mu         = 1.0*np.mean(self.X,axis=(1,2), keepdims=True)
-        sig        = 1.0*np.std(self.X,axis=(1,2), keepdims=True)+EPS
-        self.Xnorm = (self.X-mu)/sig
-
     def setup(self):
         res_dir = self.config['RESULTS_DIR']
         name    = self.config['NAME']
@@ -97,7 +89,7 @@ class BaseTrainer(AbstractTrainer):
         self.test_pred_dir  = os.path.join(self.root,'test','predictions')
 
     def train(self):
-        self.model.train(self.Xnorm,self.C)
+        self.model.train(self.X,self.C)
 
     def save(self):
         self.model.save()
@@ -115,12 +107,6 @@ class BasePredictor(AbstractPredictor):
         self.meta   = data[3]
         self.data_key = data_key
 
-        #normalize X
-        print("normalizing data")
-        mu         = 1.0*np.mean(self.X,axis=(1,2), keepdims=True)
-        sig        = 1.0*np.std(self.X,axis=(1,2), keepdims=True)+EPS
-        self.Xnorm = (self.X-mu)/sig
-
     def predict(self):
         predictions = self.model.predict(self.Xnorm)
 
@@ -131,7 +117,7 @@ class BasePredictor(AbstractPredictor):
             path = path+'/test'
 
         for i in tqdm(range(predictions.shape[0])):
-            x = self.Xnorm[i]
+            x = self.X[i]
             c = self.C[i]
             p = self.points[i]
             meta = self.meta[i]
