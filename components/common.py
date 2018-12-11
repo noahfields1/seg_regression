@@ -108,7 +108,7 @@ class BasePredictor(AbstractPredictor):
         self.data_key = data_key
 
     def predict(self):
-        predictions = self.model.predict(self.Xnorm)
+        predictions = self.model.predict(self.X)
 
         path = self.config['RESULTS_DIR']+'/'+self.config['NAME']
         if self.data_key == "VAL":
