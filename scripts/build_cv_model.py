@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.abspath('..'))
-
+sys.path.append(os.path.abspath('.'))
 import argparse
 
 import modules.sv_image as sv_image
@@ -42,9 +42,13 @@ for path_id, path in path_dict.items():
     path_name = path['name']
     path_points = path['points']
 
-    p = [x[:3] for x in path_points]
-    n = [x[3:6] for x in path_points]
-    v = [x[6:] for x in path_points]
+    points_subsample = [path_points[i] for i in range(0,len(path_points), config['INTERVAL'])]
+    path_dict[path_id]['path_points_subsample'] = points_subsample
+
+    print("predicting {} - {} points".format(path_name, len(points_subsample)))
+    p = [x[:3] for x in points_subsample]
+    n = [x[3:6] for x in points_subsample]
+    v = [x[6:] for x in points_subsample]
 
     X = image.get_reslices(p,n,v)
     mu = np.mean(X,axis=(1,2))[:,np.newaxis,np.newaxis]
@@ -65,14 +69,14 @@ for path_id, path in path_dict.items():
 
     print( "saving groups file")
     name   = path['name']
-    points = path['points']
+    points = path['path_points_subsample']
     print( name)
 
     f = open(os.path.join(model_dir, name),'w')
 
     for i,p in enumerate(points):
         c = path['contours_3d'][i]
-        pos = i
+        pos = int(i*config['INTERVAL'])
         f.write('/group/{}/{}\n'.format(name,pos))
         f.write(str(pos) +'\n')
         f.write('posId {}\n'.format(pos))
@@ -81,3 +85,18 @@ for path_id, path in path_dict.items():
         f.write('\n')
 
     f.close()
+
+f = open(os.path.join(model_dir,'group_contents.tcl'),'w')
+f.write("""# geodesic_groups_file 2.1
+#
+# Group Stuff
+#
+proc group_autoload {} {
+global gFilenames
+set grpdir $gFilenames(groups_dir)\n""")
+
+for gid in path_dict:
+    p = path_dict[gid]['name']
+    f.write('   group_readProfiles {'+p+'} [file join $grpdir {'+p+'}]\n')
+f.write('}')
+f.close()

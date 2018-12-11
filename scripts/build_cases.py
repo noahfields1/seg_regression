@@ -1,16 +1,20 @@
 import os
 import sys
+sys.path.append(os.path.abspath('..'))
+sys.path.append(os.path.abspath('.'))
+
 import subprocess
-import modules.io as io
+from modules import io
 
 CASES_DIR = os.path.join('.','data', 'cases')
 RESULTS_DIR = os.path.join('.','results')
 
 configs = [
-'i2i_regression_ct.yaml',
-'i2i_regression_mr.yaml',
-'rf_2_ct.yaml',
-'rf_2_mr.yaml'
+#'i2i_regression_ct.yaml',
+#'i2i_regression_mr.yaml',
+#'rf_2_ct.yaml',
+#'rf_2_mr.yaml'
+'rf_2.yaml'
 ]
 
 for c in configs:

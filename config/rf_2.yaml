@@ -9,6 +9,7 @@ MODEL: "rf2d"
 DATASET:    "axial2d"
 
 RESULTS_DIR: "./results"
+INTERVAL: 5
 
 SPACING: 0.029
 DIMS: 240
