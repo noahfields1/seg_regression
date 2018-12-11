@@ -154,8 +154,8 @@ class BaseEvaluation(AbstractEvaluation):
         ORIGIN  = [0,0]
 
         for i,d in tqdm(enumerate(preds)):
-            cpred = np.array(d['yhat_centered'])
-            ctrue = np.array(d['c_centered'])
+            cpred = np.array(d['yhat_pos'])
+            ctrue = np.array(d['c_pos'])
 
             cp_seg = sv.contourToSeg(cpred, ORIGIN, DIMS, SPACING)
             ct_seg = sv.contourToSeg(ctrue, ORIGIN, DIMS, SPACING)
