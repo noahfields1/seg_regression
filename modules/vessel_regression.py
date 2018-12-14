@@ -60,6 +60,9 @@ class Interpolant(object):
         if i2 > self.extent[0]-1 or j2 > self.extent[1]-1:
             return self.outside_value
 
+        if i1 < 0 or j1 < 0:
+            return self.outside_value
+
         v1    = self.image[i1,j1]
         v2    = self.image[i1,j2]
         v3    = self.image[i2,j2]

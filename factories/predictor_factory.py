@@ -1,4 +1,5 @@
 import components.common as common
+import components.edge as edge
 
 def get_predictor(config):
     if not "PREDICTOR" in config:
@@ -8,5 +9,7 @@ def get_predictor(config):
 
     if predictor == "base":
         return common.BasePredictor(config)
+    elif predictor == "edge_fit":
+        return edge.EdgeFittingPredictor(config)
     else:
         raise RuntimeError("Unrecognized predictor {}".format(predictor))

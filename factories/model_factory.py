@@ -1,5 +1,6 @@
 import components.models.rf as rf
 import components.models.nn as nn
+from modules import io
 
 def get_model(config):
     if not "MODEL" in config:
@@ -11,5 +12,9 @@ def get_model(config):
         return rf.RFModel(config)
     elif mod == "I2INetReg":
         return nn.I2INetReg(config)
+    elif mod == "edge_fit":
+        c = './config/'+config['MODEL_YAML']
+        y = io.load_yaml(c)
+        return get_model(y)
     else:
         raise RuntimeError("Unrecognized model type {}".format(mod))
