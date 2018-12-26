@@ -54,27 +54,6 @@ def get_dataset(config, key="TRAIN"):
 
     data = [read_T(s) for s in files]
 
-    X    = np.array([d[0] for d in data])
-
-    c    = int(X.shape[1]/2)
-    cd   = int(config['CROP_DIMS']/2)
-
-    X    = X[:,c-cd:c+cd,c-cd:c+cd]
-
-    if not 'IMAGE_TYPE' in config:
-        #normalize X
-        print("normalizing data")
-        mu  = 1.0*np.mean(X,axis=(1,2), keepdims=True)
-        sig = 1.0*np.std(X,axis=(1,2), keepdims=True)+EPS
-        X   = (X-mu)/sig
-    else:
-        if config['IMAGE_TYPE'] == 'EDGE':
-            print("calculating edges")
-            X = np.array([filters.sobel(x) for x in X])
-            ma = np.amax(X, axis=(1,2), keepdims=True)
-            mi = np.amin(X, axis=(1,2), keepdims=True)
-            X = (X-mi)/(ma-mi+EPS)
-
     Yc   = np.array([d[2] for d in data])
     Yc   = Yc[:,c-cd:c+cd,c-cd:c+cd]
 
@@ -107,6 +86,43 @@ def get_dataset(config, key="TRAIN"):
 
     points   = np.array(points)
     contours = np.array(contours)
+
+    X    = np.array([d[0] for d in data])
+
+    c    = int(X.shape[1]/2)
+    cd   = int(config['CROP_DIMS']/2)
+
+    if "CENTER_IMAGE" in config:
+        print("Centering images")
+        X_ = np.zeros((X.shape[0],config['CROP_DIMS'], config['CROP_DIMS']))
+        e  = int((config['DIMS']-config['CROP_DIMS'])/2)
+
+        for k,x in tqdm(enumerate(X)):
+            p_int = (points[i]/config['SPACING']).astype(int)
+
+            for i in range(2):
+                if p_int[i] > e:  p_int[i] = e
+                if p_int[i] < -e: p_int[i] = -e
+
+            X_[i] = x[c+p_int[1]-cd:c+p_int[1]+cd,c+p_int[1]-cd:c+p_int[1]+cd]
+
+        X = X_
+    else:
+        X    = X[:,c-cd:c+cd,c-cd:c+cd]
+
+    if not 'IMAGE_TYPE' in config:
+        #normalize X
+        print("normalizing data")
+        mu  = 1.0*np.mean(X,axis=(1,2), keepdims=True)
+        sig = 1.0*np.std(X,axis=(1,2), keepdims=True)+EPS
+        X   = (X-mu)/sig
+    else:
+        if config['IMAGE_TYPE'] == 'EDGE':
+            print("calculating edges")
+            X = np.array([filters.sobel(x) for x in X])
+            ma = np.amax(X, axis=(1,2), keepdims=True)
+            mi = np.amin(X, axis=(1,2), keepdims=True)
+            X = (X-mi)/(ma-mi+EPS)
 
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X,contours,points,meta = radius_balance(X,contours,points,meta,
