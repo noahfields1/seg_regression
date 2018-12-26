@@ -54,11 +54,16 @@ def get_dataset(config, key="TRAIN"):
 
     data = [read_T(s) for s in files]
 
-    Yc   = np.array([d[2] for d in data])
-    Yc   = Yc[:,c-cd:c+cd,c-cd:c+cd]
-
     meta = [d[3] for d in data]
 
+    X    = np.array([d[0] for d in data]) 
+    
+    cr   = int(X.shape[1]/2)
+    cd   = int(config['CROP_DIMS']/2)
+
+    Yc   = np.array([d[2] for d in data])
+    Yc   = Yc[:,cr-cd:cr+cd,cr-cd:cr+cd]  
+    
     points   = []
     contours = []
     for i,yc in tqdm(enumerate(Yc)):
@@ -85,30 +90,25 @@ def get_dataset(config, key="TRAIN"):
             print(meta[i])
 
     points   = np.array(points)
-    contours = np.array(contours)
-
-    X    = np.array([d[0] for d in data])
-
-    c    = int(X.shape[1]/2)
-    cd   = int(config['CROP_DIMS']/2)
-
+    contours = np.array(contours) 
+    
     if "CENTER_IMAGE" in config:
         print("Centering images")
         X_ = np.zeros((X.shape[0],config['CROP_DIMS'], config['CROP_DIMS']))
         e  = int((config['DIMS']-config['CROP_DIMS'])/2)
 
         for k,x in tqdm(enumerate(X)):
-            p_int = (points[i]/config['SPACING']).astype(int)
-
+            p_int = (points[k]*H/2).astype(int)
+            print(k, p_int)
             for i in range(2):
                 if p_int[i] > e:  p_int[i] = e
                 if p_int[i] < -e: p_int[i] = -e
 
-            X_[i] = x[c+p_int[1]-cd:c+p_int[1]+cd,c+p_int[1]-cd:c+p_int[1]+cd]
+            X_[k] = x[cr+p_int[1]-cd:cr+p_int[1]+cd,cr+p_int[1]-cd:cr+p_int[1]+cd]
 
         X = X_
     else:
-        X    = X[:,c-cd:c+cd,c-cd:c+cd]
+        X    = X[:,cr-cd:cr+cd,cr-cd:cr+cd]
 
     if not 'IMAGE_TYPE' in config:
         #normalize X
