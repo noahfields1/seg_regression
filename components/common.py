@@ -120,6 +120,9 @@ class BasePredictor(AbstractPredictor):
             x = self.X[i]
             c = self.C[i]
             p = self.points[i]
+            if "CENTER_IMAGE" in self.config:
+                p = np.array([0,0])
+                
             meta = self.meta[i]
             yhat = predictions[i]
 
