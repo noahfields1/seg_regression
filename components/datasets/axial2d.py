@@ -99,7 +99,7 @@ def get_dataset(config, key="TRAIN"):
 
         for k,x in tqdm(enumerate(X)):
             p_int = (points[k]*H/2).astype(int)
-            print(k, p_int)
+
             for i in range(2):
                 if p_int[i] > e:  p_int[i] = e
                 if p_int[i] < -e: p_int[i] = -e
