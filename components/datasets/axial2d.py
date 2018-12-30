@@ -5,8 +5,30 @@ import skimage.filters as filters
 import modules.dataset as dataset
 from modules.io import load_yaml
 import modules.vascular_data as sv
-
+from base.dataset import AbstractDataset
 EPS=1e-5
+
+class Axial2DDataset(AbstractDataset):
+    def configure(self,config, key):
+        self.config = config
+        self.key = key
+    def get(self, index):
+
+    def get_batch(self, batch_size=16):
+
+    def shape(self):
+
+    def _normalize(self):
+
+    def _max_normalize(self):
+
+    def _transform_to_edges(self):
+
+    def _center_data(self):
+
+    def _augment(self):
+
+    def _radius_balance(self):
 
 def read_T(id):
     meta_data = load_yaml(id)
@@ -56,14 +78,14 @@ def get_dataset(config, key="TRAIN"):
 
     meta = [d[3] for d in data]
 
-    X    = np.array([d[0] for d in data]) 
-    
+    X    = np.array([d[0] for d in data])
+
     cr   = int(X.shape[1]/2)
     cd   = int(config['CROP_DIMS']/2)
 
     Yc   = np.array([d[2] for d in data])
-    Yc   = Yc[:,cr-cd:cr+cd,cr-cd:cr+cd]  
-    
+    Yc   = Yc[:,cr-cd:cr+cd,cr-cd:cr+cd]
+
     points   = []
     contours = []
     for i,yc in tqdm(enumerate(Yc)):
@@ -90,8 +112,8 @@ def get_dataset(config, key="TRAIN"):
             print(meta[i])
 
     points   = np.array(points)
-    contours = np.array(contours) 
-    
+    contours = np.array(contours)
+
     if "CENTER_IMAGE" in config:
         print("Centering images")
         X_ = np.zeros((X.shape[0],config['CROP_DIMS'], config['CROP_DIMS']))
