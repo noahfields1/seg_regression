@@ -8,6 +8,8 @@ import modules.vascular_data as sv
 from base.dataset import AbstractDataset
 EPS=1e-5
 
+#TODO read raw data, set in dataset, then apply transforms
+
 class Axial2DDataset(AbstractDataset):
     def configure(self,config, key):
         self.config = config
