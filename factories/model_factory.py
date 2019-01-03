@@ -2,7 +2,7 @@ import components.models.rf as rf
 import components.models.nn as nn
 from modules import io
 
-def get_model(config):
+def get(config):
     if not "MODEL" in config:
         raise RuntimeError("MODEL key missing from config")
 

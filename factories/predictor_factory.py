@@ -1,7 +1,7 @@
 import components.common as common
 import components.edge as edge
 
-def get_predictor(config):
+def get(config):
     if not "PREDICTOR" in config:
         raise RuntimeError("PREDICTOR key missing in config")
 

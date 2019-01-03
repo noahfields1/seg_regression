@@ -1,6 +1,6 @@
 import components.common as common
 
-def get_trainer(config):
+def get(config):
     if not "TRAINER" in config:
         raise RuntimeError("TRAINER key missing in config")
 

@@ -1,4 +1,3 @@
-import components.datasets.axial2d as axial2d
 
 def get(config, key="TRAIN"):
     if not "DATASET" in config:

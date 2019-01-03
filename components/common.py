@@ -14,6 +14,7 @@ from modules.vessel_regression import pred_to_contour
 from base.train import AbstractTrainer
 from base.predict import AbstractPredictor
 from base.evaluation import AbstractEvaluation
+from base.wrapper import AbstractWrapper
 
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
@@ -122,7 +123,7 @@ class BasePredictor(AbstractPredictor):
             p = self.points[i]
             if "CENTER_IMAGE" in self.config:
                 p = np.array([0,0])
-                
+
             meta = self.meta[i]
             yhat = predictions[i]
 

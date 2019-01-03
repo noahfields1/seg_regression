@@ -1,6 +1,6 @@
 import components.common as common
 
-def get_evaluation(config):
+def get(config):
     if not "EVALUATION" in config:
         raise RuntimeError("EVALUATION key missing from config")
 
