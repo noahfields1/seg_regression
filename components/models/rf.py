@@ -13,26 +13,22 @@ class RFModel(AbstractModel):
         x - array [HxW] or [NxHxW]
         """
         S = x.shape
-        if len(S) == 2:
+        if len(S) == 1:
             return self._predict_single(x)
         else:
             return self._predict(x)
 
     def _predict_single(self, x):
         S  = x.shape
-        x_ = x.reshape([1,s[0]*s[1]])
+        x_ = x.reshape([1,s[0]])
         p  = self.rf.predict(x_)
         return p[0]
 
     def _predict(self, X):
-        S  = X.shape
-        X_ = X.reshape([-1,S[1]*S[2]])
-        return self.rf.predict(X_)
+        return self.rf.predict(X)
 
     def train(self, X, Y):
-        S  = X.shape
-        X_ = X.reshape([-1,S[1]*S[2]])
-        self.rf.fit(X_,Y)
+        self.rf.fit(X,Y)
 
     def save(self, path=None):
         if path == None:

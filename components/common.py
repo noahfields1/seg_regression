@@ -14,7 +14,26 @@ from modules.vessel_regression import pred_to_contour
 from base.train import AbstractTrainer
 from base.predict import AbstractPredictor
 from base.evaluation import AbstractEvaluation
-from base.wrapper import AbstractWrapper
+from base.preprocessor import AbstractPreProcessor
+
+EPS = 1e-5
+
+class BasePreProcessor(AbstractPreProcessor):
+    def __call__(x):
+        if not 'IMAGE_TYPE' in self.config:
+            mu  = 1.0*np.mean(x)
+            sig = 1.0*np.std(x)+EPS
+            x_   = (x-mu)/sig
+        else:
+            if self.config['IMAGE_TYPE'] == 'EDGE':
+                x_ = filters.sobel(x)
+                ma = np.amax(x_)
+                mi = np.amin(x_)
+                x_ = (x_-mi)/(ma-mi+EPS)
+
+        x_ = x_.reshape(self.config['INPUT_DIMS'])
+
+        return x_.copy()
 
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
@@ -45,7 +64,7 @@ def log_prediction(yhat,x,c,p,meta,path):
     write_json(new_meta, path+'/predictions/{}.json'.format(name))
 
     plt.figure()
-    plt.imshow(x,cmap='gray',extent=[-scale,scale,scale,-scale])
+    plt.imshow(x[:,:],cmap='gray',extent=[-scale,scale,scale,-scale])
     plt.colorbar()
     plt.scatter(cpred_pos[:,0], cpred_pos[:,1], color='r', label='predicted',s=4)
     plt.scatter(ctrue_pos[:,0], ctrue_pos[:,1], color='y', label='true', s=4)
@@ -75,6 +94,9 @@ class BaseTrainer(AbstractTrainer):
         self.meta   = data[3]
         self.data_key = data_key
 
+    def set_preprocessor(self,preprocessor):
+        self.preprocessor = self.preprocessor
+
     def setup(self):
         res_dir = self.config['RESULTS_DIR']
         name    = self.config['NAME']
@@ -89,8 +111,14 @@ class BaseTrainer(AbstractTrainer):
         self.test_image_dir = os.path.join(self.root,'test','images')
         self.test_pred_dir  = os.path.join(self.root,'test','predictions')
 
+        self.preprocessor = None
+
     def train(self):
-        self.model.train(self.X,self.C)
+        X = self.X
+        if not self.preprocessor = None:
+            X = np.array([self.preprocessor(x) for x in self.X])
+
+        self.model.train(X, self.C)
 
     def save(self):
         self.model.save()
@@ -107,9 +135,17 @@ class BasePredictor(AbstractPredictor):
         self.points = data[2]
         self.meta   = data[3]
         self.data_key = data_key
+        self.preprocessor = None
+
+    def set_preprocessor(self, preprocessor):
+        self.preprocessor = preprocessor
 
     def predict(self):
-        predictions = self.model.predict(self.X)
+        X = self.X
+        if not self.preprocessor == None:
+            X = np.array([self.preprocessor(x) for x in X])
+
+        predictions = self.model.predict(X)
 
         path = self.config['RESULTS_DIR']+'/'+self.config['NAME']
         if self.data_key == "VAL":
@@ -118,7 +154,7 @@ class BasePredictor(AbstractPredictor):
             path = path+'/test'
 
         for i in tqdm(range(predictions.shape[0])):
-            x = self.X[i]
+            x = X[i]
             c = self.C[i]
             p = self.points[i]
             if "CENTER_IMAGE" in self.config:

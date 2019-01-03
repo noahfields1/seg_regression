@@ -8,30 +8,6 @@ import modules.vascular_data as sv
 from base.dataset import AbstractDataset
 EPS=1e-5
 
-#TODO read raw data, set in dataset, then apply transforms
-
-class Axial2DDataset(AbstractDataset):
-    def configure(self,config, key):
-        self.config = config
-        self.key = key
-    def get(self, index):
-
-    def get_batch(self, batch_size=16):
-
-    def shape(self):
-
-    def _normalize(self):
-
-    def _max_normalize(self):
-
-    def _transform_to_edges(self):
-
-    def _center_data(self):
-
-    def _augment(self):
-
-    def _radius_balance(self):
-
 def read_T(id):
     meta_data = load_yaml(id)
     X         = np.load(meta_data['X'])
@@ -54,7 +30,7 @@ def radius_balance(X,c,p,meta, r_thresh, Nsample):
     m_ = [meta[i] for i in index]
 
     return X_,c_,p_,m_
-    
+
 def get_dataset(config, key="TRAIN"):
     """
     setup and return requested dataset
@@ -134,20 +110,6 @@ def get_dataset(config, key="TRAIN"):
         X = X_
     else:
         X    = X[:,cr-cd:cr+cd,cr-cd:cr+cd]
-
-    if not 'IMAGE_TYPE' in config:
-        #normalize X
-        print("normalizing data")
-        mu  = 1.0*np.mean(X,axis=(1,2), keepdims=True)
-        sig = 1.0*np.std(X,axis=(1,2), keepdims=True)+EPS
-        X   = (X-mu)/sig
-    else:
-        if config['IMAGE_TYPE'] == 'EDGE':
-            print("calculating edges")
-            X = np.array([filters.sobel(x) for x in X])
-            ma = np.amax(X, axis=(1,2), keepdims=True)
-            mi = np.amin(X, axis=(1,2), keepdims=True)
-            X = (X-mi)/(ma-mi+EPS)
 
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X,contours,points,meta = radius_balance(X,contours,points,meta,

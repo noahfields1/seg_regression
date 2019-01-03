@@ -7,7 +7,6 @@ def get_batch(X,Y, batch_size=16):
     ids = np.random.choice(X.shape[0], size=batch_size)
 
     x   = np.array([X[i] for i in ids])
-    x   = x[:,:,:,np.newaxis]
     y   = np.array([Y[i] for i in ids])
 
     return x,y
@@ -42,13 +41,13 @@ class Model(AbstractModel):
 
     def predict(self,x):
         S = list(x.shape)
-        if len(S) == 2:
-            x_ = x.reshape([1]+S+[1])
+        if len(S) == 3:
+            x_ = x.reshape([1]+S)
             return self._predict(x_)[0]
         else:
             out = []
             for i in range(S[0]):
-                x_ = x[i].reshape([1]+S[1:3]+[1])
+                x_ = x[i].reshape([1]+S[1:4])
                 y = self._predict(x_)[0].copy()
                 out.append(y)
             return np.array(out)
