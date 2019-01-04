@@ -143,7 +143,7 @@ class BasePredictor(AbstractPredictor):
         self.preprocessor = preprocessor
 
     def predict(self):
-        X = self.X
+        X = self.X.copy()
         if not self.preprocessor == None:
             X = np.array([self.preprocessor(x) for x in X])
 
@@ -156,7 +156,7 @@ class BasePredictor(AbstractPredictor):
             path = path+'/test'
 
         for i in tqdm(range(predictions.shape[0])):
-            x = X[i]
+            x = self.X[i]
             c = self.C[i]
             p = self.points[i]
             if "CENTER_IMAGE" in self.config:
