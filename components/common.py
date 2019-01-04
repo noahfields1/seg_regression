@@ -39,16 +39,15 @@ class BasePreProcessor(AbstractPreProcessor):
 class BasePostProcessor(object):
     def setup(self):
         self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
-
+        self.p = np.array([0,0])
     def set_inputs(T):
-        pass
+        self.p = T[1]
 
     def __call__(y):
         c = pred_to_contour(y)
-        return c*scale
+        return (c+self.p)*scale
 
 def log_prediction(yhat,x,c,p,meta,path):
-    cpred = pred_to_contour(yhat)
     ctrue = pred_to_contour(c)
     scale  = meta['dimensions']*meta['spacing']/2
 
@@ -56,16 +55,13 @@ def log_prediction(yhat,x,c,p,meta,path):
     for k in meta: new_meta[k] = meta[k]
 
     new_meta['center']   = p.tolist()
-    new_meta['yhat_raw'] = yhat.tolist()
     new_meta['c_raw']    = c.tolist()
 
-    new_meta['yhat_centered_unscaled'] = cpred.tolist()
     new_meta['c_centered_unscaled']    = ctrue.tolist()
 
-    cpred_pos = (cpred+p)*scale
     ctrue_pos = (ctrue+p)*scale
 
-    new_meta['yhat_pos'] = cpred_pos.tolist()
+    new_meta['yhat_pos'] = yhat.tolist()
     new_meta['c_pos']    = ctrue_pos.tolist()
 
     new_meta['radius_pixels'] = meta['radius']
@@ -179,6 +175,9 @@ class BasePredictor(AbstractPredictor):
 
             meta = self.meta[i]
             yhat = predictions[i]
+
+            self.postprocessor.set_inputs((x,p,meta))
+            yhat = self.postprocessor(yhat)
 
             log_prediction(yhat,x,c,p,meta,path)
 
