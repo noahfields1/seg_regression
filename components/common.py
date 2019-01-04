@@ -15,6 +15,7 @@ from base.train import AbstractTrainer
 from base.predict import AbstractPredictor
 from base.evaluation import AbstractEvaluation
 from base.preprocessor import AbstractPreProcessor
+from base.postprocessor import AbstractPostProcessor
 
 EPS = 1e-5
 
@@ -34,6 +35,17 @@ class BasePreProcessor(AbstractPreProcessor):
         x_ = x_.reshape(self.config['INPUT_DIMS'])
 
         return x_.copy()
+
+class BasePostProcessor(object):
+    def setup(self):
+        self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
+
+    def set_inputs(T):
+        pass
+
+    def __call__(y):
+        c = pred_to_contour(y)
+        return c*scale
 
 def log_prediction(yhat,x,c,p,meta,path):
     cpred = pred_to_contour(yhat)
@@ -139,6 +151,9 @@ class BasePredictor(AbstractPredictor):
 
     def set_preprocessor(self, preprocessor):
         self.preprocessor = preprocessor
+
+    def set_postprocessor(self,postprocessor):
+        self.postprocessor = postprocessor
 
     def predict(self):
         X = self.X
