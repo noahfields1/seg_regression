@@ -19,7 +19,7 @@ from base.preprocessor import AbstractPreProcessor
 EPS = 1e-5
 
 class BasePreProcessor(AbstractPreProcessor):
-    def __call__(x):
+    def __call__(self, x):
         if not 'IMAGE_TYPE' in self.config:
             mu  = 1.0*np.mean(x)
             sig = 1.0*np.std(x)+EPS
@@ -95,7 +95,7 @@ class BaseTrainer(AbstractTrainer):
         self.data_key = data_key
 
     def set_preprocessor(self,preprocessor):
-        self.preprocessor = self.preprocessor
+        self.preprocessor = preprocessor
 
     def setup(self):
         res_dir = self.config['RESULTS_DIR']
@@ -115,9 +115,11 @@ class BaseTrainer(AbstractTrainer):
 
     def train(self):
         X = self.X
-        if not self.preprocessor = None:
+        print(X.shape)
+        if not self.preprocessor == None:
             X = np.array([self.preprocessor(x) for x in self.X])
 
+        print(X.shape)
         self.model.train(X, self.C)
 
     def save(self):
