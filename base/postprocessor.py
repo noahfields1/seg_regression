@@ -6,8 +6,8 @@ class AbstractPostProcessor(object):
     def setup(self):
         pass
 
-    def set_inputs(T):
+    def set_inputs(self, T):
         pass
 
-    def __call__(x):
+    def __call__(self, x):
         pass

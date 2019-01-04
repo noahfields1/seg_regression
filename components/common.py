@@ -36,16 +36,16 @@ class BasePreProcessor(AbstractPreProcessor):
 
         return x_.copy()
 
-class BasePostProcessor(object):
+class BasePostProcessor(AbstractPostProcessor):
     def setup(self):
         self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
         self.p = np.array([0,0])
-    def set_inputs(T):
+    def set_inputs(self,T):
         self.p = T[1]
 
-    def __call__(y):
+    def __call__(self,y):
         c = pred_to_contour(y)
-        return (c+self.p)*scale
+        return (c+self.p)*self.scale
 
 def log_prediction(yhat,x,c,meta,path):
     ctrue = pred_to_contour(c)
@@ -73,7 +73,7 @@ def log_prediction(yhat,x,c,meta,path):
     plt.figure()
     plt.imshow(x[:,:],cmap='gray',extent=[-scale,scale,scale,-scale])
     plt.colorbar()
-    plt.scatter(cpred_pos[:,0], cpred_pos[:,1], color='r', label='predicted',s=4)
+    plt.scatter(yhat[:,0], yhat[:,1], color='r', label='predicted',s=4)
     plt.scatter(ctrue_pos[:,0], ctrue_pos[:,1], color='y', label='true', s=4)
     plt.legend()
     plt.savefig(path+'/images/{}.png'.format(name),dpi=200)
