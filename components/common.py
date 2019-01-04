@@ -47,19 +47,18 @@ class BasePostProcessor(object):
         c = pred_to_contour(y)
         return (c+self.p)*scale
 
-def log_prediction(yhat,x,c,p,meta,path):
+def log_prediction(yhat,x,c,meta,path):
     ctrue = pred_to_contour(c)
     scale  = meta['dimensions']*meta['spacing']/2
 
     new_meta = {}
     for k in meta: new_meta[k] = meta[k]
 
-    new_meta['center']   = p.tolist()
     new_meta['c_raw']    = c.tolist()
 
     new_meta['c_centered_unscaled']    = ctrue.tolist()
 
-    ctrue_pos = (ctrue+p)*scale
+    ctrue_pos = ctrue*scale
 
     new_meta['yhat_pos'] = yhat.tolist()
     new_meta['c_pos']    = ctrue_pos.tolist()
@@ -98,8 +97,7 @@ class BaseTrainer(AbstractTrainer):
         """
         self.X      = data[0]
         self.C      = data[1]
-        self.points = data[2]
-        self.meta   = data[3]
+        self.meta   = data[2]
         self.data_key = data_key
 
     def set_preprocessor(self,preprocessor):
@@ -142,7 +140,6 @@ class BasePredictor(AbstractPredictor):
         """
         self.X      = data[0]
         self.C      = data[1]
-        self.points = data[2]
         self.meta   = data[3]
         self.data_key = data_key
         self.preprocessor = None
@@ -169,9 +166,6 @@ class BasePredictor(AbstractPredictor):
         for i in tqdm(range(predictions.shape[0])):
             x = self.X[i]
             c = self.C[i]
-            p = self.points[i]
-            if "CENTER_IMAGE" in self.config:
-                p = np.array([0,0])
 
             meta = self.meta[i]
             yhat = predictions[i]
@@ -179,7 +173,7 @@ class BasePredictor(AbstractPredictor):
             self.postprocessor.set_inputs((x,p,meta))
             yhat = self.postprocessor(yhat)
 
-            log_prediction(yhat,x,c,p,meta,path)
+            log_prediction(yhat,x,c,meta,path)
 
     def load(self):
         self.model.load()

@@ -63,7 +63,6 @@ def get_dataset(config, key="TRAIN"):
     cd   = int(config['CROP_DIMS']/2)
 
     Yc   = np.array([d[2] for d in data])
-    Yc   = Yc[:,cr-cd:cr+cd,cr-cd:cr+cd]
 
     points   = []
     contours = []
@@ -72,8 +71,7 @@ def get_dataset(config, key="TRAIN"):
             c = sv.marchingSquares(yc, iso=0.5)
             c = sv.reorder_contour(c)
 
-            H = yc.shape[1]
-            c = (1.0*c-H/2)/(H/2)
+            c = (1.0*c-cd)/(cd)
             p = np.mean(c,axis=0)
             c_centered = c-p
 
@@ -93,27 +91,35 @@ def get_dataset(config, key="TRAIN"):
     points   = np.array(points)
     contours = np.array(contours)
 
-    if "CENTER_IMAGE" in config:
-        print("Centering images")
-        X_ = np.zeros((X.shape[0],config['CROP_DIMS'], config['CROP_DIMS']))
-        e  = int((config['DIMS']-config['CROP_DIMS'])/2)
-
-        for k,x in tqdm(enumerate(X)):
-            p_int = (points[k]*H/2).astype(int)
-
-            for i in range(2):
-                if p_int[i] > e:  p_int[i] = e
-                if p_int[i] < -e: p_int[i] = -e
-
-            X_[k] = x[cr+p_int[1]-cd:cr+p_int[1]+cd,cr+p_int[1]-cd:cr+p_int[1]+cd]
-
-        X = X_
-    else:
-        X    = X[:,cr-cd:cr+cd,cr-cd:cr+cd]
-
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X,contours,points,meta = radius_balance(X,contours,points,meta,
-            config['R_SMALL'], config['N_SAMPLE'])
+        config['R_SMALL'], config['N_SAMPLE'])
 
+    print("Centering images")
+    X_ = np.zeros((X.shape[0],config['CENTER_DIMS'], config['CENTER_DIMS']))
+    e  = int((config['DIMS']-config['CENTER_DIMS'])/2)
 
-    return X,contours,points,meta
+    cr_ = int(config['DIMS'])/2
+    cd_ = int(config['CENTER_DIMS']/2)
+
+    for k,x in tqdm(enumerate(X)):
+        p_int = (points[k]*cd).astype(int) #cd because used earlier
+
+        for i in range(2):
+            if p_int[i] > e:  p_int[i] = e
+            if p_int[i] < -e: p_int[i] = -e
+
+        X_[k] = x[cr_+p_int[1]-cd_:cr_+p_int[1]+cd_,cr_+p_int[0]-cd_:cr_+p_int[0]+cd_]
+
+        meta['original_center'] = p_int.tolist()
+
+    X = X_
+
+    if "AUGMENT" in config:
+        #do augment stuff
+        pass
+
+    #finally crop image
+    X    = X[:,cr-cd:cr+cd,cr-cd:cr+cd]
+
+    return X,contours,meta
