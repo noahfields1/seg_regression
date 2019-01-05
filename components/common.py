@@ -40,12 +40,10 @@ class BasePostProcessor(AbstractPostProcessor):
     def setup(self):
         self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
         self.p = np.array([0,0])
-    def set_inputs(self,T):
-        self.p = T[1]
 
     def __call__(self,y):
         c = pred_to_contour(y)
-        return (c+self.p)*self.scale
+        return c*self.scale
 
 def log_prediction(yhat,x,c,meta,path):
     ctrue = pred_to_contour(c)
@@ -140,7 +138,7 @@ class BasePredictor(AbstractPredictor):
         """
         self.X      = data[0]
         self.C      = data[1]
-        self.meta   = data[3]
+        self.meta   = data[2]
         self.data_key = data_key
         self.preprocessor = None
 
@@ -170,7 +168,7 @@ class BasePredictor(AbstractPredictor):
             meta = self.meta[i]
             yhat = predictions[i]
 
-            self.postprocessor.set_inputs((x,p,meta))
+            self.postprocessor.set_inputs((x,meta))
             yhat = self.postprocessor(yhat)
 
             log_prediction(yhat,x,c,meta,path)

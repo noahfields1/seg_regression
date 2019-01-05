@@ -71,7 +71,7 @@ def get_dataset(config, key="TRAIN"):
             c = sv.marchingSquares(yc, iso=0.5)
             c = sv.reorder_contour(c)
 
-            c = (1.0*c-cd)/(cd)
+            c = (1.0*c-cr)/(cd)
             p = np.mean(c,axis=0)
             c_centered = c-p
 
@@ -99,7 +99,7 @@ def get_dataset(config, key="TRAIN"):
     X_ = np.zeros((X.shape[0],config['CENTER_DIMS'], config['CENTER_DIMS']))
     e  = int((config['DIMS']-config['CENTER_DIMS'])/2)
 
-    cr_ = int(config['DIMS'])/2
+    cr_ = int(config['DIMS']/2)
     cd_ = int(config['CENTER_DIMS']/2)
 
     for k,x in tqdm(enumerate(X)):
@@ -111,7 +111,7 @@ def get_dataset(config, key="TRAIN"):
 
         X_[k] = x[cr_+p_int[1]-cd_:cr_+p_int[1]+cd_,cr_+p_int[0]-cd_:cr_+p_int[0]+cd_]
 
-        meta['original_center'] = p_int.tolist()
+        meta[k]['original_center'] = p_int.tolist()
 
     X = X_
 
@@ -120,6 +120,6 @@ def get_dataset(config, key="TRAIN"):
         pass
 
     #finally crop image
-    X    = X[:,cr-cd:cr+cd,cr-cd:cr+cd]
+    X    = X[:,cd_-cd:cd_+cd,cd_-cd:cd_+cd]
 
     return X,contours,meta
