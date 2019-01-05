@@ -31,6 +31,23 @@ def radius_balance(X,c,p,meta, r_thresh, Nsample):
 
     return X_,c_,p_,m_
 
+def distance_contour(yc,cd, nc):
+    c = sv.marchingSquares(yc, iso=0.5)
+    c = sv.reorder_contour(c)
+
+    c = (1.0*c-cd)/(cd)
+    p = np.mean(c,axis=0)
+    c_centered = c-p
+
+    c_centered = c_centered[:,:2]
+    p = p[:2]
+
+    c_reorient = sv.interpContour(c_centered, num_pts=nc)
+
+    c_dist = np.sqrt(np.sqrt(np.sum(c_reorient**2,axis=1)))
+
+    return c_dist, p
+
 def get_dataset(config, key="TRAIN"):
     """
     setup and return requested dataset
@@ -68,21 +85,7 @@ def get_dataset(config, key="TRAIN"):
     contours = []
     for i,yc in tqdm(enumerate(Yc)):
         try:
-            c = sv.marchingSquares(yc, iso=0.5)
-            c = sv.reorder_contour(c)
-
-            c = (1.0*c-cd)/(cd)
-            p = np.mean(c,axis=0)
-            c_centered = c-p
-
-            c_centered = c_centered[:,:2]
-            p = p[:2]
-
-            c_reorient = sv.interpContour(c_centered,
-                num_pts=config['NUM_CONTOUR_POINTS'])
-
-            c_dist = np.sqrt(np.sqrt(np.sum(c_reorient**2,axis=1)))
-
+            c_dist,p = distance_contour(yc,cd, config['NUM_CONTOUR_POINTS'])
             points.append(p)
             contours.append(c_dist)
         except:
@@ -110,13 +113,23 @@ def get_dataset(config, key="TRAIN"):
             if p_int[i] < -e: p_int[i] = -e
 
         X_[k] = x[cr_+p_int[1]-cd_:cr_+p_int[1]+cd_,cr_+p_int[0]-cd_:cr_+p_int[0]+cd_]
-
+        Yc[k] = Yc[k, cr_+p_int[1]-cd_:cr_+p_int[1]+cd_,cr_+p_int[0]-cd_:cr_+p_int[0]+cd_]
         meta['original_center'] = p_int.tolist()
 
     X = X_
 
     if "AUGMENT" in config:
-        #do augment stuff
+        aug_x = []
+        aug_c = []
+        aug_m = []
+        for k in config['AUGMENT_FACTOR']:
+            for i in range(X.shape[0]):
+                x = X[i]
+
+                rpix = meta[i]['radius']
+                lim  = int(np.sqrt(config['AUGMENT_R_SCALE']*rpix))
+                x_shift = np.random.randint(-lim,lim)
+                y_shift = np.random.randint(-lim,lim)
         pass
 
     #finally crop image
