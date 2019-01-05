@@ -7,17 +7,27 @@ import scipy
 from scipy.interpolate import UnivariateSpline
 from vtk import vtkImageExport
 from vtk.util import numpy_support
+from scipy.ndimage import rotate
+
 import os
+
+def random_rotate(image_pair):
+    angle = np.random.randint(360)
+    return_images = []
+    for i,im in enumerate(image_pair):
+        return_images.append(rotate(im,angle,axes=(1,0),reshape=False))
+
+    return tuple(return_images)
 
 def qc_deviation(c):
     p = np.mean(c,axis=0)
-    
+
     c_cent = c-p
     b = np.sqrt(np.sum(c_cent**2,axis=1))
     r = np.mean(b)
 
     v = np.sqrt(np.mean((b-r)**2))/(r+1e-3)
-    
+
     return v
 
 def mkdir(fn):

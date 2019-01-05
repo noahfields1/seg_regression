@@ -15,7 +15,7 @@ def read_T(id):
     Yc        = np.load(meta_data['Yc'])
     return (X,Y,Yc,meta_data)
 
-def radius_balance(X,c,p,meta, r_thresh, Nsample):
+def radius_balance(X,Y,meta, r_thresh, Nsample):
     N = X.shape[0]
     radiuses = [m['radius']*m['spacing'] for m in meta]
 
@@ -25,11 +25,10 @@ def radius_balance(X,c,p,meta, r_thresh, Nsample):
     index    = random.choices(i_sm,k=Nsample)+random.choices(i_lg,k=Nsample)
 
     X_ = np.array([X[i] for i in index])
-    c_ = np.array([c[i] for i in index])
-    p_ = np.array([p[i] for i in index])
+    Y_ = np.array([Y[i] for i in index])
     m_ = [meta[i] for i in index]
 
-    return X_,c_,p_,m_
+    return X_,Y_,m_
 
 def distance_contour(yc,cd, nc):
     c = sv.marchingSquares(yc, iso=0.5)
@@ -77,62 +76,56 @@ def get_dataset(config, key="TRAIN"):
     X    = np.array([d[0] for d in data])
 
     cr   = int(X.shape[1]/2)
+    cc   = int(config['CENTER_DIMS']/2)
     cd   = int(config['CROP_DIMS']/2)
 
     Yc   = np.array([d[2] for d in data])
 
-    points   = []
-    contours = []
+    X_center = []
+    Y_center = []
+
+    print("centering images")
     for i,yc in tqdm(enumerate(Yc)):
         try:
-            c_dist,p = distance_contour(yc,cd, config['NUM_CONTOUR_POINTS'])
-            points.append(p)
-            contours.append(c_dist)
+            contour = sv.marchingSquares(yc, iso=0.5)
+            contour = sv.reorder_contour(contour)
+
+            cx = np.mean(contour[:,0])
+            cy = np.mean(contour[:,1])
+
+            X_center.append( X[i,cy-cc:cy+cc, cx-cc:cx+cc] )
+            Y_center.append( Yc[i,cy-cc:cy+cc, cx-cc:cx+cc] )
         except:
             print(meta[i])
 
-    points   = np.array(points)
-    contours = np.array(contours)
-
     if config['BALANCE_RADIUS'] and key=='TRAIN':
-        X,contours,points,meta = radius_balance(X,contours,points,meta,
+        X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
-
-    print("Centering images")
-    X_ = np.zeros((X.shape[0],config['CENTER_DIMS'], config['CENTER_DIMS']))
-    e  = int((config['DIMS']-config['CENTER_DIMS'])/2)
-
-    cr_ = int(config['DIMS']/2)
-    cd_ = int(config['CENTER_DIMS']/2)
-
-    for k,x in tqdm(enumerate(X)):
-        p_int = (points[k]*cd).astype(int) #cd because used earlier
-
-        for i in range(2):
-            if p_int[i] > e:  p_int[i] = e
-            if p_int[i] < -e: p_int[i] = -e
-
-        X_[k] = x[cr_+p_int[1]-cd_:cr_+p_int[1]+cd_,cr_+p_int[0]-cd_:cr_+p_int[0]+cd_]
-        Yc[k] = Yc[k, cr_+p_int[1]-cd_:cr_+p_int[1]+cd_,cr_+p_int[0]-cd_:cr_+p_int[0]+cd_]
-        meta['original_center'] = p_int.tolist()
-
-    X = X_
 
     if "AUGMENT" in config:
         aug_x = []
-        aug_c = []
+        aug_y = []
         aug_m = []
         for k in config['AUGMENT_FACTOR']:
             for i in range(X.shape[0]):
-                x = X[i]
+                x = X_center[i]
+                y = Y_center[i]
 
+                x,y = sv.random_rotate((x,y))
+                
                 rpix = meta[i]['radius']
                 lim  = int(np.sqrt(config['AUGMENT_R_SCALE']*rpix))
                 x_shift = np.random.randint(-lim,lim)
                 y_shift = np.random.randint(-lim,lim)
-        pass
 
-    #finally crop image
-    X    = X[:,cd_-cd:cd_+cd,cd_-cd:cd_+cd]
+                aug_x.append( x[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
+                aug_x.append( y[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
+                aug_x.append( meta[i] )
+        X = np.array(aug_x)
+        Y = np.array(aug_y)
+        meta = aug_m
+    else:
+        X = np.array(X_center)[:,cc-cd:cc+cd,cc-cd:cc+cd]
+        Y = np.array(Y_center)[:,cc-cd:cc+cd,cc-cd:cc+cd]
 
-    return X,contours,meta
+    return X,Y,meta
