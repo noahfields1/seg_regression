@@ -86,21 +86,25 @@ def get_dataset(config, key="TRAIN"):
     Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
 
     print("centering images")
-    for i,yc in tqdm(enumerate(Yc)):     
-        contour = sv.marchingSquares(yc, iso=0.5)
-        contour = sv.reorder_contour(contour)
+    for i,yc in tqdm(enumerate(Yc)):   
+        if key == 'TRAIN':
+            contour = sv.marchingSquares(yc, iso=0.5)
+            contour = sv.reorder_contour(contour)
 
-        cx = int(np.mean(contour[:,0]))
-        cy = int(np.mean(contour[:,1]))
-        if cx > cc+2*(cr-cc): cx = int(cc+2*(cr-cc))
-        if cx < cc: cx=cc
+            cx = int(np.mean(contour[:,0]))
+            cy = int(np.mean(contour[:,1]))
+            if cx > cc+2*(cr-cc): cx = int(cc+2*(cr-cc))
+            if cx < cc: cx=cc
+
+            if cy > cc+2*(cr-cc): cy = int(cc+2*(cr-cc))
+            if cy < cc: cy=cc
+
+            X_center[i] = X[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
+            Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy() 
+        else:
+            X_center[i] = X[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
+            Y_center[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy() 
             
-        if cy > cc+2*(cr-cc): cy = int(cc+2*(cr-cc))
-        if cy < cc: cy=cc
-        
-        X_center[i] = X[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
-        Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy() 
-     
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
