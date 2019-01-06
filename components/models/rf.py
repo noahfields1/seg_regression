@@ -6,7 +6,7 @@ from base.model import AbstractModel
 class RFModel(AbstractModel):
     def setup(self):
         n_estimators = self.config['N_ESTIMATORS']
-        self.rf      = RandomForestRegressor(n_estimators=n_estimators)
+        self.rf      = RandomForestRegressor(n_estimators=n_estimators, n_jobs=-1, max_features=self.config['MAX_FEATURES'])
         self.name = self.config['NAME']
     def predict(self, x):
         """

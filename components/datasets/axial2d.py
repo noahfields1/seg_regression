@@ -24,8 +24,8 @@ def radius_balance(X,Y,meta, r_thresh, Nsample):
 
     index    = random.choices(i_sm,k=Nsample)+random.choices(i_lg,k=Nsample)
 
-    X_ = np.array([X[i] for i in index])
-    Y_ = np.array([Y[i] for i in index])
+    X_ = [X[i] for i in index]
+    Y_ = [Y[i] for i in index]
     m_ = [meta[i] for i in index]
 
     return X_,Y_,m_
@@ -36,7 +36,7 @@ def distance_contour(yc,cd, nc):
 
     c = (1.0*c-cd)/(cd)
     p = np.mean(c,axis=0)
-    c_centered = c-p
+    c_centered = c
 
     c_centered = c_centered[:,:2]
     p = p[:2]
@@ -75,57 +75,78 @@ def get_dataset(config, key="TRAIN"):
 
     X    = np.array([d[0] for d in data])
 
+    N    = X.shape[0]
     cr   = int(X.shape[1]/2)
     cc   = int(config['CENTER_DIMS']/2)
     cd   = int(config['CROP_DIMS']/2)
 
     Yc   = np.array([d[2] for d in data])
 
-    X_center = []
-    Y_center = []
+    X_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
+    Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
 
     print("centering images")
-    for i,yc in tqdm(enumerate(Yc)):
-        try:
-            contour = sv.marchingSquares(yc, iso=0.5)
-            contour = sv.reorder_contour(contour)
+    for i,yc in tqdm(enumerate(Yc)):     
+        contour = sv.marchingSquares(yc, iso=0.5)
+        contour = sv.reorder_contour(contour)
 
-            cx = np.mean(contour[:,0])
-            cy = np.mean(contour[:,1])
-
-            X_center.append( X[i,cy-cc:cy+cc, cx-cc:cx+cc] )
-            Y_center.append( Yc[i,cy-cc:cy+cc, cx-cc:cx+cc] )
-        except:
-            print(meta[i])
-
+        cx = int(np.mean(contour[:,0]))
+        cy = int(np.mean(contour[:,1]))
+        if cx > cc+2*(cr-cc): cx = int(cc+2*(cr-cc))
+        if cx < cc: cx=cc
+            
+        if cy > cc+2*(cr-cc): cy = int(cc+2*(cr-cc))
+        if cy < cc: cy=cc
+        
+        X_center[i] = X[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
+        Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy() 
+     
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
 
-    if "AUGMENT" in config:
+    if "AUGMENT" in config and key=='TRAIN':
         aug_x = []
         aug_y = []
         aug_m = []
-        for k in config['AUGMENT_FACTOR']:
-            for i in range(X.shape[0]):
+        for k in range(config['AUGMENT_FACTOR']):
+            for i in tqdm(range(len(X_center))):
                 x = X_center[i]
                 y = Y_center[i]
 
                 x,y = sv.random_rotate((x,y))
-                
+
                 rpix = meta[i]['radius']
-                lim  = int(np.sqrt(config['AUGMENT_R_SCALE']*rpix))
+                lim  = int(np.sqrt(config['AUGMENT_R_SCALE']*rpix))+1
                 x_shift = np.random.randint(-lim,lim)
                 y_shift = np.random.randint(-lim,lim)
 
                 aug_x.append( x[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
-                aug_x.append( y[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
-                aug_x.append( meta[i] )
-        X = np.array(aug_x)
-        Y = np.array(aug_y)
+                aug_y.append( y[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
+                aug_m.append( meta[i] )
+
+        X_ = np.array(aug_x)
+        Y_ = np.array(aug_y)
         meta = aug_m
     else:
-        X = np.array(X_center)[:,cc-cd:cc+cd,cc-cd:cc+cd]
-        Y = np.array(Y_center)[:,cc-cd:cc+cd,cc-cd:cc+cd]
+        X_ = np.array(X_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
+        Y_ = np.array(Y_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
 
-    return X,Y,meta
+        
+    #get contours
+    contours = []
+    x_final  = []
+    m_final  = []
+    for i in tqdm(range(X_.shape[0])):
+        try:
+            c,p = distance_contour(Y_[i],cd,config['NUM_CONTOUR_POINTS'])
+            contours.append(c)
+            x_final.append(X_[i])
+            m_final.append(meta[i])
+        except:
+            print("failed")
+    contours = np.array(contours)
+    X_ = np.array(x_final)
+    meta = m_final
+    
+    return X_,contours,meta
