@@ -5,6 +5,8 @@ import skimage.filters as filters
 import modules.dataset as dataset
 from modules.io import load_yaml
 import modules.vascular_data as sv
+import modules.vessel_regression as vessel_regression
+
 from base.dataset import AbstractDataset
 EPS=1e-5
 
@@ -29,6 +31,12 @@ def radius_balance(X,Y,meta, r_thresh, Nsample):
     m_ = [meta[i] for i in index]
 
     return X_,Y_,m_
+
+def outlier(y):
+    c = vessel_regression.pred_to_contour(y)
+    if np.amax(np.abs(c)) > 1:
+        return True
+    return False
 
 def distance_contour(yc,cd, nc):
     c = sv.marchingSquares(yc, iso=0.5)
@@ -86,8 +94,8 @@ def get_dataset(config, key="TRAIN"):
     Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
 
     print("centering images")
-    for i,yc in tqdm(enumerate(Yc)):   
-        if key == 'TRAIN':
+    for i,yc in tqdm(enumerate(Yc)):
+        if key == 'TRAIN' and config['CENTER']:
             contour = sv.marchingSquares(yc, iso=0.5)
             contour = sv.reorder_contour(contour)
 
@@ -100,11 +108,11 @@ def get_dataset(config, key="TRAIN"):
             if cy < cc: cy=cc
 
             X_center[i] = X[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
-            Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy() 
+            Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
         else:
             X_center[i] = X[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
-            Y_center[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy() 
-            
+            Y_center[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
+
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
@@ -136,7 +144,7 @@ def get_dataset(config, key="TRAIN"):
         X_ = np.array(X_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
         Y_ = np.array(Y_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
 
-        
+
     #get contours
     contours = []
     x_final  = []
@@ -144,6 +152,10 @@ def get_dataset(config, key="TRAIN"):
     for i in tqdm(range(X_.shape[0])):
         try:
             c,p = distance_contour(Y_[i],cd,config['NUM_CONTOUR_POINTS'])
+            if outlier(c):
+                print("outlier")
+                continue
+                
             contours.append(c)
             x_final.append(X_[i])
             m_final.append(meta[i])
@@ -152,5 +164,5 @@ def get_dataset(config, key="TRAIN"):
     contours = np.array(contours)
     X_ = np.array(x_final)
     meta = m_final
-    
+
     return X_,contours,meta
