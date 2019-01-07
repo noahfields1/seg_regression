@@ -10,6 +10,7 @@ from medpy.metric.binary import hd, assd, dc
 import modules.vascular_data as sv
 from modules.io import mkdir, write_json, load_json
 from modules.vessel_regression import pred_to_contour
+import modules.vessel_regression as vessel_regression
 
 from base.train import AbstractTrainer
 from base.predict import AbstractPredictor
@@ -39,11 +40,33 @@ class BasePreProcessor(AbstractPreProcessor):
 class BasePostProcessor(AbstractPostProcessor):
     def setup(self):
         self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
-        self.p = np.array([0,0])
 
     def __call__(self,y):
         c = pred_to_contour(y)
         return c*self.scale
+
+class EdgePostProcessor(AbstractPostProcessor):
+    def setup(self):
+        self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
+
+    def set_inputs(T):
+        x = T[0]
+        I = filters.gaussian(x)
+        E = filters.sobel(I)
+
+        self.interp = vessel_regression.Interpolant(E,
+            np.array([-self.scale, -self.scale]), self.config['SPACING'])
+
+    def __call__(self,y):
+        cpred  = pred_to_contour(y)*self.scale
+        R      = np.mean(np.sqrt(np.sum(cpred**2,axis=1)))
+        Nsteps = self.config['N_STEPS']
+        alpha  = self.config['EDGE_RADIUS_RATIO']
+        angles = np.arctan2(cpred[:,1],cpred[:,0])
+
+        z = vessel_regression.edge_fit(self.interp, cpred, angles, alpha, R, Nsteps)
+
+        return z
 
 def log_prediction(yhat,x,c,meta,path):
     ctrue = pred_to_contour(c)

@@ -15,6 +15,6 @@ def get(config):
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']
         y = io.load_yaml(c)
-        return get_model(y)
+        return get(y)
     else:
         raise RuntimeError("Unrecognized model type {}".format(mod))
