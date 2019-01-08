@@ -6,4 +6,4 @@ def get(config, key="TRAIN"):
 
         if pp == "EDGE":
             return common.EdgePostProcessor(config)
-    return BasePostProcessor(config)
+    return common.BasePostProcessor(config)

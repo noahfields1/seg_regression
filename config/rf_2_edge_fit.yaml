@@ -3,7 +3,7 @@ FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
 NAME:       "rf2d_2_edge_fit"
 TRAINER:    "base"
-PREDICTOR:  "edge_fit"
+PREDICTOR:  "base"
 EVALUATION: "base"
 MODEL:      "edge_fit"
 DATASET:    "axial2d"
@@ -12,19 +12,27 @@ MODEL_YAML: "rf_2.yaml"
 
 RESULTS_DIR: "./results"
 
-EDGE_RADIUS_RATIO: 0.3
+POST_PROCESSOR: "EDGE"
+EDGE_RADIUS_RATIO: 0.025
 N_STEPS: 10
 INTERVAL: 5
+
 SPACING: 0.029
 DIMS: 240
+CENTER_DIMS: 200
 CROP_DIMS: 160
+INPUT_DIMS:
+  - 25600
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
+CENTER: false
 
 N_ESTIMATORS: 10
+MAX_FEATURES: 25600
+
 BALANCE_RADIUS: true
 R_SMALL: 0.75
-N_SAMPLE: 5000
+N_SAMPLE: 10000
 
 VAL_PATTERNS:
   - OSMSC0110_CLEAN

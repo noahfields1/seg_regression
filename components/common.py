@@ -6,6 +6,7 @@ from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 import pandas as pd
 from medpy.metric.binary import hd, assd, dc
+import skimage.filters as filters
 
 import modules.vascular_data as sv
 from modules.io import mkdir, write_json, load_json
@@ -49,7 +50,7 @@ class EdgePostProcessor(AbstractPostProcessor):
     def setup(self):
         self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
 
-    def set_inputs(T):
+    def set_inputs(self, T):
         x = T[0]
         I = filters.gaussian(x)
         E = filters.sobel(I)

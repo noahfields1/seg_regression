@@ -113,6 +113,9 @@ def get_dataset(config, key="TRAIN"):
             X_center[i] = X[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
             Y_center[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
 
+    X  = None
+    Yc = None
+            
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
