@@ -18,8 +18,12 @@ from base.predict import AbstractPredictor
 from base.evaluation import AbstractEvaluation
 from base.preprocessor import AbstractPreProcessor
 from base.postprocessor import AbstractPostProcessor
-
 EPS = 1e-5
+
+def outlier(c):
+    if np.amax(np.abs(c)) > 1:
+        return True
+    return False
 
 class BasePreProcessor(AbstractPreProcessor):
     def __call__(self, x):
@@ -33,6 +37,14 @@ class BasePreProcessor(AbstractPreProcessor):
                 ma = np.amax(x_)
                 mi = np.amin(x_)
                 x_ = (x_-mi)/(ma-mi+EPS)
+
+            if self.config['IMAGE_TYPE'] == 'CLIP':
+                mu  = 1.0*np.mean(x)
+                sig = 1.0*np.std(x)+EPS
+                x_   = (x-mu)/sig
+                c = self.config['CLIP_VAL']
+                x_[x_>c] = c
+                x_[x_<-c] = -c
 
         x_ = x_.reshape(self.config['INPUT_DIMS'])
 
@@ -92,8 +104,15 @@ def log_prediction(yhat,x,c,meta,path):
 
     write_json(new_meta, path+'/predictions/{}.json'.format(name))
 
+    S = x.shape
+    if len(S) == 1:
+        w = int(S[0]**0.5)
+        x_ = x.reshape((w,w))
+    else:
+        x_ = x[:,:,0]
+
     plt.figure()
-    plt.imshow(x[:,:],cmap='gray',extent=[-scale,scale,scale,-scale])
+    plt.imshow(x_,cmap='gray',extent=[-scale,scale,scale,-scale])
     plt.colorbar()
     plt.scatter(yhat[:,0], yhat[:,1], color='r', label='predicted',s=4)
     plt.scatter(ctrue_pos[:,0], ctrue_pos[:,1], color='y', label='true', s=4)
@@ -187,6 +206,7 @@ class BasePredictor(AbstractPredictor):
 
         for i in tqdm(range(predictions.shape[0])):
             x = self.X[i]
+            x_ = X[i]
             c = self.C[i]
 
             meta = self.meta[i]
@@ -195,7 +215,7 @@ class BasePredictor(AbstractPredictor):
             self.postprocessor.set_inputs((x,meta))
             yhat = self.postprocessor(yhat)
 
-            log_prediction(yhat,x,c,meta,path)
+            log_prediction(yhat,x_,c,meta,path)
 
     def load(self):
         self.model.load()
@@ -228,6 +248,10 @@ class BaseEvaluation(AbstractEvaluation):
         for i,d in tqdm(enumerate(preds)):
             cpred = np.array(d['yhat_pos'])
             ctrue = np.array(d['c_pos'])
+
+            if outlier(ctrue):
+                print("outlier")
+                continue
 
             cp_seg = sv.contourToSeg(cpred, ORIGIN, DIMS, SPACING)
             ct_seg = sv.contourToSeg(ctrue, ORIGIN, DIMS, SPACING)
