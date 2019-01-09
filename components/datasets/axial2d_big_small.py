@@ -148,40 +148,6 @@ def get_dataset(config, key="TRAIN"):
         Y_ = np.array(Y_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
 
 
-    #get contours
-    contours = []
-    x_final  = []
-    m_final  = []
-    for i in tqdm(range(X_.shape[0])):
-        try:
-            c,p = distance_contour(Y_[i],cd,config['NUM_CONTOUR_POINTS'])
-            if outlier(c):
-               print("outlier")
-               continue
-
-            contours.append(c)
-            x_final.append(X_[i])
-            m_final.append(meta[i])
-        except:
-            print("failed")
-    contours = np.array(contours)
-    X_ = np.array(x_final)
-    meta = m_final
-
-    r_thresh = config['R_SMALL']
-    radiuses = [m['radius']*m['spacing'] for m in meta]
-
-    if 'SIZE_SPLIT' in config:
-        print("splitting size")
-        if config.get('SIZE_SPLIT') == 'LARGE':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] > r_thresh]
-
-        if config.get('SIZE_SPLIT') == 'SMALL':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] <= r_thresh]
-
-        X_       = np.array([X_[i] for i in indexes])
-        contours = np.array([contours[i] for i in indexes])
-        meta     = [meta[i] for i in indexes]
-        return X_, contours, meta
+    
 
     return X_,contours,meta

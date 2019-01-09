@@ -115,7 +115,7 @@ def get_dataset(config, key="TRAIN"):
 
     X  = None
     Yc = None
-
+            
     if config['BALANCE_RADIUS'] and key=='TRAIN':
         X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
@@ -158,7 +158,7 @@ def get_dataset(config, key="TRAIN"):
             if outlier(c):
                print("outlier")
                continue
-
+                
             contours.append(c)
             x_final.append(X_[i])
             m_final.append(meta[i])
@@ -167,21 +167,5 @@ def get_dataset(config, key="TRAIN"):
     contours = np.array(contours)
     X_ = np.array(x_final)
     meta = m_final
-
-    r_thresh = config['R_SMALL']
-    radiuses = [m['radius']*m['spacing'] for m in meta]
-
-    if 'SIZE_SPLIT' in config:
-        print("splitting size")
-        if config.get('SIZE_SPLIT') == 'LARGE':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] > r_thresh]
-
-        if config.get('SIZE_SPLIT') == 'SMALL':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] <= r_thresh]
-
-        X_       = np.array([X_[i] for i in indexes])
-        contours = np.array([contours[i] for i in indexes])
-        meta     = [meta[i] for i in indexes]
-        return X_, contours, meta
 
     return X_,contours,meta

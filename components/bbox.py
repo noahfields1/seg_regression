@@ -25,73 +25,6 @@ def outlier(c):
         return True
     return False
 
-class BasePreProcessor(AbstractPreProcessor):
-    def __call__(self, x):
-        if not 'IMAGE_TYPE' in self.config:
-            mu  = 1.0*np.mean(x)
-            sig = 1.0*np.std(x)+EPS
-            x_   = (x-mu)/sig
-        else:
-            if self.config['IMAGE_TYPE'] == 'EDGE':
-                x_ = filters.sobel(x)
-                ma = np.amax(x_)
-                mi = np.amin(x_)
-                x_ = (x_-mi)/(ma-mi+EPS)
-
-            if self.config['IMAGE_TYPE'] == 'HESSIAN':
-                x_ = filters.gaussian(x, sigma=self.config['BLUR_SIGMA'])
-                x_ = filters.sobel(x_)
-                x_ = filters.sobel(x_)
-                mu  = 1.0*np.mean(x_)
-                sig = 1.0*np.std(x_)+EPS
-                x_   = (x_-mu)/sig
-                c = self.config['CLIP_VAL']
-                x_[x_>c] = c
-                x_[x_<-c] = -c
-
-            if self.config['IMAGE_TYPE'] == 'CLIP':
-                mu  = 1.0*np.mean(x)
-                sig = 1.0*np.std(x)+EPS
-                x_   = (x-mu)/sig
-                c = self.config['CLIP_VAL']
-                x_[x_>c] = c
-                x_[x_<-c] = -c
-
-        x_ = x_.reshape(self.config['INPUT_DIMS'])
-
-        return x_.copy()
-
-class BasePostProcessor(AbstractPostProcessor):
-    def setup(self):
-        self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
-
-    def __call__(self,y):
-        c = pred_to_contour(y)
-        return c*self.scale
-
-class EdgePostProcessor(AbstractPostProcessor):
-    def setup(self):
-        self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
-
-    def set_inputs(self, T):
-        x = T[0]
-        I = filters.gaussian(x)
-        E = filters.sobel(I)
-
-        self.interp = vessel_regression.Interpolant(E,
-            np.array([-self.scale, -self.scale]), self.config['SPACING'])
-
-    def __call__(self,y):
-        cpred  = pred_to_contour(y)*self.scale
-        R      = np.mean(np.sqrt(np.sum(cpred**2,axis=1)))
-        Nsteps = self.config['N_STEPS']
-        alpha  = self.config['EDGE_RADIUS_RATIO']
-        angles = np.arctan2(cpred[:,1],cpred[:,0])
-
-        z = vessel_regression.edge_fit(self.interp, cpred, angles, alpha, R, Nsteps)
-
-        return z
-
 def log_prediction(yhat,x,c,meta,path):
     ctrue = pred_to_contour(c)
     scale  = meta['dimensions']*meta['spacing']/2
@@ -131,61 +64,7 @@ def log_prediction(yhat,x,c,meta,path):
     plt.savefig(path+'/images/{}.png'.format(name),dpi=200)
     plt.close()
 
-class BaseTrainer(AbstractTrainer):
-    def setup_directories(self):
-        mkdir(self.root)
-        mkdir(self.log_dir)
-        mkdir(self.model_dir)
-        mkdir(self.val_dir)
-        mkdir(self.val_image_dir)
-        mkdir(self.val_pred_dir)
-        mkdir(self.test_dir)
-        mkdir(self.test_image_dir)
-        mkdir(self.test_pred_dir)
-
-    def set_data(self, data, data_key):
-        """
-        data is a tuple (X,C,points,meta)
-        """
-        self.X      = data[0]
-        self.C      = data[1]
-        self.meta   = data[2]
-        self.data_key = data_key
-
-    def set_preprocessor(self,preprocessor):
-        self.preprocessor = preprocessor
-
-    def setup(self):
-        res_dir = self.config['RESULTS_DIR']
-        name    = self.config['NAME']
-
-        self.root           = os.path.join(res_dir,name)
-        self.log_dir        = os.path.join(self.root,'log')
-        self.model_dir      = os.path.join(self.root,'model')
-        self.val_dir        = os.path.join(self.root,'val')
-        self.val_image_dir  = os.path.join(self.root,'val','images')
-        self.val_pred_dir   = os.path.join(self.root,'val','predictions')
-        self.test_dir       = os.path.join(self.root,'test')
-        self.test_image_dir = os.path.join(self.root,'test','images')
-        self.test_pred_dir  = os.path.join(self.root,'test','predictions')
-
-        self.preprocessor = None
-
-    def train(self):
-        X = self.X
-        print(X.shape)
-        if not self.preprocessor == None:
-            X = np.array([self.preprocessor(x) for x in self.X])
-
-        print(X.shape)
-        self.model.train(X, self.C)
-
-    def save(self):
-        self.model.save()
-    def load(self):
-        self.model.load()
-
-class BasePredictor(AbstractPredictor):
+class BoxPredictor(AbstractPredictor):
     def set_data(self, data, data_key):
         """
         data is a tuple (X,C,points,meta)
@@ -231,7 +110,7 @@ class BasePredictor(AbstractPredictor):
     def load(self):
         self.model.load()
 
-class BaseEvaluation(AbstractEvaluation):
+class BoxEvaluation(AbstractEvaluation):
     def setup(self):
         self.results_dir = self.config['RESULTS_DIR']
     def evaluate(self, data_key):
