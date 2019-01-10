@@ -77,6 +77,11 @@ def get_dataset(config, key="TRAIN"):
 
     files = [f for f in files if any([s in f for s in patterns])]
 
+    if "OTHER_PATTERNS" in config:
+        p = config['OTHER_PATTERNS']
+
+        files = [f for f in files if any([s in f.lower() for s in p])]
+        
     data = [read_T(s) for s in files]
 
     meta = [d[3] for d in data]
