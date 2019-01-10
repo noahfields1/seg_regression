@@ -92,9 +92,9 @@ class EdgePostProcessor(AbstractPostProcessor):
 
         return z
 
-def log_prediction(yhat,x,c,meta,path):
+def log_prediction(yhat,x,c,meta,path,config):
     ctrue = pred_to_contour(c)
-    scale  = meta['dimensions']*meta['spacing']/2
+    scale  = config['CROP_DIMS']*meta['spacing']/2
 
     new_meta = {}
     for k in meta: new_meta[k] = meta[k]
@@ -226,7 +226,7 @@ class BasePredictor(AbstractPredictor):
             self.postprocessor.set_inputs((x,meta))
             yhat = self.postprocessor(yhat)
 
-            log_prediction(yhat,x_,c,meta,path)
+            log_prediction(yhat,x_,c,meta,path,self.config)
 
     def load(self):
         self.model.load()

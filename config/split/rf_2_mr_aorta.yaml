@@ -1,7 +1,7 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-NAME:       "rf2d_2_mr_aorta"
+NAME:       "rf2d_mr_aorta"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
@@ -14,9 +14,9 @@ INTERVAL: 5
 SPACING: 0.029
 DIMS: 240
 CENTER_DIMS: 200
-CROP_DIMS: 160
+CROP_DIMS: 128
 INPUT_DIMS:
-  - 25600
+  - 16384
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
 CENTER: true
@@ -24,10 +24,10 @@ N_ESTIMATORS: 10
 MAX_FEATURES: 25600
 
 AUGMENT: true
-AUGMENT_FACTOR: 10
-AUGMENT_R_SCALE: 0.25
+AUGMENT_FACTOR: 15
+AUGMENT_R_SCALE: 0.75
 
-BALANCE_RADIUS: true
+BALANCE_RADIUS: false
 R_SMALL: 0.75
 N_SAMPLE: 10000
 
