@@ -51,7 +51,7 @@ def distance_contour(yc,cd, nc):
 
     c_reorient = sv.interpContour(c_centered, num_pts=nc)
 
-    c_dist = np.sqrt(np.sqrt(np.sum(c_reorient**2,axis=1)))
+    c_dist = np.sqrt(np.sum(c_reorient**2,axis=1))
 
     return c_dist, p
 
@@ -81,7 +81,7 @@ def get_dataset(config, key="TRAIN"):
         p = config['OTHER_PATTERNS']
 
         files = [f for f in files if any([s in f.lower() for s in p])]
-        
+
     data = [read_T(s) for s in files]
 
     meta = [d[3] for d in data]
@@ -137,7 +137,7 @@ def get_dataset(config, key="TRAIN"):
                 x,y = sv.random_rotate((x,y))
 
                 rpix = meta[i]['radius']
-                lim  = int(np.sqrt(config['AUGMENT_R_SCALE']*rpix))+1
+                lim  = int(config['AUGMENT_R_SCALE']*rpix/np.sqrt(2))+1
                 x_shift = np.random.randint(-lim,lim)
                 y_shift = np.random.randint(-lim,lim)
 
