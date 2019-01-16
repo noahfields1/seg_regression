@@ -83,10 +83,6 @@ class I2INetReg(Model):
         NUM_FILTERS = self.config['NUM_FILTERS']
         LAMBDA      = self.config['L2_REG']
         INIT        = self.config['INIT']
-        if "INIT" in self.config:
-            INIT = self.config['INIT']
-            print(INIT)
-
 
         NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']+2
 
@@ -97,6 +93,68 @@ class I2INetReg(Model):
 
         self.yclass,self.yhat,_,_ = tf_util.I2INet(self.x,nfilters=NUM_FILTERS,
             activation=leaky_relu,init=INIT)
+
+
+        o = leaky_relu(self.yhat)
+
+        if "POOL" in self.config:
+            pool = self.config['POOL']
+            o = tf.nn.pool(o,window_shape=[pool, pool],pooling_type="MAX",padding="VALID",strides=[pool, pool])
+
+        s = o.get_shape().as_list()
+
+        o_vec = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+
+        for i in range(self.config['FC_LAYERS']-1):
+            if "HIDDEN_SIZES" in self.config:
+                h = self.config['HIDDEN_SIZES'][i]
+            else:
+                h = self.config['HIDDEN_SIZE']
+
+            o_vec = tf_util.fullyConnected(o_vec, h,
+                leaky_relu, std=INIT, scope='fc_'+str(i))
+
+        self.yhat = tf_util.fullyConnected(o_vec, NUM_POINTS,
+            tf.nn.sigmoid, std=INIT, scope='fc_final')
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
+    def build_loss(self):
+        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
+        self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
+
+    def predict(self,xb):
+        return self.sess.run(self.yhat,{self.x:xb})
+
+    def finalize(self):
+        self.sess = tf.Session()
+        self.sess.run(tf.global_variables_initializer())
+
+class ResNetReg(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+
+        NLAYERS     = int(self.config['NLAYERS']/2)
+        NFILTERS_SMALL = self.config['NFILTERS_SMALL']
+        NFILTERS_LARGE = self.config['NFILTERS_LARGE']
+
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']+2
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        self.yclass,self.yhat,_,_ = tf_util.ResNet(self.x,
+            nlayers_before=NLAYERS, nlayers_after=NLAYERS,
+            nfilters_small=NFILTERS_SMALL, nfilters_large=NFILTERS_LARGE,
+            output_filters=NFILTERS_LARGE, activation=leaky_relu, init=INIT)
 
 
         o = leaky_relu(self.yhat)

@@ -35,7 +35,7 @@ def conv2D(x, dims=[3,3], nfilters=32, strides=[1,1],
 
         shape = dims +[s[3],nfilters]
 
-        if init=='variance':
+        if init=='xavier':
             init = np.sqrt(2.0/(dims[0]*dims[1]*s[3]))
 
         W = tf.Variable(tf.random_normal(shape=shape,stddev=init),

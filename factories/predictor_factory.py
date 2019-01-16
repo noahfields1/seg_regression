@@ -1,5 +1,6 @@
 import components.common as common
 import components.edge as edge
+from components.seg import SegPredictor
 
 def get(config):
     if not "PREDICTOR" in config:
@@ -11,5 +12,7 @@ def get(config):
         return common.BasePredictor(config)
     elif predictor == "edge_fit":
         return edge.EdgeFittingPredictor(config)
+    elif predictor == 'SEG':
+        return SegPredictor(config)
     else:
         raise RuntimeError("Unrecognized predictor {}".format(predictor))

@@ -25,6 +25,45 @@ def outlier(c):
         return True
     return False
 
+class SegPreProcessor(AbstractPreProcessor):
+    def __call__(self, x):
+        if not 'IMAGE_TYPE' in self.config:
+            mu  = 1.0*np.mean(x)
+            sig = 1.0*np.std(x)+EPS
+            x_   = (x-mu)/sig
+        else:
+            if self.config['IMAGE_TYPE'] == 'EDGE':
+                x_ = filters.sobel(x)
+                ma = np.amax(x_)
+                mi = np.amin(x_)
+                x_ = (x_-mi)/(ma-mi+EPS)
+
+            if self.config['IMAGE_TYPE'] == 'HESSIAN':
+                x_ = filters.gaussian(x, sigma=self.config['BLUR_SIGMA'])
+                x_ = filters.sobel(x_)
+                x_ = filters.sobel(x_)
+                mu  = 1.0*np.mean(x_)
+                sig = 1.0*np.std(x_)+EPS
+                x_   = (x_-mu)/sig
+                c = self.config['CLIP_VAL']
+                x_[x_>c] = c
+                x_[x_<-c] = -c
+
+            if self.config['IMAGE_TYPE'] == 'CLIP':
+                mu  = 1.0*np.mean(x)
+                sig = 1.0*np.std(x)+EPS
+                x_   = (x-mu)/sig
+                c = self.config['CLIP_VAL']
+                x_[x_>c] = c
+                x_[x_<-c] = -c
+
+        x_ = x_.reshape(self.config['INPUT_DIMS'])
+
+        return x_.copy()
+
+    def preprocess_label(y):
+        return y.reshape(self.config['LABEL_SHAPE'])
+
 class SegPostProcessor(AbstractPostProcessor):
     def setup(self):
         self.cd = self.config['CROP_DIMS']
@@ -71,7 +110,7 @@ def log_prediction(yhat,x,y,meta,path,config):
     plt.savefig(path+'/images/{}.y.png'.format(name),dpi=200)
     plt.close()
 
-class BasePredictor(AbstractPredictor):
+class SegPredictor(AbstractPredictor):
     def set_data(self, data, data_key):
         """
         data is a tuple (X,C,points,meta)
@@ -117,7 +156,7 @@ class BasePredictor(AbstractPredictor):
     def load(self):
         self.model.load()
 
-class BaseEvaluation(AbstractEvaluation):
+class SegEvaluation(AbstractEvaluation):
     def setup(self):
         self.results_dir = self.config['RESULTS_DIR']
     def evaluate(self, data_key):

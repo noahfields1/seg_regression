@@ -6,5 +6,8 @@ class AbstractPreProcessor(object):
     def setup(self):
         pass
 
-    def __call__(x):
+    def __call__(self,x):
         pass
+
+    def preprocess_label(self,y):
+        return y

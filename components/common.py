@@ -176,9 +176,10 @@ class BaseTrainer(AbstractTrainer):
         print(X.shape)
         if not self.preprocessor == None:
             X = np.array([self.preprocessor(x) for x in self.X])
-
+            C = np.array([self.preprocessor.preprocess_label(c) for c in self.C])
         print(X.shape)
-        self.model.train(X, self.C)
+        print(C.shape)
+        self.model.train(X, C)
 
     def save(self):
         self.model.save()
