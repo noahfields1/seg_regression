@@ -12,6 +12,9 @@ def get(config):
         return rf.RFModel(config)
     elif mod == "I2INetReg":
         return nn.I2INetReg(config)
+    elif mod == "ResNetReg":
+        return nn.ResNetReg(config)
+
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']
         y = io.load_yaml(c)
