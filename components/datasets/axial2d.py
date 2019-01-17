@@ -171,6 +171,10 @@ def get_dataset(config, key="TRAIN"):
             print("failed")
     contours = np.array(contours)
     X_ = np.array(x_final)
+
+    #m = np.mean(X_,axis=0,keepdims=True)
+    #s = np.std(X_,axis=0,keepdims=True)
+    #X_ = (1.0*X_-m)/(s+EPS)
     meta = m_final
 
     r_thresh = config['R_SMALL']

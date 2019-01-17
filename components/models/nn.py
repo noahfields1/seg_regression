@@ -84,11 +84,14 @@ class Model(AbstractModel):
 
     def log(self,i,x,y):
         l = self.calculate_loss(x,y)
+        yhat = self.predict(x)[0]
 
         print("{}: loss={}\n".format(i,l))
+        print("yhat = {}".format(yhat))
 
         f = open(self.config["LOG_FILE"],"a+")
         f.write("{}: loss={}\n".format(i,l))
+        f.write("{}: yhat={}\n".format(i,yhat))
         f.close()
 
         self.save()

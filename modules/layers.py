@@ -36,11 +36,11 @@ def conv2D(x, dims=[3,3], nfilters=32, strides=[1,1],
         shape = dims +[s[3],nfilters]
 
         if init=='xavier':
-            init = np.sqrt(2.0/(dims[0]*dims[1]*s[3]))
+            init = np.sqrt(1.0/(dims[0]*dims[1]*s[3]))
 
         W = tf.Variable(tf.random_normal(shape=shape,stddev=init),
             name='W')
-        b = tf.Variable(tf.ones([nfilters])*init, name='b')
+        b = tf.Variable(tf.zeros([nfilters]), name='b')
 
         o = tf.nn.convolution(x, W, padding, strides=strides)
 
@@ -73,10 +73,10 @@ def fullyConnected(x,output_units=100,activation=tf.identity,std=1e-3,
         shape = [s[1],output_units]
 
         if std=='xavier':
-            std = np.sqrt(2.0/shape[0])
+            std = np.sqrt(1.0/(shape[0]))
 
         W = tf.get_variable('W',shape=shape,initializer=tf.random_normal_initializer(0.0,std))
-        b = tf.get_variable("b",shape=shape[1],initializer=tf.random_normal_initializer(0.0,std))
+        b = tf.get_variable("b",shape=shape[1],initializer=tf.constant_initializer(0.0))
 
         h = tf.matmul(x,W)+b
         a = activation(h)
@@ -126,8 +126,8 @@ def resNet(x, nlayers_before=10, nlayers_after=10, nfilters=32, nfilters_large=1
         encoding = resNetBlock(x,nlayers=nlayers_before,nfilters_small=nfilters,nfilters_large=nfilters_large,
         init=init,activation=activation,scope='resblock_before')
 
-    output = resNetBlock(encoding,nlayers=nlayers_before,nfilters_small=nfilters,nfilters_large=nfilters_large,
-    init=init,activation=activation,scope='resblock_before')
+        output = resNetBlock(encoding,nlayers=nlayers_after,nfilters_small=nfilters,nfilters_large=nfilters_large,
+        init=init,activation=activation,scope='resblock_after')
 
     yhat = conv2D(output, dims=[1,1], activation=tf.identity, nfilters=output_filters, init=init)
     yclass = tf.sigmoid(yhat)
