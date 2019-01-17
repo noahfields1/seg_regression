@@ -61,7 +61,7 @@ class SegPreProcessor(AbstractPreProcessor):
 
         return x_.copy()
 
-    def preprocess_label(y):
+    def preprocess_label(self,y):
         return y.reshape(self.config['LABEL_SHAPE'])
 
 class SegPostProcessor(AbstractPostProcessor):

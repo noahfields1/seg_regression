@@ -3,8 +3,10 @@ FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
 NAME:       "rf2d_seg"
 TRAINER: "base"
-PREDICTOR: "base"
+PREDICTOR: "SEG"
 EVALUATION: "base"
+PREPROCESSOR: "SEG"
+POSTPROCESSOR: "SEG"
 MODEL: "rf2d"
 DATASET:    "axial2d_seg"
 
@@ -16,6 +18,8 @@ DIMS: 240
 
 CROP_DIMS: 160
 INPUT_DIMS:
+  - 25600
+LABEL_SHAPE:
   - 25600
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
@@ -29,7 +33,7 @@ MAX_PIX_SHIFT: 15
 
 BALANCE_RADIUS: true
 R_SMALL: 0.75
-N_SAMPLE: 10000
+N_SAMPLE: 100
 
 VAL_PATTERNS:
   - OSMSC0110_CLEAN
