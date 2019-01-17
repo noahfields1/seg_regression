@@ -161,16 +161,16 @@ class ResNetReg(Model):
         NFILTERS_SMALL = self.config['NFILTERS_SMALL']
         NFILTERS_LARGE = self.config['NFILTERS_LARGE']
 
-        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']+2
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
 
         leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
 
         self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
         self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
 
-        self.yclass,self.yhat,_,_ = tf_util.ResNet(self.x,
+        self.yclass,self.yhat,_,_ = tf_util.resNet(self.x,
             nlayers_before=NLAYERS, nlayers_after=NLAYERS,
-            nfilters_small=NFILTERS_SMALL, nfilters_large=NFILTERS_LARGE,
+            nfilters=NFILTERS_SMALL, nfilters_large=NFILTERS_LARGE,
             output_filters=NFILTERS_LARGE, activation=leaky_relu, init=INIT)
 
         o = leaky_relu(self.yhat)
