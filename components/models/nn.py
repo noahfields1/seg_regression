@@ -2,6 +2,8 @@ from base.model import AbstractModel
 import numpy as np
 import tensorflow as tf
 import modules.layers as tf_util
+import matplotlib.pyplot as plt
+import modules.vessel_regression as vr
 
 def get_batch(X,Y, batch_size=16):
     ids = np.random.choice(X.shape[0], size=batch_size)
@@ -95,6 +97,18 @@ class Model(AbstractModel):
         f.close()
 
         self.save()
+
+        x_ = x[0,:,:,0]
+        y_ = y[0]
+        ctrue = vr.pred_to_contour(y_)
+        cpred = vr.pred_to_contour(yhat)
+
+        plt.figure()
+        plt.imshow(x_,cmap='gray',extent=[-1, 1, 1, -1])
+        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=3)
+        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=3)
+        plt.show()
+        plt.close()
 
 class I2INetReg(Model):
     def build_model(self):
@@ -208,3 +222,13 @@ class ResNetReg(Model):
     def finalize(self):
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
+
+    def configure_trainer(self):
+        LEARNING_RATE = self.config["LEARNING_RATE"]
+        self.global_step = tf.Variable(0, trainable=False)
+        boundaries = [2500]
+        values = [LEARNING_RATE, LEARNING_RATE]
+        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
+
+        self.opt = tf.train.AdamOptimizer(learning_rate)
+        self.train_op = self.opt.minimize(self.loss)
