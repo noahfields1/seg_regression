@@ -1,24 +1,25 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-NAME:       "ResNetReg"
+NAME:       "ResNetReg_2"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "ResNetReg"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/ResNetReg/log/train.txt"
+LOG_FILE: "./results/ResNetReg_2/log/train.txt"
 
-MODEL_DIR: "./results/ResNetReg/model"
+MODEL_DIR: "./results/ResNetReg_2/model"
 MODEL_NAME: "ResNetReg"
 MODEL_TYPE: "ResNetReg"
 
 LOG_STEP: 100
 LEAK: 0.2
 BATCH_SIZE: 4
-LEARNING_RATE: 0.000005
-TRAIN_STEPS: 30000
+LEARNING_RATE_: 0.000001
+LEARNING_RATE: 0.000001
+TRAIN_STEPS: 7000
 BATCH_SIZE: 4
 L2_REG: 0.0
 NUM_FILTERS: 32
@@ -41,8 +42,8 @@ NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
 
 NLAYERS: 4
-NFILTERS_SMALL: 8
-NFILTERS_LARGE: 32
+NFILTERS_SMALL: 32
+NFILTERS_LARGE: 128
 FC_LAYERS: 0
 HIDDEN_SIZE: 100
 INIT: 'xavier'

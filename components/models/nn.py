@@ -82,6 +82,7 @@ class Model(AbstractModel):
 
             if i % self.config['LOG_STEP'] == 0:
                 self.log(i,x,y)
+                self.log(i,X[:4],Y[:4])
                 self.save()
 
     def log(self,i,x,y):
@@ -105,8 +106,9 @@ class Model(AbstractModel):
 
         plt.figure()
         plt.imshow(x_,cmap='gray',extent=[-1, 1, 1, -1])
-        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=3)
-        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=3)
+        plt.colorbar()
+        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
+        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
         plt.show()
         plt.close()
 
@@ -226,9 +228,12 @@ class ResNetReg(Model):
     def configure_trainer(self):
         LEARNING_RATE = self.config["LEARNING_RATE"]
         self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [2500]
-        values = [LEARNING_RATE, LEARNING_RATE]
+        boundaries = [5000, 10000, 15000]
+        values = [LEARNING_RATE, LEARNING_RATE/2, LEARNING_RATE/4, LEARNING_RATE/8]
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
         self.opt = tf.train.AdamOptimizer(learning_rate)
-        self.train_op = self.opt.minimize(self.loss)
+
+        self.gvs = self.opt.compute_gradients(self.loss)
+        self.capped_gvs = [(tf.clip_by_value(grad, -1.0, 1.0), var) for grad, var in self.gvs]
+        self.train_op = self.opt.apply_gradients(self.capped_gvs)
