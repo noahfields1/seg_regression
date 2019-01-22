@@ -10,6 +10,8 @@ def get(config):
 
     if mod == "rf2d":
         return rf.RFModel(config)
+    elif mod == 'gb':
+        return rf.GBModel(config)
     elif mod == "I2INetReg":
         return nn.I2INetReg(config)
     elif mod == "ResNetReg":
