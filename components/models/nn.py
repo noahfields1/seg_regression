@@ -262,7 +262,7 @@ class ResNetRegMultiscale(Model):
             self.x_2 = tf.nn.pool(self.x_1, [2,2], "MAX", "VALID", strides=[2,2])
         elif self.config['MULTI_TYPE'] == "CROP":
             self.x_1 = tf.image.central_crop(self.x, central_fraction=0.5)
-            self.x_2 = tf.image.central_crop(self.x_2, central_fraction=0.5)
+            self.x_2 = tf.image.central_crop(self.x_1, central_fraction=0.5)
         else:
             raise RuntimeError("Unrecognized multi type")
 
