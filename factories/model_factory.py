@@ -16,6 +16,8 @@ def get(config):
         return nn.I2INetReg(config)
     elif mod == "ResNetReg":
         return nn.ResNetReg(config)
+    elif mod == "ResNetRegMultiscale":
+        return nn.ResNetRegMultiscale(config)
 
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']

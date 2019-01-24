@@ -1,16 +1,16 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-NAME:       "ResNetReg_2"
+NAME:       "ResNetReg_2_freeze"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "ResNetReg"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/ResNetReg_2/log/train.txt"
+LOG_FILE: "./results/ResNetReg_2_freeze/log/train.txt"
 
-MODEL_DIR: "./results/ResNetReg_2/model"
+MODEL_DIR: "./results/ResNetReg_2_freeze/model"
 MODEL_NAME: "ResNetReg"
 MODEL_TYPE: "ResNetReg"
 
@@ -18,7 +18,7 @@ LOG_STEP: 100
 LEAK: 0.2
 BATCH_SIZE: 4
 LEARNING_RATE_: 0.000001
-LEARNING_RATE: 0.0001
+LEARNING_RATE: 0.000001
 TRAIN_STEPS: 30000
 BATCH_SIZE: 4
 L2_REG: 0.0

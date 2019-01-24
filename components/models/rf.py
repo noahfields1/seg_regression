@@ -43,7 +43,7 @@ class RFModel(AbstractModel):
 class GBModel(AbstractModel):
     def setup(self):
         n_estimators = self.config['N_ESTIMATORS']
-        self.rf      = GradientBoostingRegressor(n_estimators=n_estimators, n_jobs=-1, max_features=self.config['MAX_FEATURES'])
+        self.rf      = GradientBoostingRegressor(n_estimators=n_estimators, max_features=self.config['MAX_FEATURES'])
         self.name = self.config['NAME']
     def predict(self, x):
         """
