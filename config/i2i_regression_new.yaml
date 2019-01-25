@@ -1,33 +1,27 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-NAME:       "ResNetReg_2_multi"
+NAME:       "I2INetReg_new"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
-MODEL: "ResNetRegMultiscale"
+MODEL: "I2INetReg"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/ResNetReg_2_multi/log/train.txt"
+LOG_FILE: "./results/I2INetReg_new/log/train.txt"
 
-MODEL_DIR: "./results/ResNetReg_2_multi/model"
-MODEL_NAME: "ResNetReg"
-MODEL_TYPE: "ResNetReg"
+MODEL_DIR: "./results/I2INetReg_new/model"
+MODEL_NAME: "I2I"
+MODEL_TYPE: "I2INetRegression"
 
 LOG_STEP: 100
 LEAK: 0.2
 BATCH_SIZE: 4
-LEARNING_RATE_: 0.000001
-LEARNING_RATE: 0.00001
+LEARNING_RATE: 0.001
 TRAIN_STEPS: 30000
 BATCH_SIZE: 4
 L2_REG: 0.0
 NUM_FILTERS: 32
-
-MULTI_TYPE: "POOL"
-
-IMAGE_TYPE: "BLUR"
-BLUR_SIGMA: 3
 
 CENTER: false
 INPUT_DIMS:
@@ -46,9 +40,6 @@ CROP_DIMS: 160
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
 
-NLAYERS: 4
-NFILTERS_SMALL: 32
-NFILTERS_LARGE: 128
 FC_LAYERS: 0
 HIDDEN_SIZE: 100
 INIT: 'xavier'

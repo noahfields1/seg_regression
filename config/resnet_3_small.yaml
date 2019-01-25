@@ -1,16 +1,16 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-NAME:       "ResNetReg_2_multi"
+NAME:       "ResNetReg_3_small"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
-MODEL: "ResNetRegMultiscale"
+MODEL: "ResNetReg"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/ResNetReg_2_multi/log/train.txt"
+LOG_FILE: "./results/ResNetReg_3_small/log/train.txt"
 
-MODEL_DIR: "./results/ResNetReg_2_multi/model"
+MODEL_DIR: "./results/ResNetReg_3_small/model"
 MODEL_NAME: "ResNetReg"
 MODEL_TYPE: "ResNetReg"
 
@@ -18,22 +18,22 @@ LOG_STEP: 100
 LEAK: 0.2
 BATCH_SIZE: 4
 LEARNING_RATE_: 0.000001
-LEARNING_RATE: 0.00001
+LEARNING_RATE: 0.0001
 TRAIN_STEPS: 30000
 BATCH_SIZE: 4
 L2_REG: 0.0
 NUM_FILTERS: 32
-
-MULTI_TYPE: "POOL"
-
-IMAGE_TYPE: "BLUR"
-BLUR_SIGMA: 3
 
 CENTER: false
 INPUT_DIMS:
   - 160
   - 160
   - 1
+
+IMAGE_TYPE: "BLUR"
+BLUR_SIGMA: 3
+
+SIZE_SPLIT: "SMALL"
 
 BALANCE_RADIUS: true
 R_SMALL: 0.75
@@ -46,7 +46,7 @@ CROP_DIMS: 160
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
 
-NLAYERS: 4
+NLAYERS: 10
 NFILTERS_SMALL: 32
 NFILTERS_LARGE: 128
 FC_LAYERS: 0

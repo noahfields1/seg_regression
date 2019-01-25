@@ -62,16 +62,16 @@ class Model(AbstractModel):
 
     def build_loss(self):
         self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-        self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
+        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
 
     def configure_trainer(self):
         LEARNING_RATE = self.config["LEARNING_RATE"]
         self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [10000, 20000, 25000]
+        boundaries = [200, 4000, 6000]
         values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000]
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
-        self.opt = tf.train.AdamOptimizer(learning_rate)
+        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
         self.train_op = self.opt.minimize(self.loss)
 
     def train(self, X,Y):
@@ -151,7 +151,7 @@ class I2INetReg(Model):
                 leaky_relu, std=INIT, scope='fc_'+str(i))
 
         self.yhat = tf_util.fullyConnected(o_vec, NUM_POINTS,
-            tf.nn.sigmoid, std=INIT, scope='fc_final')
+            tf.identity, std=INIT, scope='fc_final')
 
         self.build_loss()
 
@@ -159,7 +159,7 @@ class I2INetReg(Model):
 
     def build_loss(self):
         self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-        self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
+       # self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
 
     def _predict(self,x):
         return self.sess.run(self.yhat,{self.x:x})
