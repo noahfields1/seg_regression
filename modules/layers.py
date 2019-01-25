@@ -36,7 +36,7 @@ def conv2D(x, dims=[3,3], nfilters=32, strides=[1,1],
         shape = dims +[s[3],nfilters]
 
         if init=='xavier':
-            init = np.sqrt(2.0/(dims[0]*dims[1]*s[3]))
+            init = np.sqrt(1.0/(dims[0]*dims[1]*s[3]))
 
         W = tf.Variable(tf.random_normal(shape=shape,stddev=init),
             name='W')
@@ -73,7 +73,7 @@ def fullyConnected(x,output_units=100,activation=tf.identity,std=1e-3,
         shape = [s[1],output_units]
 
         if std=='xavier':
-            std = np.sqrt(2.0/(shape[0]))
+            std = np.sqrt(1.0/(shape[0]))
 
         W = tf.get_variable('W',shape=shape,initializer=tf.random_normal_initializer(0.0,std))
         b = tf.get_variable("b",shape=shape[1],initializer=tf.constant_initializer(0.0))
