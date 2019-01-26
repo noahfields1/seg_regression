@@ -228,8 +228,8 @@ class ResNetReg(Model):
     def configure_trainer(self):
         LEARNING_RATE = self.config["LEARNING_RATE"]
         self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [2000, 3000, 4000, 6000, 9000]
-        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/10000, LEARNING_RATE/100000, LEARNING_RATE/1000000, LEARNING_RATE/10000000]
+        boundaries = [2000, 4000, 6000, 8000, 10000]
+        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000, LEARNING_RATE/10000, LEARNING_RATE/100000]
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
         #self.opt = tf.train.AdamOptimizer(learning_rate)
