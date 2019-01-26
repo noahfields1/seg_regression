@@ -19,9 +19,9 @@ def get(config):
     elif mod == "ResNetRegMultiscale":
         return nn.ResNetRegMultiscale(config)
     elif mod == "ConvNet":
-        return nn.ConvNet
+        return nn.ConvNet(config)
     elif mod == "FcNet":
-        return nn.FcNet
+        return nn.FcNet(config)
         
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']

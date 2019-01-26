@@ -134,8 +134,21 @@ class Model(AbstractModel):
         plt.show()
         plt.close()
 
+        W = x_.shape[0]
+        s = int(0.25*W)
+        e = int(0.75*W)
+        
+        plt.figure()
+        plt.imshow(x_[s:e,s:e],cmap='gray',extent=[-0.5, 0.5, 0.5, -0.5])
+        plt.colorbar()
+        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
+        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
+        plt.show()
+        plt.close()
+        
+        
         c = self.config
-        log_dir = c['RESULTS_DIR']+'/'+c['MODEL_NAME']+'/log/'
+        log_dir = c['RESULTS_DIR']+'/'+c['NAME']+'/log/'
 
         plt.figure()
         plt.plot(self.losses)
@@ -163,9 +176,8 @@ class Model(AbstractModel):
 class FcNet(Model):
     def build_model(self):
         CROP_DIMS   = self.config['CROP_DIMS']
-        C           = self.config['NUM_CHANNELS']
         LEAK        = self.config['LEAK']
-        NUM_FILTERS = self.config['NUM_FILTERS']
+        C           = self.config['NUM_CHANNELS']
         LAMBDA      = self.config['L2_REG']
         INIT        = self.config['INIT']
         NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
@@ -174,12 +186,9 @@ class FcNet(Model):
 
         self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
         self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
-
-        self.yclass,self.yhat,_,_ = tf_util.I2INet(self.x,nfilters=NUM_FILTERS,
-            activation=leaky_relu,init=INIT)
-
+        
         o = self.x
-        if "INPUT_POOL" In self.config:
+        if "INPUT_POOL" in self.config:
             d = self.config['INPUT_POOL']
 
             o = tf.nn.pool(o, [d,d], "MAX", "VALID", strides=[d,d])

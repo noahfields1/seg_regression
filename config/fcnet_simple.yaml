@@ -1,7 +1,7 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-NAME:       "fcnet"
+NAME:       "fcnet_simple"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
@@ -17,7 +17,7 @@ MODEL_TYPE: "FcNet"
 LOG_STEP: 100
 LEAK: 0.2
 BATCH_SIZE: 4
-LEARNING_RATE: 0.01
+LEARNING_RATE: 0.0001
 TRAIN_STEPS: 30000
 BATCH_SIZE: 4
 L2_REG: 0.0
@@ -31,7 +31,7 @@ INPUT_DIMS:
   - 160
   - 1
 
-BALANCE_RADIUS: true
+BALANCE_RADIUS: false
 R_SMALL: 0.75
 N_SAMPLE: 10000
 
@@ -39,8 +39,10 @@ SPACING: 0.029
 DIMS: 240
 CENTER_DIMS: 200
 CROP_DIMS: 160
+NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
 
+INPUT_POOL: 4
 DROPOUT: 0.5
 HIDDEN_SIZES:
   - 500
