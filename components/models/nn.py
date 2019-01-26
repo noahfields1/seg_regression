@@ -300,16 +300,18 @@ class ResNetRegMultiscale(Model):
 
         o = tf.concat([o_vec, o_vec_1, o_vec_2], axis=1)
 
+        print(o)
+
         for i in range(self.config['FC_LAYERS']-1):
             if "HIDDEN_SIZES" in self.config:
                 h = self.config['HIDDEN_SIZES'][i]
             else:
                 h = self.config['HIDDEN_SIZE']
 
-            o_vec = tf_util.fullyConnected(o_vec, h,
+            o = tf_util.fullyConnected(o, h,
                 leaky_relu, std=INIT, scope='fc_'+str(i))
 
-        self.yhat = tf_util.fullyConnected(o_vec, NUM_POINTS,
+        self.yhat = tf_util.fullyConnected(o, NUM_POINTS,
             tf.identity, std=INIT, scope='fc_final')
 
         self.build_loss()
@@ -393,3 +395,156 @@ class ResNetRegMultiscale(Model):
         plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
         plt.show()
         plt.close()
+
+class ConvNet(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+
+        NLAYERS     = int(self.config['NLAYERS']/2)
+        NFILTERS    = self.config['NFILTERS']
+
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
+        DIMS = [self.config['CONV_DIMS']]*2
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        o = self.x
+
+        for i in range(NLAYERS):
+            o = tf_util.conv2D(o,dims=DIMS, nfilters=NFILTERS,init=INIT,activation=leaky_relu)
+
+        s   = o.get_shape().as_list()
+        s_1 = o_1.get_shape().as_list()
+        s_2 = o_2.get_shape().as_list()
+
+        o_vec   = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+        o_vec_1 = tf.reshape(o_1,shape=[-1,s_1[1]*s_1[2]*s_1[3]])
+        o_vec_2 = tf.reshape(o_2,shape=[-1,s_2[1]*s_2[2]*s_2[3]])
+
+        o = tf.concat([o_vec, o_vec_1, o_vec_2], axis=1)
+
+        for i in range(self.config['FC_LAYERS']-1):
+            if "HIDDEN_SIZES" in self.config:
+                h = self.config['HIDDEN_SIZES'][i]
+            else:
+                h = self.config['HIDDEN_SIZE']
+
+            o = tf_util.fullyConnected(o, h,
+                leaky_relu, std=INIT, scope='fc_'+str(i))
+
+        self.yhat = tf_util.fullyConnected(o, NUM_POINTS,
+            tf.identity, std=INIT, scope='fc_final')
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
+    def build_loss(self):
+        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
+        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
+
+    def _predict(self,x):
+        return self.sess.run(self.yhat,{self.x:x})
+
+    def finalize(self):
+        self.sess = tf.Session()
+        self.sess.run(tf.global_variables_initializer())
+
+    def configure_trainer(self):
+        LEARNING_RATE = self.config["LEARNING_RATE"]
+        self.global_step = tf.Variable(0, trainable=False)
+        boundaries = [2000, 4000, 6000, 8000, 10000]
+        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000, LEARNING_RATE/10000, LEARNING_RATE/100000]
+        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
+
+        #self.opt = tf.train.AdamOptimizer(learning_rate)
+        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
+        self.train_op = self.opt.minimize(self.loss)
+
+class ConvNetMulti(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+
+        NLAYERS     = int(self.config['NLAYERS']/2)
+        NFILTERS    = self.config['NFILTERS']
+
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
+        DIMS = [self.config['CONV_DIMS']]*2
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        self.x_1 = tf.nn.pool(self.x, [2,2], "MAX", "VALID", strides=[2,2])
+        self.x_2 = tf.nn.pool(self.x_1, [2,2], "MAX", "VALID", strides=[2,2])
+
+        o = self.x
+
+        for i in range(NLAYERS):
+            o = tf_util.conv2D(o,dims=DIMS, nfilters=NFILTERS,init=INIT,activation=leaky_relu,
+                scope="conv_{}".format(i))
+
+        o_1 = self.x_1
+
+        for i in range(NLAYERS):
+            o_1 = tf_util.conv2D(o_1,dims=DIMS, nfilters=NFILTERS,init=INIT,activation=leaky_relu, scope="conv_1_{}".format(i))
+
+        o_2 = self.x_2
+
+        for i in range(NLAYERS):
+            o_2 = tf_util.conv2D(o_2,dims=DIMS, nfilters=NFILTERS,init=INIT,activation=leaky_relu, scope="conv_2_{}".format(i))
+
+
+        s = o.get_shape().as_list()
+
+        o_vec = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+
+        for i in range(self.config['FC_LAYERS']-1):
+            if "HIDDEN_SIZES" in self.config:
+                h = self.config['HIDDEN_SIZES'][i]
+            else:
+                h = self.config['HIDDEN_SIZE']
+
+            o_vec = tf_util.fullyConnected(o_vec, h,
+                leaky_relu, std=INIT, scope='fc_'+str(i))
+
+        self.yhat = tf_util.fullyConnected(o_vec, NUM_POINTS,
+            tf.identity, std=INIT, scope='fc_final')
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
+    def build_loss(self):
+        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
+        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
+
+    def _predict(self,x):
+        return self.sess.run(self.yhat,{self.x:x})
+
+    def finalize(self):
+        self.sess = tf.Session()
+        self.sess.run(tf.global_variables_initializer())
+
+    def configure_trainer(self):
+        LEARNING_RATE = self.config["LEARNING_RATE"]
+        self.global_step = tf.Variable(0, trainable=False)
+        boundaries = [2000, 4000, 6000, 8000, 10000]
+        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000, LEARNING_RATE/10000, LEARNING_RATE/100000]
+        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
+
+        #self.opt = tf.train.AdamOptimizer(learning_rate)
+        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
+        self.train_op = self.opt.minimize(self.loss)
