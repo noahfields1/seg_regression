@@ -1,0 +1,57 @@
+DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
+FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
+
+NAME:       "fcnet"
+TRAINER: "base"
+PREDICTOR: "base"
+EVALUATION: "base"
+MODEL: "FcNet"
+DATASET:    "axial2d"
+RESULTS_DIR: "./results"
+LOG_FILE: "./results/fcnet_simple/log/train.txt"
+
+MODEL_DIR: "./results/fcnet_simple/model"
+MODEL_NAME: "FcNet"
+MODEL_TYPE: "FcNet"
+
+LOG_STEP: 100
+LEAK: 0.2
+BATCH_SIZE: 4
+LEARNING_RATE: 0.01
+TRAIN_STEPS: 30000
+BATCH_SIZE: 4
+L2_REG: 0.0
+
+IMAGE_TYPE: "BLUR"
+BLUR_SIGMA: 3
+
+CENTER: false
+INPUT_DIMS:
+  - 160
+  - 160
+  - 1
+
+BALANCE_RADIUS: true
+R_SMALL: 0.75
+N_SAMPLE: 10000
+
+SPACING: 0.029
+DIMS: 240
+CENTER_DIMS: 200
+CROP_DIMS: 160
+NUM_CONTOUR_POINTS: 15
+
+DROPOUT: 0.5
+HIDDEN_SIZES:
+  - 500
+  - 100
+INIT: 'xavier'
+
+VAL_PATTERNS:
+  - cabg5_CLEAN
+
+TEST_PATTERNS:
+  - cabg11
+
+TRAIN_PATTERNS:
+  - cabg5_CLEAN

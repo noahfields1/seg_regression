@@ -19,6 +19,8 @@ class Model(AbstractModel):
         self.configure_trainer()
         self.finalize()
 
+        self.losses = []
+
     def train_step(self,x,y):
         self.global_step = self.global_step+1
 
@@ -62,21 +64,34 @@ class Model(AbstractModel):
 
     def build_loss(self):
         self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
 
     def configure_trainer(self):
         LEARNING_RATE = self.config["LEARNING_RATE"]
         self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [200, 4000, 6000]
-        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000]
+        boundaries = [2000,
+                      5000,
+                      10000,
+                      15000]
+
+        values = [LEARNING_RATE,
+                  LEARNING_RATE/3,
+                  LEARNING_RATE/10,
+                  LEARNING_RATE/100,
+                  LEARNING_RATE/1000]
+
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
-        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
+        self.opt = tf.train.AdamOptimizer(learning_rate)
+
+        #self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
         self.train_op = self.opt.minimize(self.loss)
 
     def train(self, X,Y):
         for i in range(self.config['TRAIN_STEPS']):
             x,y = get_batch(X,Y, self.config['BATCH_SIZE'])
+
+            l = self.calculate_loss(x,y)
+            self.losses.append(l)
 
             self.train_step(x,y)
 
@@ -84,6 +99,13 @@ class Model(AbstractModel):
                 self.log(i,x,y)
                 self.log(i,X[:4],Y[:4])
                 self.save()
+
+    def _predict(self,x):
+        return self.sess.run(self.yhat,{self.x:x})
+
+    def finalize(self):
+        self.sess = tf.Session()
+        self.sess.run(tf.global_variables_initializer())
 
     def log(self,i,x,y):
         l = self.calculate_loss(x,y)
@@ -112,6 +134,75 @@ class Model(AbstractModel):
         plt.show()
         plt.close()
 
+        c = self.config
+        log_dir = c['RESULTS_DIR']+'/'+c['MODEL_NAME']+'/log/'
+
+        plt.figure()
+        plt.plot(self.losses)
+        plt.savefig(log_dir+'loss.png',dpi=300)
+        plt.close()
+
+        plt.figure()
+        plt.plot(self.losses)
+        plt.ylim(0,1)
+        plt.savefig(log_dir+'loss_1.png',dpi=300)
+        plt.close()
+
+        plt.figure()
+        plt.plot(self.losses)
+        plt.ylim(0,0.1)
+        plt.savefig(log_dir+'loss_2.png',dpi=300)
+        plt.close()
+
+        plt.figure()
+        plt.plot(self.losses)
+        plt.ylim(0,0.01)
+        plt.savefig(log_dir+'loss_3.png',dpi=300)
+        plt.close()
+
+class FcNet(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        NUM_FILTERS = self.config['NUM_FILTERS']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        self.yclass,self.yhat,_,_ = tf_util.I2INet(self.x,nfilters=NUM_FILTERS,
+            activation=leaky_relu,init=INIT)
+
+        o = self.x
+        if "INPUT_POOL" In self.config:
+            d = self.config['INPUT_POOL']
+
+            o = tf.nn.pool(o, [d,d], "MAX", "VALID", strides=[d,d])
+
+        s = o.get_shape().as_list()
+
+        o_vec = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+
+        for i,h in enumerate(self.config['HIDDEN_SIZES']):
+
+            o_vec = tf_util.fullyConnected(o_vec, h,
+                leaky_relu, std=INIT, scope='fc_'+str(i))
+
+            if "DROPOUT" in self.config:
+                o_vec = tf.nn.dropout(o_vec, self.config['DROPOUT'])
+
+        self.yhat = tf_util.fullyConnected(o_vec, NUM_POINTS,
+            tf.sigmoid, std=INIT, scope='fc_final')
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
 class I2INetReg(Model):
     def build_model(self):
         CROP_DIMS   = self.config['CROP_DIMS']
@@ -120,11 +211,6 @@ class I2INetReg(Model):
         NUM_FILTERS = self.config['NUM_FILTERS']
         LAMBDA      = self.config['L2_REG']
         INIT        = self.config['INIT']
-        if "INIT" in self.config:
-            INIT = self.config['INIT']
-            print(INIT)
-
-
         NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
 
         leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
@@ -156,17 +242,6 @@ class I2INetReg(Model):
         self.build_loss()
 
         self.saver = tf.train.Saver()
-
-    def build_loss(self):
-        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-       # self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
-
-    def _predict(self,x):
-        return self.sess.run(self.yhat,{self.x:x})
-
-    def finalize(self):
-        self.sess = tf.Session()
-        self.sess.run(tf.global_variables_initializer())
 
 class ResNetReg(Model):
     def build_model(self):
@@ -213,31 +288,6 @@ class ResNetReg(Model):
         self.build_loss()
 
         self.saver = tf.train.Saver()
-
-    def build_loss(self):
-        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
-
-    def _predict(self,x):
-        return self.sess.run(self.yhat,{self.x:x})
-
-    def finalize(self):
-        self.sess = tf.Session()
-        self.sess.run(tf.global_variables_initializer())
-
-    def configure_trainer(self):
-        LEARNING_RATE = self.config["LEARNING_RATE"]
-        self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [2000, 4000, 6000, 8000, 10000]
-        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000, LEARNING_RATE/10000, LEARNING_RATE/100000]
-        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
-
-        #self.opt = tf.train.AdamOptimizer(learning_rate)
-        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
-
-        self.gvs = self.opt.compute_gradients(self.loss)
-        self.capped_gvs = [(tf.clip_by_value(grad, -1.0, 1.0), var) for grad, var in self.gvs]
-        self.train_op = self.opt.apply_gradients(self.capped_gvs)
 
 class ResNetRegMultiscale(Model):
     def build_model(self):
@@ -318,84 +368,6 @@ class ResNetRegMultiscale(Model):
 
         self.saver = tf.train.Saver()
 
-    def build_loss(self):
-        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
-
-    def _predict(self,x):
-        return self.sess.run(self.yhat,{self.x:x})
-
-    def finalize(self):
-        self.sess = tf.Session()
-        self.sess.run(tf.global_variables_initializer())
-
-    def configure_trainer(self):
-        LEARNING_RATE = self.config["LEARNING_RATE"]
-        self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [2000, 3000, 4000, 6000, 9000]
-        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/10000, LEARNING_RATE/100000, LEARNING_RATE/1000000, LEARNING_RATE/10000000]
-        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
-
-        #self.opt = tf.train.AdamOptimizer(learning_rate)
-        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
-        #
-        # self.gvs = self.opt.compute_gradients(self.loss)
-        # self.capped_gvs = [(tf.clip_by_value(grad, -1.0, 1.0), var) for grad, var in self.gvs]
-        # self.train_op = self.opt.apply_gradients(self.capped_gvs)
-        self.train_op = self.opt.minimize(self.loss)
-
-    def log(self,i,x,y):
-        l = self.calculate_loss(x,y)
-        yhat = self.predict(x)[0]
-
-        x_1,x_2 = self.sess.run([self.x_1,self.x_2], {self.x:x})
-
-        print("{}: loss={}\n".format(i,l))
-        print("yhat = {}".format(yhat))
-
-        f = open(self.config["LOG_FILE"],"a+")
-        f.write("{}: loss={}\n".format(i,l))
-        f.write("{}: yhat={}\n".format(i,yhat))
-        f.close()
-
-        self.save()
-
-        x_ = x[0,:,:,0]
-        y_ = y[0]
-        ctrue = vr.pred_to_contour(y_)
-        cpred = vr.pred_to_contour(yhat)
-
-        plt.figure()
-        plt.imshow(x_,cmap='gray',extent=[-1, 1, 1, -1])
-        plt.colorbar()
-        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
-        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
-        plt.show()
-        plt.close()
-
-        if self.config['MULTI_TYPE'] == "POOL":
-            ext1 = [-1,1,1,-1]
-            ext2 = [-1,1,1,-1]
-        else:
-            ext1 = [-0.5,0.5,0.5,-0.5]
-            ext2 = [-0.25,0.25,0.25,-0.25]
-
-        plt.figure()
-        plt.imshow(x_1[0,:,:,0],cmap='gray',extent=ext1)
-        plt.colorbar()
-        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
-        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
-        plt.show()
-        plt.close()
-
-        plt.figure()
-        plt.imshow(x_2[0,:,:,0],cmap='gray',extent=ext2)
-        plt.colorbar()
-        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
-        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
-        plt.show()
-        plt.close()
-
 class ConvNet(Model):
     def build_model(self):
         CROP_DIMS   = self.config['CROP_DIMS']
@@ -421,14 +393,6 @@ class ConvNet(Model):
             o = tf_util.conv2D(o,dims=DIMS, nfilters=NFILTERS,init=INIT,activation=leaky_relu)
 
         s   = o.get_shape().as_list()
-        s_1 = o_1.get_shape().as_list()
-        s_2 = o_2.get_shape().as_list()
-
-        o_vec   = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
-        o_vec_1 = tf.reshape(o_1,shape=[-1,s_1[1]*s_1[2]*s_1[3]])
-        o_vec_2 = tf.reshape(o_2,shape=[-1,s_2[1]*s_2[2]*s_2[3]])
-
-        o = tf.concat([o_vec, o_vec_1, o_vec_2], axis=1)
 
         for i in range(self.config['FC_LAYERS']-1):
             if "HIDDEN_SIZES" in self.config:
@@ -440,33 +404,11 @@ class ConvNet(Model):
                 leaky_relu, std=INIT, scope='fc_'+str(i))
 
         self.yhat = tf_util.fullyConnected(o, NUM_POINTS,
-            tf.identity, std=INIT, scope='fc_final')
+            tf.sigmoid, std=INIT, scope='fc_final')
 
         self.build_loss()
 
         self.saver = tf.train.Saver()
-
-    def build_loss(self):
-        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
-
-    def _predict(self,x):
-        return self.sess.run(self.yhat,{self.x:x})
-
-    def finalize(self):
-        self.sess = tf.Session()
-        self.sess.run(tf.global_variables_initializer())
-
-    def configure_trainer(self):
-        LEARNING_RATE = self.config["LEARNING_RATE"]
-        self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [2000, 4000, 6000, 8000, 10000]
-        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000, LEARNING_RATE/10000, LEARNING_RATE/100000]
-        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
-
-        #self.opt = tf.train.AdamOptimizer(learning_rate)
-        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
-        self.train_op = self.opt.minimize(self.loss)
 
 class ConvNetMulti(Model):
     def build_model(self):
@@ -508,8 +450,14 @@ class ConvNetMulti(Model):
 
 
         s = o.get_shape().as_list()
+        s_1 = o_1.get_shape().as_list()
+        s_2 = o_2.get_shape().as_list()
 
-        o_vec = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+        o_vec   = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+        o_vec_1 = tf.reshape(o_1,shape=[-1,s_1[1]*s_1[2]*s_1[3]])
+        o_vec_2 = tf.reshape(o_2,shape=[-1,s_2[1]*s_2[2]*s_2[3]])
+
+        o = tf.concat([o_vec, o_vec_1, o_vec_2], axis=1)
 
         for i in range(self.config['FC_LAYERS']-1):
             if "HIDDEN_SIZES" in self.config:
@@ -517,34 +465,12 @@ class ConvNetMulti(Model):
             else:
                 h = self.config['HIDDEN_SIZE']
 
-            o_vec = tf_util.fullyConnected(o_vec, h,
+            o = tf_util.fullyConnected(o, h,
                 leaky_relu, std=INIT, scope='fc_'+str(i))
 
-        self.yhat = tf_util.fullyConnected(o_vec, NUM_POINTS,
+        self.yhat = tf_util.fullyConnected(o, NUM_POINTS,
             tf.identity, std=INIT, scope='fc_final')
 
         self.build_loss()
 
         self.saver = tf.train.Saver()
-
-    def build_loss(self):
-        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
-        #self.loss += tf.reduce_mean(tf.abs(self.y-self.yhat))
-
-    def _predict(self,x):
-        return self.sess.run(self.yhat,{self.x:x})
-
-    def finalize(self):
-        self.sess = tf.Session()
-        self.sess.run(tf.global_variables_initializer())
-
-    def configure_trainer(self):
-        LEARNING_RATE = self.config["LEARNING_RATE"]
-        self.global_step = tf.Variable(0, trainable=False)
-        boundaries = [2000, 4000, 6000, 8000, 10000]
-        values = [LEARNING_RATE, LEARNING_RATE/10, LEARNING_RATE/100, LEARNING_RATE/1000, LEARNING_RATE/10000, LEARNING_RATE/100000]
-        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
-
-        #self.opt = tf.train.AdamOptimizer(learning_rate)
-        self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
-        self.train_op = self.opt.minimize(self.loss)
