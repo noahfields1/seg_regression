@@ -385,7 +385,7 @@ class ConvNet(Model):
         LAMBDA      = self.config['L2_REG']
         INIT        = self.config['INIT']
 
-        NLAYERS     = int(self.config['NLAYERS']/2)
+        NLAYERS     = self.config['NLAYERS']
         NFILTERS    = self.config['NFILTERS']
 
         NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
@@ -398,11 +398,20 @@ class ConvNet(Model):
 
         o = self.x
 
+        if "INPUT_POOL" in self.config:
+            d = self.config['INPUT_POOL']
+
+            o = tf.nn.pool(o, [d,d], "MAX", "VALID", strides=[d,d])
+
+        
         for i in range(NLAYERS):
-            o = tf_util.conv2D(o,dims=DIMS, nfilters=NFILTERS,init=INIT,activation=leaky_relu)
+            o = tf_util.conv2D(o,dims=DIMS,nfilters=NFILTERS,
+                               init=INIT,
+                          activation=leaky_relu,scope="conv_{}".format(i))
 
         s   = o.get_shape().as_list()
-
+        o = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+        
         for i in range(self.config['FC_LAYERS']-1):
             if "HIDDEN_SIZES" in self.config:
                 h = self.config['HIDDEN_SIZES'][i]
