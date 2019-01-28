@@ -137,7 +137,7 @@ class Model(AbstractModel):
         W = x_.shape[0]
         s = int(0.25*W)
         e = int(0.75*W)
-        
+
         plt.figure()
         plt.imshow(x_[s:e,s:e],cmap='gray',extent=[-0.5, 0.5, 0.5, -0.5])
         plt.colorbar()
@@ -145,8 +145,8 @@ class Model(AbstractModel):
         plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
         plt.show()
         plt.close()
-        
-        
+
+
         c = self.config
         log_dir = c['RESULTS_DIR']+'/'+c['NAME']+'/log/'
 
@@ -186,7 +186,7 @@ class FcNet(Model):
 
         self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
         self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
-        
+
         o = self.x
         if "INPUT_POOL" in self.config:
             d = self.config['INPUT_POOL']
@@ -403,7 +403,7 @@ class ConvNet(Model):
 
             o = tf.nn.pool(o, [d,d], "MAX", "VALID", strides=[d,d])
 
-        
+
         for i in range(NLAYERS):
             o = tf_util.conv2D(o,dims=DIMS,nfilters=NFILTERS,
                                init=INIT,
@@ -411,8 +411,8 @@ class ConvNet(Model):
 
         s   = o.get_shape().as_list()
         o = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
-        
-        for i in range(self.config['FC_LAYERS']-1):
+
+        for i in range(self.config['FC_LAYERS']):
             if "HIDDEN_SIZES" in self.config:
                 h = self.config['HIDDEN_SIZES'][i]
             else:
@@ -420,6 +420,7 @@ class ConvNet(Model):
 
             o = tf_util.fullyConnected(o, h,
                 leaky_relu, std=INIT, scope='fc_'+str(i))
+            print(o)
 
         self.yhat = tf_util.fullyConnected(o, NUM_POINTS,
             tf.sigmoid, std=INIT, scope='fc_final')
