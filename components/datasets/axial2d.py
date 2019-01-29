@@ -141,7 +141,11 @@ def get_dataset(config, key="TRAIN"):
                 x_shift = np.random.randint(-lim,lim)
                 y_shift = np.random.randint(-lim,lim)
 
-                aug_x.append( x[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
+                x_ = x[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd]
+                if x_.shape[1] == 0 or x_.shape[0] == 0:
+                    continue
+
+                aug_x.append( x_ )
                 aug_y.append( y[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
                 aug_m.append( meta[i] )
 
