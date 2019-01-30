@@ -278,11 +278,15 @@ class ResNetReg(Model):
 
         o = leaky_relu(self.yhat)
 
+        d = self.config['POOL']
+
+        o = tf.nn.pool(o, [d,d], "MAX", "VALID", strides=[d,d])
+
         s = o.get_shape().as_list()
 
         o_vec = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
 
-        for i in range(self.config['FC_LAYERS']-1):
+        for i in range(self.config['FC_LAYERS']):
             if "HIDDEN_SIZES" in self.config:
                 h = self.config['HIDDEN_SIZES'][i]
             else:
@@ -292,7 +296,7 @@ class ResNetReg(Model):
                 leaky_relu, std=INIT, scope='fc_'+str(i))
 
         self.yhat = tf_util.fullyConnected(o_vec, NUM_POINTS,
-            tf.identity, std=INIT, scope='fc_final')
+            tf.sigmoid, std=INIT, scope='fc_final')
 
         self.build_loss()
 
