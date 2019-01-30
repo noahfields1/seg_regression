@@ -95,6 +95,23 @@ def get_dataset(config, key="TRAIN"):
 
     Yc   = np.array([d[2] for d in data])
 
+    r_thresh = config['R_SMALL']
+    radiuses = [m['radius']*m['spacing'] for m in meta]
+
+    if 'SIZE_SPLIT' in config:
+        print("splitting size")
+        if config.get('SIZE_SPLIT') == 'LARGE':
+            indexes = [i for i in range(X_.shape[0]) if radiuses[i] > r_thresh]
+
+        if config.get('SIZE_SPLIT') == 'SMALL':
+            indexes = [i for i in range(X_.shape[0]) if radiuses[i] <= r_thresh]
+
+        X        = np.array([X[i] for i in indexes])
+        Yc       = np.array([Yc[i] for i in indexes])
+        meta     = [meta[i] for i in indexes]
+
+
+
     X_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
     Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
 
@@ -172,25 +189,6 @@ def get_dataset(config, key="TRAIN"):
     contours = np.array(contours)
     X_ = np.array(x_final)
 
-    # m = np.mean(X_,axis=0,keepdims=True)
-    # s = np.std(X_,axis=0,keepdims=True)
-    # X_ = (1.0*X_-m)/(s+EPS)
     meta = m_final
-
-    r_thresh = config['R_SMALL']
-    radiuses = [m['radius']*m['spacing'] for m in meta]
-
-    if 'SIZE_SPLIT' in config:
-        print("splitting size")
-        if config.get('SIZE_SPLIT') == 'LARGE':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] > r_thresh]
-
-        if config.get('SIZE_SPLIT') == 'SMALL':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] <= r_thresh]
-
-        X_       = np.array([X_[i] for i in indexes])
-        contours = np.array([contours[i] for i in indexes])
-        meta     = [meta[i] for i in indexes]
-        return X_, contours, meta
 
     return X_,contours,meta
