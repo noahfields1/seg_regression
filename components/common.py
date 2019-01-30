@@ -56,7 +56,7 @@ class BasePreProcessor(AbstractPreProcessor):
                 c = self.config['CLIP_VAL']
                 x_[x_>c] = c
                 x_[x_<-c] = -c
-                
+
             if self.config['IMAGE_TYPE'] == 'BLUR':
                 x_ = filters.gaussian(x, sigma=self.config['BLUR_SIGMA'])
                 mu  = 1.0*np.mean(x_)
@@ -180,6 +180,7 @@ class BaseTrainer(AbstractTrainer):
     def train(self):
         X = self.X
         print(X.shape)
+
         if not self.preprocessor == None:
             X = np.array([self.preprocessor(x) for x in self.X])
             C = np.array([self.preprocessor.preprocess_label(c) for c in self.C])
