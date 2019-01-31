@@ -1,16 +1,16 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files.txt"
 
-NAME:       "convnet_ct_fc250_small"
+NAME:       "convnet_ct_fc250_large_aug"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "ConvNet"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/convnet_ct_fc250_small/log/train.txt"
+LOG_FILE: "./results/convnet_ct_fc250_large_aug/log/train.txt"
 
-MODEL_DIR: "./results/convnet_ct_fc250_small/model"
+MODEL_DIR: "./results/convnet_ct_fc250_large_aug/model"
 MODEL_NAME: "convnet"
 MODEL_TYPE: "convnet"
 
@@ -24,15 +24,17 @@ L2_REG: 0.0
 NUM_FILTERS: 32
 
 IMAGE_TYPE: "BLUR"
-BLUR_SIGMA: 1
+BLUR_SIGMA: 3
 
-CENTER: false
+AUGMENT: true
+AUGMENT_FACTOR: 10
+AUGMENT_R_SCALE: 0.75
+CENTER: True
+
 INPUT_DIMS:
-  - 96
-  - 96
+  - 160
+  - 160
   - 1
-
-SIZE_SPLIT: "SMALL"
 
 BALANCE_RADIUS: false
 R_SMALL: 0.75
@@ -41,11 +43,13 @@ N_SAMPLE: 10000
 SPACING: 0.029
 DIMS: 240
 CENTER_DIMS: 200
-CROP_DIMS: 96
+CROP_DIMS: 160
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 15
 
-INPUT_POOL: 2
+INPUT_POOL: 4
+
+SIZE_SPLIT: "LARGE"
 
 NLAYERS: 3
 CONV_DIMS: 3

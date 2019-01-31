@@ -88,7 +88,6 @@ def get_dataset(config, key="TRAIN"):
 
     X    = np.array([d[0] for d in data])
 
-    N    = X.shape[0]
     cr   = int(X.shape[1]/2)
     cc   = int(config['CENTER_DIMS']/2)
     cd   = int(config['CROP_DIMS']/2)
@@ -101,10 +100,10 @@ def get_dataset(config, key="TRAIN"):
     if 'SIZE_SPLIT' in config:
         print("splitting size")
         if config.get('SIZE_SPLIT') == 'LARGE':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] > r_thresh]
+            indexes = [i for i in range(X.shape[0]) if radiuses[i] > r_thresh]
 
         if config.get('SIZE_SPLIT') == 'SMALL':
-            indexes = [i for i in range(X_.shape[0]) if radiuses[i] <= r_thresh]
+            indexes = [i for i in range(X.shape[0]) if radiuses[i] <= r_thresh]
 
         X        = np.array([X[i] for i in indexes])
         Yc       = np.array([Yc[i] for i in indexes])
@@ -112,6 +111,7 @@ def get_dataset(config, key="TRAIN"):
 
 
 
+    N    = X.shape[0]
     X_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
     Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
 
