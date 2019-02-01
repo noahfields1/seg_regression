@@ -426,6 +426,10 @@ class ConvNet(Model):
                 leaky_relu, std=INIT, scope='fc_'+str(i))
             print(o)
 
+            if "DROPOUT" in self.config:
+                o = tf.nn.dropout(o, self.config['DROPOUT'])
+
+
         self.yhat = tf_util.fullyConnected(o, NUM_POINTS,
             tf.sigmoid, std=INIT, scope='fc_final')
 

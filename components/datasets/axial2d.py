@@ -142,7 +142,7 @@ def get_dataset(config, key="TRAIN"):
         X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
 
-    if "AUGMENT" in config and key=='TRAIN':
+    if "AUGMENT" in config and key == 'TRAIN':
         aug_x = []
         aug_y = []
         aug_m = []
@@ -159,7 +159,7 @@ def get_dataset(config, key="TRAIN"):
                 y_shift = np.random.randint(-lim,lim)
 
                 x_ = x[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd]
-                if x_.shape[1] == 0 or x_.shape[0] == 0:
+                if not x_.shape[1] == config['CROP_DIMS'] or not x_.shape[0] == config['CROP_DIMS'] or len(x.shape) < 2:
                     continue
 
                 aug_x.append( x_ )
