@@ -1,23 +1,23 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files_clean.txt"
 
-NAME: "convnet_fc1000_clean_aug"
+NAME: "convnet_fc2000_clean"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "ConvNet"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/convnet_fc1000_clean_aug/log/train.txt"
+LOG_FILE: "./results/convnet_fc2000_clean/log/train.txt"
 
-MODEL_DIR: "./results/convnet_fc1000_clean_aug/model"
+MODEL_DIR: "./results/convnet_fc2000_clean/model"
 MODEL_NAME: "convnet"
 MODEL_TYPE: "convnet"
 
 LOG_STEP: 100
 LEAK: 0.2
 BATCH_SIZE: 4
-LEARNING_RATE: 0.0001
+LEARNING_RATE: 0.00001
 TRAIN_STEPS: 30000
 BATCH_SIZE: 4
 L2_REG: 0.0
@@ -26,11 +26,7 @@ NUM_FILTERS: 32
 IMAGE_TYPE: "BLUR"
 BLUR_SIGMA: 3
 
-AUGMENT: true
-AUGMENT_FACTOR: 10
-AUGMENT_R_SCALE: 0.65
-CENTER: true
-
+CENTER: false
 INPUT_DIMS:
   - 160
   - 160
@@ -54,7 +50,7 @@ CONV_DIMS: 3
 NFILTERS: 32
 FC_LAYERS: 1
 HIDDEN_SIZES:
-  - 1000
+  - 2000
 INIT: 'xavier'
 
 VAL_PATTERNS:
