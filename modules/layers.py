@@ -354,3 +354,31 @@ def masked_loss_3D(logits, label, radius=30):
         loss = tf.reduce_sum(loss)/tf.reduce_sum(y_dilated)
 
         return loss
+
+def inception(x, c1x1=64, c3x3_reduce=96, c3x3=128, c5x5_reduce=16,
+    c5x5=32, c1x1_pool=32, activation=tf.nn.relu, init='variance', scope="inception"):
+
+    with tf.variable_scope(scope):
+        #1x1
+        o_1x1 = conv2D(x, nfilters=c1x1, dims=[1,1], activation=activation,
+            init=init, scope='1x1')
+
+        #3x3_reduce
+        o_3x3_r = conv2D(x, nfilters=c3x3_reduce, dims=[1,1], activation=activation,
+            init=init, scope='3x3_reduce')
+
+        o_3x3 = conv2D(o_1x1_r, nfilters=c3x3, dims=[3,3], activation=activation,
+            init=init, scope='3x3')
+
+        #5x5_reduce
+        o_5x5_r = conv2D(x, nfilters=c5x5_reduce, dims=[1,1], activation=activation,
+            init=init, scope='5x5_reduce')
+
+        o_5x5 = conv2D(o_5x5_r, nfilters=c5x5, dims=[5,5], activation=activation,
+            init=init, scope='5x5')
+
+        #1x1 pool proj
+        o_pool = tf.nn.pool(x, [3,3], "MAX", "SAME", strides=[1,1])
+
+        o_1x1 = conv2D(o_pool, nfilters=c1x1_pool, dims=[1,1], activation=activation,
+            init=init, scope='1x1_pool')
