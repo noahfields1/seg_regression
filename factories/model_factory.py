@@ -22,7 +22,9 @@ def get(config):
         return nn.ConvNet(config)
     elif mod == "FcNet":
         return nn.FcNet(config)
-        
+    elif mod == "GoogleNet":
+        return nn.GoogleNet(config)
+            
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']
         y = io.load_yaml(c)

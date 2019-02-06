@@ -501,3 +501,35 @@ class ConvNetMulti(Model):
         self.build_loss()
 
         self.saver = tf.train.Saver()
+
+class GoogleNet(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        o,o_side = tf_util.GoogleNet(self.x, activation=leaky_relu, init=INIT,
+            scope='googlenet', output_size=NUM_POINTS)
+
+        print(o)
+        print(o_side)
+
+        self.yhat = tf.nn.sigmoid(o)
+        self.yhat_side = tf.nn.sigmoid(o_side)
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
+    def build_loss(self):
+        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
+        self.loss += 0.3*tf.reduce_mean(tf.square(self.y-self.yhat_side))
