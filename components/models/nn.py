@@ -71,13 +71,15 @@ class Model(AbstractModel):
         boundaries = [2000,
                       5000,
                       10000,
-                      15000]
+                      15000,
+                      150000]
 
         values = [LEARNING_RATE,
                   LEARNING_RATE/3,
                   LEARNING_RATE/10,
                   LEARNING_RATE/100,
-                  LEARNING_RATE/1000]
+                  LEARNING_RATE/1000,
+                  LEARNING_RATE/10000,]
 
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
