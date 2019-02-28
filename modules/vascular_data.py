@@ -413,6 +413,25 @@ def read_mha(img_fn):
     reader.Update()
     return reader.GetOutput()
 
+def read_vti(img_fn):
+    reader = vtk.vtkXMLImageDataReader()
+
+    reader.SetFileName(img_fn)
+    reader.Update()
+    return reader.GetOutput()
+
+def read_dicom(dicom_dir):
+    # fnames = os.listdir(dicom_dir)
+    # fnames = [f for f in fnames if ".dcm" in f]
+    # fnames = sorted(fnames)
+    # fnames = [os.path.join(dicom_dir,f) for f in fnames]
+
+    reader = vtk.vtkDICOMImageReader()
+    reader.SetDirectoryName(dicom_dir)
+    reader.Update()
+
+    return reader.GetOutput()
+
 def getImageReslice(img, ext, p, n, x, spacing, asnumpy=False):
     """
     gets slice of an image in the plane defined by p, n and x
