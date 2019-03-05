@@ -21,6 +21,12 @@ data    = dataset_factory.get(config, DATA_KEY)
 import factories.model_factory as model_factory
 model = model_factory.get(config)
 
+try:
+    model.load()
+    print("loaded model")
+except:
+    print("no model found, training fresh")
+
 #preprocessor
 import factories.preprocessor_factory as prepro_factory
 preprocessor = prepro_factory.get(config)
