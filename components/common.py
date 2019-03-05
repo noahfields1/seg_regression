@@ -3,7 +3,11 @@ import numpy as np
 import os
 from tqdm import tqdm
 from sklearn.ensemble import RandomForestRegressor
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 import pandas as pd
 from medpy.metric.binary import hd, assd, dc
 import skimage.filters as filters

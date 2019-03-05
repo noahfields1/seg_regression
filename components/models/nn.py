@@ -2,7 +2,11 @@ from base.model import AbstractModel
 import numpy as np
 import tensorflow as tf
 import modules.layers as tf_util
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 import modules.vessel_regression as vr
 
 def get_batch(X,Y, batch_size=16):
