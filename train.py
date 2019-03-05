@@ -1,3 +1,5 @@
+import os
+os.environ['CUDA_VISIBILE_DEVICES'] = ''
 import modules.io as io
 import argparse
 
@@ -8,7 +10,8 @@ parser.add_argument('data_key')
 
 args = parser.parse_args()
 
-config = io.load_yaml(args.config_file)
+config   = io.load_yaml(args.config_file)
+DATA_KEY = args.data_key
 
 #dataset
 import factories.dataset_factory as dataset_factory
