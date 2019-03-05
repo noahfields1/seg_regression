@@ -11,6 +11,8 @@ MirrorURL: http://us.archive.ubuntu.com/ubuntu/
 %runscript
     echo "This is what happens when you run the container..."
 
+%environment
+    DISPLAY=:0
 
 %post
     echo "Hello from inside the container"
@@ -29,7 +31,8 @@ MirrorURL: http://us.archive.ubuntu.com/ubuntu/
       wget \
       git \
       python3.6 \
-      python3-dev
+      python3-dev \
+      python3-tk
 
     wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate && \
           python3.6 get-pip.py && \
@@ -37,6 +40,7 @@ MirrorURL: http://us.archive.ubuntu.com/ubuntu/
 
     pip install -r /requirements.txt
 
+    git clone https://github.com/gmaher/seg_regression.git
 
 %files
   requirements.txt /
