@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --job-name="seg_regression"
+#SBATCH --output="/home/gdmaher/output/singularity.%j.out"
+#SBATCH --error="/home/gdmaher/output/singularity.%j.err"
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=24
+#SBATCH --time=00:10:00
+
+module load singularity
+
+CONTAINER=/home/gdmaher/tf.img
+
+CONFIG=./config/convnet_fc250_l10_train1k_clean.yaml
+
+echo "Starting job with config ${CONFIG}"
+singularity exec --bind /home/gdmaher/data:/media ${CONTAINER} ./run.sh ${CONFIG}

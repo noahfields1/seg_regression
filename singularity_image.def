@@ -40,7 +40,7 @@ MirrorURL: http://us.archive.ubuntu.com/ubuntu/
 
     pip install -r /requirements.txt
 
-    git clone https://github.com/gmaher/seg_regression.git
+    mkdir code
 
 %files
   requirements.txt /

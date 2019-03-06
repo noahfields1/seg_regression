@@ -24,6 +24,7 @@ class Model(AbstractModel):
         self.finalize()
 
         self.losses = []
+        self.iters = []
 
     def train_step(self,x,y):
         self.global_step = self.global_step+1
@@ -96,12 +97,15 @@ class Model(AbstractModel):
         for i in range(self.config['TRAIN_STEPS']):
             x,y = get_batch(X,Y, self.config['BATCH_SIZE'])
 
-            l = self.calculate_loss(x,y)
-            self.losses.append(l)
+            
 
             self.train_step(x,y)
 
             if i % self.config['LOG_STEP'] == 0:
+                l = self.calculate_loss(x,y)
+                self.losses.append(l)
+                self.iters.append(i)
+                
                 self.log(i,x,y)
                 self.log(i,X[:4],Y[:4])
                 self.save()
@@ -157,24 +161,24 @@ class Model(AbstractModel):
         log_dir = c['RESULTS_DIR']+'/'+c['NAME']+'/log/'
 
         plt.figure()
-        plt.plot(self.losses)
+        plt.plot(self.iters, self.losses)
         plt.savefig(log_dir+'loss.png',dpi=300)
         plt.close()
 
         plt.figure()
-        plt.plot(self.losses)
+        plt.plot(self.iters, self.losses)
         plt.ylim(0,1)
         plt.savefig(log_dir+'loss_1.png',dpi=300)
         plt.close()
 
         plt.figure()
-        plt.plot(self.losses)
+        plt.plot(self.iters, self.losses)
         plt.ylim(0,0.1)
         plt.savefig(log_dir+'loss_2.png',dpi=300)
         plt.close()
 
         plt.figure()
-        plt.plot(self.losses)
+        plt.plot(self.iters, self.losses)
         plt.ylim(0,0.01)
         plt.savefig(log_dir+'loss_3.png',dpi=300)
         plt.close()
