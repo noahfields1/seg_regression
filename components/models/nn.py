@@ -91,10 +91,10 @@ class Model(AbstractModel):
         if not "CONTINUE" in self.config:
             self.opt = tf.train.AdamOptimizer(learning_rate)
         else:
-            lr = self.config['LEARNING_RATE']/10000
+            lr = self.config['LEARNING_RATE']/1000
             print("continuing with lr {}".format(lr))
             self.opt = tf.train.AdamOptimizer(lr)
-            
+
         #self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
         self.train_op = self.opt.minimize(self.loss)
 

@@ -20,15 +20,12 @@ data    = dataset_factory.get(config, DATA_KEY)
 #model
 import factories.model_factory as model_factory
 
-
-try:
+if os.path.isdir(config['MODEL_DIR']):
     config['CONTINUE'] = True
     model = model_factory.get(config)
     model.load()
     print("loaded model")
-except:
-    del config['CONTINUE']
-    model.sess.close()
+else:
     model = model_factory.get(config)
     print("no model found, training fresh")
 
