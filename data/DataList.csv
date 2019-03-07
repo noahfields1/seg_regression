@@ -1,0 +1,157 @@
+num,full_name,osmsc_id,image_id,sub_id,Modality,segtype,seg_subtype,gender,age
+0,0001_0001,1,OSMSC0001,1,CT,cerebral,normal,F,30
+1,0002_0001,2,OSMSC0002,1,CT,coronary,normal,F,63
+2,0003_0001,3,OSMSC0003,1,CT,aortofemoral,normal,F,21
+3,0004_0001,4,OSMSC0004,1,CT,aortofemoral,lower,F,23
+4,0005_1001,5,OSMSC0005,1001,CT,Pulmonary,normal,F,67
+5,0006_0001,6,OSMSC0006,1,MR,aortofemoral,normal,F,30
+6,0063_0001,63,OSMSC0063,1,MR,fontan,,M,3
+7,0063_1001,63,OSMSC0063,1001,MR,aorta,fontan,M,3
+8,0063_2001,63,OSMSC0063,2001,MR,fontan,,M,3
+9,0063_3001,63,OSMSC0063,3001,MR,,,M,3
+10,0063_4001,63,OSMSC0063,4001,MR,,,M,3
+11,0064_0001,64,OSMSC0064,1,MR,fontan,,F,6
+12,0064_1001,64,OSMSC0064,1001,MR,aorta,fontan,F,6
+13,0064_2001,64,OSMSC0064,2001,MR,,,F,6
+14,0064_3001,64,OSMSC0064,3001,MR,,,F,6
+15,0064_4001,64,OSMSC0064,4001,MR,,,F,6
+16,0065_0001,65,OSMSC0065,1,CT,fontan,normal,F,5
+17,0065_1001,65,OSMSC0065,1001,CT,,,F,5
+18,0065_2001,65,OSMSC0065,2001,CT,,,F,5
+19,0065_3001,65,OSMSC0065,3001,CT,,,F,5
+20,0065_4001,65,OSMSC0065,4001,CT,,,F,5
+21,0066_0001,66,OSMSC0066,1,MR,animal-aortic,coa,animal,
+22,0067_0001,67,OSMSC0067,1,MR,animal-aortic,coa,animal,
+23,0068_0001,68,OSMSC0068,1,MR,animal-aortic,coa,animal,
+24,0069_0001,69,OSMSC0069,1,MR,animal-aortic,coa,animal,
+25,0070_0001,70,OSMSC0070,1,MR,animal-aortic,coa,animal,
+26,0071_0001,71,OSMSC0071,1,MR,animal-aortic,coa,animal,
+27,0072_0001,72,OSMSC0072,1,MR,animal-aortic,coa,animal,
+28,0073_0001,73,OSMSC0073,1,MR,animal-aortic,coa,animal,
+29,0074_0001,74,OSMSC0074,1,MR,animal-aortic,coa,animal,
+30,0075_0001,75,OSMSC0075,1,MR,fontan,,F,17
+31,0075_1001,75,OSMSC0075,1001,MR,aorta,fontan,F,17
+32,0075_2001,75,OSMSC0075,2001,MR,,,F,17
+33,0075_3001,75,OSMSC0075,3001,MR,,,F,17
+34,0075_4001,75,OSMSC0075,4001,MR,,,F,17
+35,0076_0001,76,OSMSC0076,1,MR,fontan,normal,F,27
+36,0076_1001,76,OSMSC0076,1001,MR,aorta,fontan,F,27
+37,0076_2001,76,OSMSC0076,2001,MR,,,F,27
+38,0076_3001,76,OSMSC0076,3001,MR,,,F,27
+39,0076_4001,76,OSMSC0076,4001,MR,,,F,27
+40,0077_0001,77,OSMSC0077,1,MR,fontan,normal,F,3
+41,0077_1001,77,OSMSC0077,1001,MR,aorta,fontan,F,3
+42,0078_0001,78,OSMSC0078,1,MR,vertebral,normal,F,31
+43,0079_0001,79,OSMSC0079,1,MR,vertebral,normal,M,25
+44,0080_0001,80,OSMSC0080,1,MR,pulmonary,normal,F,43
+45,0080_1001,80,OSMSC0080,1001,MR,,,F,43
+46,0081_0001,81,OSMSC0081,1,MR,pulmonary,normal,F,51
+47,0081_1001,81,OSMSC0081,1001,MR,,,F,51
+48,0082_0001,82,OSMSC0082,1,MR,,,M,35
+49,0082_1001,82,OSMSC0082,1001,MR,,,M,35
+50,0083_2002,83,OSMSC0083,2002,MR,pulmonary,hypertension,F,15
+51,0084_0001,84,OSMSC0084,1,MR,pulmonary,normal,F,31
+52,0084_1001,84,OSMSC0084,1001,MR,,,F,31
+53,0085_1001,85,OSMSC0085,1001,MR,pulmonary,hypertension,F,36
+54,0086_0001,86,OSMSC0086,1,MR,pulmonary,normal,M,21
+55,0086_1001,86,OSMSC0086,1001,MR,,,M,21
+56,0087_1001,87,OSMSC0087,1001,MR,pulmonary,hypertension,F,16
+57,0088_1001,88,OSMSC0088,1001,MR,pulmonary,hypertension,F,19
+58,0089_1001,89,OSMSC0089,1001,MR,pulmonary,hypertension,F,50
+59,0090_0001,90,OSMSC0090,1,MR,aorta,"coa, anastomosis",M,13
+60,0091_0001,91,OSMSC0091,1,CT,aorta,"coa, anastomosis",M,6
+61,0091_2001,91,OSMSC0091,2001,CT,,"coa, anastomosis",,
+62,0092_0001,92,OSMSC0092,1,CT,aorta,"coa, anastomosis",M,11
+63,0093_0001,93,OSMSC0093,1,MR,aorta,"coa, anastomosis",F,11
+64,0094_0001,94,OSMSC0094,1,MR,aorta,"coa, anastomosis",M,23
+65,0095_0001,95,OSMSC0095,1,MR,aorta,"coa, anastomosis",M,26
+66,0096_0001,96,OSMSC0096,1,MR,glenn,,F,3
+67,0097_0001,97,OSMSC0097,1,MR,glenn,,M,3.9
+68,0098_0001,98,OSMSC0098,1,MR,glenn,,F,2.8
+69,0099_0001,99,OSMSC0099,1,MR,glenn,,M,4.75
+70,0100_0002,100,OSMSC0100,2,MR,glenn,,M,3
+71,0101_0001,101,OSMSC0101,1,MR,aorta,"coa, anastomosis",M,13
+72,0102_0001,102,OSMSC0102,1,MR,aorta,"coa, anastomosis",M,5
+73,0102_2001,102,OSMSC0102,2001,MR,,"coa, anastomosis",M,5
+74,0103_0001,103,OSMSC0103,1,MR,aorta,"coa, anastomosis",F,11
+75,0104_0001,104,OSMSC0104,1,MR,aorta,"coa, anastomosis",F,11
+76,0105_0001,105,OSMSC0105,1,MR,aorta,"coa, anastomosis",F,23
+77,0106_0001,106,OSMSC0106,1,MR,aorta,"coarctation, severe",F,10
+78,0107_0001,107,OSMSC0107,1,MR,aorta,coa,M,4
+79,0107_1001,107,OSMSC0107,1001,MR,,,M,4
+80,0108_0001,108,OSMSC0108,1,CT,"aorta, coronary",kawasaki,M,10
+81,0109_0001,109,OSMSC0109,1,CT,"aorta, coronary",cabg,M,63
+82,0110_0001,110,OSMSC0110,1,MR,aortofemoral,normal,M,67
+83,0111_0001,111,OSMSC0111,1,MR,aorta,coa,F,8
+84,0111_1001,111,OSMSC0111,1001,MR,,,F,8
+85,0112_1001,112,OSMSC0112,1001,MR,pulmonary,hypertension,M,41
+86,0113_0003,113,OSMSC0113,3,CT,"aorta, coronary",cabg,M,65
+87,0115_0005,115,OSMSC0115,5,CT,"aorta, coronary",cabg,M,60
+88,0116_0001,116,OSMSC0116,1,CT,aorta-stub,kawasaki,F,0.5
+89,0117_0001,117,OSMSC0117,1,CT,aorta-stub,kawasaki,M,28
+90,0118_1000,118,OSMSC0118,1000,CT,pulmonary,,M,2
+91,0119_0001,119,OSMSC0119,1,CT,pulmonary,,M,16
+92,0121_0000,121,OSMSC0121,0,MR,fontan,,M,5
+93,0125_0001,125,OSMSC0125,1,MR,fontan,,M,9
+94,0126_0001,126,OSMSC0126,1,MR,fontan,,M,9
+95,0129_0000,129,OSMSC0129,0,CT,aorta,aneurysm,M,18
+96,0130_0000,130,OSMSC0130,0,MR,aorta,aneurysm,M,17
+97,0131_0000,131,OSMSC0131,0,MR,aorta,aneurysm,M,15
+98,0134_0002,134,OSMSC0134,2,MR,pulmonary,,M,31
+99,0135_0001,135,OSMSC0135,1,MR,pulmonary,,M,37
+100,0136_0000,136,OSMSC0136,0,MR,polmonary,valvar stenosis,M,10
+101,0138_1001,138,OSMSC0138,1001,CT,"aorta, abdominal",aneurysm,M,73
+102,0139_1001,139,OSMSC0139,1001,CT,"aorta, abdominal",aneurysm,F,79
+103,0140_2001,140,OSMSC0140,2001,CT,"aorta, abdominal",aneurysm,M,76
+104,0141_1001,141,OSMSC0141,1001,CT,"aorta, abdominal",aneurysm,M,64
+105,0142_1001,142,OSMSC0142,1001,CT,"aorta, abdominal",aneurysm,M,75
+106,0143_0000,143,OSMSC0143,0,CT,"aorta, abdominal",disection,M,72
+107,0144_1001,144,OSMSC0144,1001,CT,"aorta, abdominal",aneurysm,M,66
+108,0145_1001,145,OSMSC0145,1001,CT,"aorta, abdominal",aneurysm,M,68
+109,0146_1001,146,OSMSC0146,1001,CT,"aorta, abdominal",aneurysm,M,70
+110,0147_1001,147,OSMSC0147,1001,CT,"aorta, abdominal",aneurysm,M,63
+111,0148_1001,148,OSMSC0148,1001,CT,"aorta, abdominal",aneurysm,M,70
+112,0149_1001,149,OSMSC0149,1001,CT,"aorta, abdominal",aneurysm,M,75
+113,0150_0001,150,OSMSC0150,1,CT,"aorta, abdominal",aneurysm,M,48
+114,0151_0001,151,OSMSC0151,1,CT,"aorta, abdominal",aneurysm,M,71
+115,0154_0001,154,OSMSC0154,1,MR,aorta,arch,M,23
+116,0154_1001,154,OSMSC0154,1001,MR,,,,
+117,0155_0001,155,OSMSC0155,1,MR,pulmonary,normal,F,22
+118,0155_1001,155,OSMSC0155,1001,MR,,,F,22
+119,0156_0001,156,OSMSC0156,1,CT,"aorta, abdominal",aneurysm,M,69
+120,0157_0000,157,OSMSC0157,0,CT,"aorta, abdominal",aneurysm,M,71
+121,0158_0001,158,OSMSC0158,1,CT,coronary,diseased,M,65
+122,0159_0001,159,OSMSC0159,1,CT,aortofemoral,lower,F,40
+123,0160_6001,160,OSMSC0160,6001,MR,aortofemoral,PAD,F,67
+124,0161_0001,161,OSMSC0161,1,MR,aortofemoral,PAD,F,67
+125,0162_3001,162,OSMSC0162,3001,MR,aortofemoral,PAD,M,55
+126,0163_0001,163,OSMSC0163,1,MR,aortofemoral,PAD,M,55
+127,0166_0001,166,OSMSC0166,1,MR,vertebral,normal,F,23
+128,0167_0001,167,OSMSC0167,1,MR,vertebral,normal,F,24
+129,0168_0001,168,OSMSC0168,1,CT,cerebrovascular,aneurysm,F,47
+130,0169_0002,169,OSMSC0169,2,MR,cerebrovascular,aneurysm,F,47
+131,0170_0001,170,OSMSC0170,1,MR,cerebrovascular,aneurysm,F,69
+132,0171_0001,171,OSMSC0171,1,MR,cerebrovascular,aneurysm,F,69
+133,0172_0001,172,OSMSC0172,1,CT,"aorta, coronary",kawasaki,M,14
+134,0173_1001,173,OSMSC0173,1001,CT,"aorta, coronary",kawasaki,M,4
+135,0174_0000,174,OSMSC0174,0,CT,aorta,,M,18
+136,0175_0000,175,OSMSC0175,0,CT,aorta,,M,45
+137,0176_0000,176,OSMSC0176,0,CT,aorta,,M,25
+138,0177_0000,177,OSMSC0177,0,CT,aortofemoral,marfan disection,F,39
+139,0178_0001,178,OSMSC0178,1,MR,cerebrovascular,aneurysm,F,56
+140,0179_0001,179,OSMSC0179,1,CT,cerebrovascular,aneurysm,F,39
+141,0180_0000,180,OSMSC0180,0,CT,cerebrovascular,aneurysm,F,39
+142,0181_0000,181,OSMSC0181,0,MR,cerebrovascular,aneurysm,F,32
+143,0182_0000,182,OSMSC0182,0,MR,cerebrovascular,aneurysm,F,32
+144,0183_1002,183,OSMSC0183,1002,CT,"aorta, coronary",kawasaki,M,4
+145,0184_0001,184,OSMSC0184,1,CT,"aorta, coronary",kawasaki,M,26
+146,0185_0001,185,OSMSC0185,1,CT,"aorta, coronary",kawasaki,F,8
+147,0186_0002,186,OSMSC0186,2,CT,coronary,normal,F,28
+148,0187_0002,187,OSMSC0187,2,CT,"aorta, coronary",kawasaki,M,59
+149,0188_0001,188,OSMSC0188,1,CT,"aorta, coronary",cabg,F,50
+150,cabg5_all,,cabg5_scan2,all,CT,"aorta, coronary",cabg,F,51
+151,cabg10_all,,cabg10_export8,all,CT,"aorta, coronary",cabg,M,73
+152,cabg11_all,,cabg11,all,CT,"aorta, coronary",cabg,M,62
+153,normal1_stump,,normal1_scan3,all,CT,"coronary, stump",normal,F,32
+154,normal4_stump,,normal4_contrast,stump,CT,"coronary, stump",normal,M,65
+155,0189_0001,185,OSMSC0189,1,CT,"aorta, coronary",cabg,F,72

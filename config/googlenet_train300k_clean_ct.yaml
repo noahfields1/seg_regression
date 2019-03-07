@@ -1,0 +1,104 @@
+DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
+FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files_clean.txt"
+
+NAME: "googlenet_train300k_clean_ct"
+TRAINER: "base"
+PREDICTOR: "base"
+EVALUATION: "base"
+MODEL: "GoogleNet"
+DATASET:    "axial2d"
+RESULTS_DIR: "./results"
+LOG_FILE: "./results/googlenet_train300k_clean_ct/log/train.txt"
+
+MODEL_DIR: "./results/googlenet_train300k_clean_ct/model"
+MODEL_NAME: "googlenet"
+MODEL_TYPE: "googlenet"
+
+LOG_STEP: 2000
+LEAK: 0.2
+BATCH_SIZE: 4
+LEARNING_RATE: 0.00005
+TRAIN_STEPS: 300000
+BATCH_SIZE: 4
+L2_REG: 0.0
+NUM_FILTERS: 32
+
+IMAGE_TYPE: "BLUR"
+BLUR_SIGMA: 3
+
+CENTER: false
+INPUT_DIMS:
+  - 160
+  - 160
+  - 1
+
+BALANCE_RADIUS: false
+R_SMALL: 0.75
+N_SAMPLE: 10000
+
+SPACING: 0.029
+DIMS: 240
+CENTER_DIMS: 200
+CROP_DIMS: 160
+NUM_CHANNELS: 1
+NUM_CONTOUR_POINTS: 15
+
+INIT: 'xavier'
+
+VAL_PATTERNS:
+  - cabg5_CLEAN
+  - OSMSC0003_CLEAN
+
+TEST_PATTERNS:
+  - OSMSC0119
+  - OSMSC0144
+  - OSMSC0148
+  - OSMSC0150
+  - OSMSC0177
+  - cabg11
+
+TRAIN_PATTERNS:
+  - OSMSC0001
+  - OSMSC0002
+  - OSMSC0004
+  - OSMSC0005
+  - OSMSC0092
+  - OSMSC0108
+  - OSMSC0109
+  - OSMSC0113
+  - OSMSC0115
+  - OSMSC0116
+  - OSMSC0117
+  - OSMSC0118
+  - OSMSC0119
+  - OSMSC0129
+  - OSMSC0138
+  - OSMSC0139
+  - OSMSC0140
+  - OSMSC0141
+  - OSMSC0142
+  - OSMSC0143
+  - OSMSC0145
+  - OSMSC0146
+  - OSMSC0147
+  - OSMSC0149
+  - OSMSC0150
+  - OSMSC0151
+  - OSMSC0156
+  - OSMSC0157
+  - OSMSC0158
+  - OSMSC0159
+  - OSMSC0168
+  - OSMSC0172
+  - OSMSC0173
+  - OSMSC0174
+  - OSMSC0175
+  - OSMSC0176
+  - OSMSC0179
+  - OSMSC0180
+  - OSMSC0183
+  - OSMSC0184
+  - OSMSC0185
+  - OSMSC0186
+  - OSMSC0187
+  - OSMSC0189
