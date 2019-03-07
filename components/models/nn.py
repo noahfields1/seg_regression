@@ -88,8 +88,13 @@ class Model(AbstractModel):
 
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
-        self.opt = tf.train.AdamOptimizer(learning_rate)
-
+        if not "CONTINUE" in self.config:
+            self.opt = tf.train.AdamOptimizer(learning_rate)
+        else:
+            lr = self.config['LEARNING_RATE']/10000
+            print("continuing with lr {}".format(lr))
+            self.opt = tf.train.AdamOptimizer(lr)
+            
         #self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
         self.train_op = self.opt.minimize(self.loss)
 
@@ -97,7 +102,7 @@ class Model(AbstractModel):
         for i in range(self.config['TRAIN_STEPS']):
             x,y = get_batch(X,Y, self.config['BATCH_SIZE'])
 
-            
+
 
             self.train_step(x,y)
 
@@ -105,7 +110,7 @@ class Model(AbstractModel):
                 l = self.calculate_loss(x,y)
                 self.losses.append(l)
                 self.iters.append(i)
-                
+
                 self.log(i,x,y)
                 self.log(i,X[:4],Y[:4])
                 self.save()

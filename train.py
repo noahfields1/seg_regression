@@ -19,12 +19,17 @@ data    = dataset_factory.get(config, DATA_KEY)
 
 #model
 import factories.model_factory as model_factory
-model = model_factory.get(config)
+
 
 try:
+    config['CONTINUE'] = True
+    model = model_factory.get(config)
     model.load()
     print("loaded model")
 except:
+    del config['CONTINUE']
+    model.sess.close()
+    model = model_factory.get(config)
     print("no model found, training fresh")
 
 #preprocessor
