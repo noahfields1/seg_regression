@@ -4,7 +4,7 @@
 #SBATCH --error="/home/gdmaher/output/singularity.%j.err"
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=24
-#SBATCH --time=00:10:00
+#SBATCH --time=48:00:00
 
 module load singularity
 
