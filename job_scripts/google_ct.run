@@ -12,5 +12,7 @@ CONTAINER=/home/gdmaher/tf.img
 
 CONFIG=./config/googlenet_train300k_clean_ct.yaml
 
+cd /home/gdmaher
+
 echo "Starting job with config ${CONFIG}"
 singularity exec --bind /home/gdmaher/data:/media ${CONTAINER} ./run.sh ${CONFIG}

@@ -10,6 +10,9 @@ DATASET:    "axial2d"
 RESULTS_DIR: "./results"
 LOG_FILE: "./results/googlenet_train300k_clean_mr/log/train.txt"
 
+ITER_FILE: "./results/googlenet_train300k_clean_mr/log/iter.txt"
+
+
 MODEL_DIR: "./results/googlenet_train300k_clean_mr/model"
 MODEL_NAME: "googlenet"
 MODEL_TYPE: "googlenet"
