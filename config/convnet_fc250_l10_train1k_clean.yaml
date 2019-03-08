@@ -10,6 +10,8 @@ DATASET:    "axial2d"
 RESULTS_DIR: "./results"
 LOG_FILE: "./results/convnet_fc250_l10_train1k_clean/log/train.txt"
 
+ITER_FILE: "./results/convnet_fc250_l10_train1k_clean/log/iter.txt"
+
 MODEL_DIR: "./results/convnet_fc250_l10_train1k_clean/model"
 MODEL_NAME: "convnet"
 MODEL_TYPE: "convnet"

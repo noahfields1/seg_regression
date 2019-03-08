@@ -19,6 +19,7 @@ def get_batch(X,Y, batch_size=16):
 
 class Model(AbstractModel):
     def setup(self):
+        self.start_iter = 0
         self.build_model()
         self.configure_trainer()
         self.finalize()
@@ -88,18 +89,15 @@ class Model(AbstractModel):
 
         learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
 
-        if not "CONTINUE" in self.config:
-            self.opt = tf.train.AdamOptimizer(learning_rate)
-        else:
-            lr = self.config['LEARNING_RATE']/1000
-            print("continuing with lr {}".format(lr))
-            self.opt = tf.train.AdamOptimizer(lr)
+
+        self.opt = tf.train.AdamOptimizer(learning_rate)
 
         #self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
         self.train_op = self.opt.minimize(self.loss)
 
     def train(self, X,Y):
-        for i in range(self.config['TRAIN_STEPS']):
+        for i in range(self.start_iter,
+            self.config['TRAIN_STEPS']+self.start_iter):
             x,y = get_batch(X,Y, self.config['BATCH_SIZE'])
 
 
@@ -123,6 +121,11 @@ class Model(AbstractModel):
         self.sess.run(tf.global_variables_initializer())
 
     def log(self,i,x,y):
+
+        f = open(self.config['ITER_FILE'], 'w')
+        f.write(str(i))
+        f.close()
+
         l = self.calculate_loss(x,y)
         yhat = self.predict(x)[0]
 

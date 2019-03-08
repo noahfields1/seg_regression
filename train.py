@@ -21,10 +21,12 @@ data    = dataset_factory.get(config, DATA_KEY)
 import factories.model_factory as model_factory
 
 if os.path.isdir(config['MODEL_DIR']):
-    config['CONTINUE'] = True
+    iter = int(open(config['ITER_FILE']).readlines()[0])
     model = model_factory.get(config)
     model.load()
-    print("loaded model")
+    model.global_step += iter
+    model.start_iter  = iter
+    print("loaded model, restarting from iteration {}".format(iter))
 else:
     model = model_factory.get(config)
     print("no model found, training fresh")
