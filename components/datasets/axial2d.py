@@ -12,6 +12,7 @@ EPS=1e-5
 
 def read_T(id):
     meta_data = load_yaml(id)
+    meta_data['radius_real'] = meta_data['radius']*meta_data['spacing']
     X         = np.load(meta_data['X'])
     Y         = np.load(meta_data['Y'])
     Yc        = np.load(meta_data['Yc'])
