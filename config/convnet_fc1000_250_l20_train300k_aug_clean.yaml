@@ -10,7 +10,9 @@ DATASET:    "axial2d"
 RESULTS_DIR: "./results"
 LOG_FILE: "./results/convnet_fc1000_250_l20_train300k_aug_clean/log/train.txt"
 
-MODEL_DIR: "./results/convnet_fc1000_250_l20_train300k_ug_clean/model"
+ITER_FILE: "./results/convnet_fc1000_250_l20_train300k_aug_clean/log/iter.txt"
+
+MODEL_DIR: "./results/convnet_fc1000_250_l20_train300k_aug_clean/model"
 MODEL_NAME: "convnet"
 MODEL_TYPE: "convnet"
 
@@ -27,7 +29,7 @@ IMAGE_TYPE: "BLUR"
 BLUR_SIGMA: 3
 
 AUGMENT: true
-AUGMENT_FACTOR: 10
+AUGMENT_FACTOR: 5
 AUGMENT_R_SCALE: 0.65
 CENTER: true
 
