@@ -3,7 +3,7 @@ num,full_name,osmsc_id,image_id,sub_id,Modality,segtype,seg_subtype,gender,age
 1,0002_0001,2,OSMSC0002,1,CT,coronary,normal,F,63
 2,0003_0001,3,OSMSC0003,1,CT,aortofemoral,normal,F,21
 3,0004_0001,4,OSMSC0004,1,CT,aortofemoral,lower,F,23
-4,0005_1001,5,OSMSC0005,1001,CT,Pulmonary,normal,F,67
+4,0005_1001,5,OSMSC0005,1001,CT,pulmonary,normal,F,67
 5,0006_0001,6,OSMSC0006,1,MR,aortofemoral,normal,F,30
 6,0063_0001,63,OSMSC0063,1,MR,fontan,,M,3
 7,0063_1001,63,OSMSC0063,1001,MR,aorta,fontan,M,3
@@ -99,7 +99,7 @@ num,full_name,osmsc_id,image_id,sub_id,Modality,segtype,seg_subtype,gender,age
 97,0131_0000,131,OSMSC0131,0,MR,aorta,aneurysm,M,15
 98,0134_0002,134,OSMSC0134,2,MR,pulmonary,,M,31
 99,0135_0001,135,OSMSC0135,1,MR,pulmonary,,M,37
-100,0136_0000,136,OSMSC0136,0,MR,polmonary,valvar stenosis,M,10
+100,0136_0000,136,OSMSC0136,0,MR,pulmonary,valvar stenosis,M,10
 101,0138_1001,138,OSMSC0138,1001,CT,"aorta, abdominal",aneurysm,M,73
 102,0139_1001,139,OSMSC0139,1001,CT,"aorta, abdominal",aneurysm,F,79
 103,0140_2001,140,OSMSC0140,2001,CT,"aorta, abdominal",aneurysm,M,76
