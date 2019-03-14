@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="goog_aug"
+#SBATCH --job-name="goog_c30"
 #SBATCH --output="/home/gdmaher/output/singularity.%j.out"
 #SBATCH --error="/home/gdmaher/output/singularity.%j.err"
 #SBATCH --nodes=1
