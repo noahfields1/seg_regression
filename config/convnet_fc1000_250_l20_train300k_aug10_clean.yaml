@@ -1,18 +1,18 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files_clean.txt"
 
-NAME: "convnet_fc1000_250_l20_train300k_aug20_clean"
+NAME: "convnet_fc1000_250_l20_train300k_aug10_clean"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "ConvNet"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/convnet_fc1000_250_l20_train300k_aug20_clean/log/train.txt"
+LOG_FILE: "./results/convnet_fc1000_250_l20_train300k_aug10_clean/log/train.txt"
 
-ITER_FILE: "./results/convnet_fc1000_250_l20_train300k_aug20_clean/log/iter.txt"
+ITER_FILE: "./results/convnet_fc1000_250_l20_train300k_aug10_clean/log/iter.txt"
 
-MODEL_DIR: "./results/convnet_fc1000_250_l20_train300k_aug20_clean/model"
+MODEL_DIR: "./results/convnet_fc1000_250_l20_train300k_aug10_clean/model"
 MODEL_NAME: "convnet"
 MODEL_TYPE: "convnet"
 
@@ -29,7 +29,7 @@ IMAGE_TYPE: "BLUR"
 BLUR_SIGMA: 3
 
 AUGMENT: true
-AUGMENT_FACTOR: 20
+AUGMENT_FACTOR: 10
 AUGMENT_R_SCALE: 0.65
 CENTER: true
 
