@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="convnet_aug20"
+#SBATCH --job-name="conv_l10_aug10"
 #SBATCH --output="/home/gdmaher/output/singularity.%j.out"
 #SBATCH --error="/home/gdmaher/output/singularity.%j.err"
 #SBATCH --nodes=1
