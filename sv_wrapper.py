@@ -1,11 +1,5 @@
 print("imported svWrapper.py")
 
-print("importing vtk")
-
-import vtk
-print("successfully imported vtk")
-
-
 import os
 from modules import io
 from modules import sv_image
@@ -47,9 +41,11 @@ class SVWrapper(object):
             raise RuntimeError("image file not found {}".format(image_fn))
 
         self.image = sv_image(image_fn)
+        print("successfully set image")
         self.image.set_reslice_ext(self.cfg['CROP_DIMS'])
         self.image.set_spacing(self.cfg['SPACING'])
 
+        print("successfully set image")
         return "ok"
 
     def segment(self, point_string):
