@@ -7,7 +7,7 @@ class Image(object):
 
         if not os.path.exists(filename):
             raise RuntimeError("path {} does not exist".format(filename))
-            
+
         if ".mha" in filename:
             self.image = sv.read_mha(filename)
 

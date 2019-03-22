@@ -40,12 +40,10 @@ class SVWrapper(object):
         if not os.path.isfile(image_fn):
             raise RuntimeError("image file not found {}".format(image_fn))
 
-        self.image = sv_image(image_fn)
-        print("successfully set image")
+        self.image = sv_image.Image(image_fn)
         self.image.set_reslice_ext(self.cfg['CROP_DIMS'])
         self.image.set_spacing(self.cfg['SPACING'])
 
-        print("successfully set image")
         return "ok"
 
     def segment(self, point_string):
