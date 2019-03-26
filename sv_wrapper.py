@@ -1,8 +1,11 @@
 print("imported svWrapper.py")
 
 import os
+import json
+
 from modules import io
 from modules import sv_image
+from modules import vascular_data
 
 import factories.model_factory as model_factory
 import factories.preprocessor_factory as preprocessor_factory
@@ -35,6 +38,9 @@ class SVWrapper(object):
         self.model.load()
         print("model loaded")
 
+        self.preprocessor  = preprocessor_factory.get(self.cfg)
+        self.postprocessor = postprocessor_factory.get(self.cfg)
+
     def set_image(self, image_fn):
         print("setting image {}".format(image_fn))
         if not os.path.isfile(image_fn):
@@ -48,4 +54,39 @@ class SVWrapper(object):
 
     def segment(self, point_string):
         print("test: point_string {}".format(point_string))
-        return "test: output of segment"
+
+        try:
+            data = json.loads(point_string)
+            print(data)
+
+            p     = data["p"]
+            v     = data["n"]
+            n     = data["tx"]
+
+            seg = {}
+
+            img = self.image.get_reslice(p,n,v)
+
+            img     = self.preprocessor(img)
+            pred    = self.model.predict(img)
+            contour = self.postprocessor(pred)
+
+            print(contour)
+
+            scale = self.cfg['CROP_DIMS']*self.cfg['SPACING']/2
+
+            # plt.figure()
+            # plt.imshow(img[:,:,0],cmap='gray',extent=[-scale,scale,scale,-scale])
+            # plt.colorbar()
+            # plt.plot(contour[:,0], contour[:,1], color='r', marker='*')
+            # plt.savefig('./images/{}.png'.format(seg['index']), dpi=300)
+            # plt.close()
+
+            contour[:,1] = contour[:,1]*-1
+            contour_3d    = vascular_data.denormalizeContour(contour, p,n,v)
+            seg["points"] = contour_3d.tolist()
+
+            return json.dumps(seg)
+        except:
+            print("error during sv_wrapper.segment")
+            return ""
