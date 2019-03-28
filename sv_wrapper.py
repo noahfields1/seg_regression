@@ -3,16 +3,17 @@ print("imported svWrapper.py")
 import os
 import json
 
+print("importing seg_reg modules")
 from modules import io
 from modules import sv_image
 from modules import vascular_data
 
+print("importing factories")
 import factories.model_factory as model_factory
 import factories.preprocessor_factory as preprocessor_factory
 import factories.postprocessor_factory as postprocessor_factory
 
-print("imported factories")
-
+print("getting directories")
 SRC_DIR    = os.path.dirname(os.path.realpath(__file__))
 CONFIG_DIR = os.path.join(SRC_DIR,"config")
 
@@ -90,3 +91,8 @@ class SVWrapper(object):
         except:
             print("error during sv_wrapper.segment")
             return ""
+
+    # def __del__(self):
+    #     print("svWrapper destructor")
+    #     self.model.sess.close()
+    #     tf.reset_default_graph()
