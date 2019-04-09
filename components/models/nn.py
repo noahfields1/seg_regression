@@ -548,6 +548,23 @@ class GoogleNet(Model):
 
         self.saver = tf.train.Saver()
 
+        self.dropout_mask_op = op = tf.get_default_graph().get_tensor_by_name(
+            "googlenet/dropout_1/Floor:0")
+
+        self.dropout_mask = None
+        self.dropout_fixed = False
+
     def build_loss(self):
         self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
         self.loss += 0.3*tf.reduce_mean(tf.square(self.y-self.yhat_side))
+
+    def sample(self):
+        self.dropout_mask = (np.random.uniform(size=(1,9216))<=0.6).astype(int)
+        self.dropout_fixed = True
+        
+    def _predict(self,x):
+        if not self.dropout_fixed:
+            return self.sess.run(self.yhat,{self.x:x})
+        else:
+            return self.sess.run(self.yhat,{self.x:x,
+                self.dropout_mask_op:self.dropout_mask})
