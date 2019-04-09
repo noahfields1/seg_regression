@@ -1,5 +1,5 @@
 import components.common as common
-from components.seg import SegPostProcessor
+#from components.seg import SegPostProcessor
 
 def get(config, key="TRAIN"):
     if "POST_PROCESSOR" in config:
@@ -9,5 +9,5 @@ def get(config, key="TRAIN"):
             return common.EdgePostProcessor(config)
         elif pp == 'SEG':
             return SegPostProcessor(config)
-            
+
     return common.BasePostProcessor(config)

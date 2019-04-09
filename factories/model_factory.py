@@ -1,4 +1,4 @@
-import components.models.rf as rf
+#import components.models.rf as rf
 import components.models.nn as nn
 from modules import io
 
@@ -24,7 +24,7 @@ def get(config):
         return nn.FcNet(config)
     elif mod == "GoogleNet":
         return nn.GoogleNet(config)
-            
+
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']
         y = io.load_yaml(c)
