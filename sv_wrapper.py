@@ -35,6 +35,11 @@ class SVWrapper(object):
 
         self.model = model_factory.get(self.cfg)
 
+        try:
+            self.model.sample()
+        except:
+            print("using model without sample")
+
         print("loading model")
         self.model.load()
         print("model loaded")
@@ -91,6 +96,9 @@ class SVWrapper(object):
         except:
             print("error during sv_wrapper.segment")
             return ""
+
+    def sample(self):
+        self.model.sample()
 
     # def __del__(self):
     #     print("svWrapper destructor")
