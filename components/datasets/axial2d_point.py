@@ -48,7 +48,7 @@ def distance_contour(yc,cd, nc):
     c_centered = c
 
     c_centered = c_centered[:,:2]
-    p = p[:2]
+    p = p[:2]/2+0.5
 
     c_reorient = sv.interpContour(c_centered, num_pts=nc-2)
 
@@ -118,7 +118,7 @@ def get_dataset(config, key="TRAIN"):
 
     print("centering images")
     for i,yc in tqdm(enumerate(Yc)):
-        if key == 'TRAIN' and config['CENTER']:
+        if key == 'TRAIN':
             contour = sv.marchingSquares(yc, iso=0.5)
             contour = sv.reorder_contour(contour)
 
@@ -143,7 +143,7 @@ def get_dataset(config, key="TRAIN"):
         X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
         config['R_SMALL'], config['N_SAMPLE'])
 
-    if "AUGMENT" in config and key == 'TRAIN':
+    if  key == 'TRAIN':
         aug_x = []
         aug_y = []
         aug_m = []
@@ -155,7 +155,7 @@ def get_dataset(config, key="TRAIN"):
                 x,y = sv.random_rotate((x,y))
 
                 rpix = meta[i]['radius']
-                lim  = int(config['AUGMENT_R_SCALE']*rpix/np.sqrt(2))+1
+                lim  = config['PP_BIAS'] + config['PP_SLOPE']*rpix
                 x_shift = np.random.randint(-lim,lim)
                 y_shift = np.random.randint(-lim,lim)
 
@@ -180,17 +180,17 @@ def get_dataset(config, key="TRAIN"):
     x_final  = []
     m_final  = []
     for i in tqdm(range(X_.shape[0])):
-        try:
-            c,p = distance_contour(Y_[i],cd,config['NUM_CONTOUR_POINTS'])
-            if outlier(c):
-               print("outlier")
-               continue
+        # try:
+        c,p = distance_contour(Y_[i],cd,config['NUM_CONTOUR_POINTS'])
+        if outlier(c):
+           print("outlier")
+           continue
 
-            contours.append(c)
-            x_final.append(X_[i])
-            m_final.append(meta[i])
-        except:
-            print("failed")
+        contours.append(np.concatenate((p,c)))
+        x_final.append(X_[i])
+        m_final.append(meta[i])
+        # except:
+        #     print("failed")
     contours = np.array(contours)
     X_ = np.array(x_final)
 
