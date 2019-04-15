@@ -4,7 +4,7 @@ import tensorflow as tf
 import modules.layers as tf_util
 
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import modules.vessel_regression as vr
@@ -141,8 +141,13 @@ class Model(AbstractModel):
 
         x_ = x[0,:,:,0]
         y_ = y[0]
-        ctrue = vr.pred_to_contour(y_)
-        cpred = vr.pred_to_contour(yhat)
+        if self.config['DATASET'] == 'axial2d_point':
+            ctrue = vr.point_pred_to_contour(y_)
+            cpred = vr.point_pred_to_contour(yhat)
+
+        else:
+            ctrue = vr.pred_to_contour(y_)
+            cpred = vr.pred_to_contour(yhat)
 
         plt.figure()
         plt.imshow(x_,cmap='gray',extent=[-1, 1, 1, -1])
@@ -561,7 +566,7 @@ class GoogleNet(Model):
     def sample(self):
         self.dropout_mask = (np.random.uniform(size=(1,9216))<=0.6).astype(int)
         self.dropout_fixed = True
-        
+
     def _predict(self,x):
         if not self.dropout_fixed:
             return self.sess.run(self.yhat,{self.x:x})

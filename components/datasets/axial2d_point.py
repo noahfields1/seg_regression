@@ -45,7 +45,7 @@ def distance_contour(yc,cd, nc):
 
     c = (1.0*c-cd)/(cd)
     p = np.mean(c,axis=0)
-    c_centered = c
+    c_centered = c-p
 
     c_centered = c_centered[:,:2]
     p = p[:2]/2+0.5

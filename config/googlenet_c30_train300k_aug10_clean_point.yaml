@@ -6,6 +6,7 @@ TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "GoogleNet"
+POST_PROCESSOR: "POINT"
 DATASET:    "axial2d_point"
 RESULTS_DIR: "./results"
 LOG_FILE: "./results/googlenet_c30_train300k_aug10_clean_point/log/train.txt"
@@ -16,10 +17,10 @@ MODEL_DIR: "./results/googlenet_c30_train300k_aug10_clean_point/model"
 MODEL_NAME: "googlenet"
 MODEL_TYPE: "googlenet"
 
-LOG_STEP: 2000
+LOG_STEP: 100
 LEAK: 0.2
 BATCH_SIZE: 4
-LEARNING_RATE: 0.00005
+LEARNING_RATE: 0.0005
 TRAIN_STEPS: 300000
 BATCH_SIZE: 4
 L2_REG: 0.0

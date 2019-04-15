@@ -9,5 +9,7 @@ def get(config, key="TRAIN"):
             return common.EdgePostProcessor(config)
         elif pp == 'SEG':
             return SegPostProcessor(config)
+        elif pp == 'POINT':
+            return common.PointPostProcessor(config)
 
     return common.BasePostProcessor(config)

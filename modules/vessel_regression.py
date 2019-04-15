@@ -13,6 +13,20 @@ def pred_to_contour(pred):
 
     return c
 
+def point_pred_to_contour(pred):
+    #assume -1,1 extent
+    Npoints  = len(pred)-2
+    p = (pred[:2]-0.5)*2
+    radiuses = pred[2:]
+    angles   = np.linspace(-0.95,0.95, Npoints)*np.pi
+
+    c = np.zeros((Npoints,2))
+
+    c[:,0] = np.cos(angles)*radiuses
+    c[:,1] = np.sin(angles)*radiuses
+
+    return c+p
+
 def edge_fit(E, C, angles, alpha, R, Nsteps):
     na     = len(angles)
     Cnew   = np.zeros((na,2))

@@ -79,6 +79,14 @@ class BasePostProcessor(AbstractPostProcessor):
         c = pred_to_contour(y)
         return c*self.scale
 
+class PointPostProcessor(AbstractPostProcessor):
+    def setup(self):
+        self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
+
+    def __call__(self,y):
+        c = vessel_regression.point_pred_to_contour(y)
+        return c*self.scale
+
 class EdgePostProcessor(AbstractPostProcessor):
     def setup(self):
         self.scale = self.config['CROP_DIMS']*self.config['SPACING']/2
