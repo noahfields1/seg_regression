@@ -154,8 +154,8 @@ def get_dataset(config, key="TRAIN"):
 
                 x,y = sv.random_rotate((x,y))
 
-                rpix = meta[i]['radius']
-                lim  = config['PP_BIAS'] + config['PP_SLOPE']*rpix
+                rpix = meta[i]['radius']*config['SPACING']
+                lim  = int(config['PP_BIAS'] + config['PP_SLOPE']*rpix)
                 x_shift = np.random.randint(-lim,lim)
                 y_shift = np.random.randint(-lim,lim)
 
