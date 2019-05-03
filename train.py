@@ -1,5 +1,5 @@
 import os
-os.environ['CUDA_VISIBILE_DEVICES'] = ''
+# os.environ['CUDA_VISIBILE_DEVICES'] = ''
 import modules.io as io
 import argparse
 

@@ -4,7 +4,7 @@ import tensorflow as tf
 import modules.layers as tf_util
 
 import matplotlib
-#matplotlib.use('Agg')
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import modules.vessel_regression as vr

@@ -111,7 +111,7 @@ class EdgePostProcessor(AbstractPostProcessor):
         return z
 
 def log_prediction(yhat,x,c,meta,path,config):
-    ctrue = pred_to_contour(c)
+    ctrue = c
     scale  = config['CROP_DIMS']*meta['spacing']/2
 
     new_meta = {}
@@ -121,7 +121,7 @@ def log_prediction(yhat,x,c,meta,path,config):
 
     new_meta['c_centered_unscaled']    = ctrue.tolist()
 
-    ctrue_pos = ctrue*scale
+    ctrue_pos = ctrue
 
     new_meta['yhat_pos'] = yhat.tolist()
     new_meta['c_pos']    = ctrue_pos.tolist()
@@ -245,7 +245,7 @@ class BasePredictor(AbstractPredictor):
 
             self.postprocessor.set_inputs((x,meta))
             yhat = self.postprocessor(yhat)
-
+            c    = self.postprocessor(c)
             log_prediction(yhat,x_,c,meta,path,self.config)
 
     def load(self):
