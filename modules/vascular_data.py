@@ -11,6 +11,8 @@ from scipy.ndimage import rotate
 
 import os
 
+import json
+
 def random_rotate(image_pair):
     angle = np.random.randint(360)
     return_images = []
@@ -638,3 +640,70 @@ def denormalizeContour(c,p,t,tx):
 
     res = np.array([p + k[0]*tx + k[1]*ty for k in c])
     return res[:-1]
+
+def get_regexp(line, field):
+    path_name = re.search("{}=\"[A-Za-z_\-\+\.\:0-9 ]*\"".format(field), line)
+    return path_name.group().split("\"")[1]
+
+def parse_point(line):
+    return [float(get_regexp(line,"x")),
+        float(get_regexp(line,"y")), float(get_regexp(line,"z"))]
+
+
+def parse_xml_group(input_file):
+    f = open(input_file,'r').readlines()
+    f = [s.replace('\n','') for s in f]
+
+    collecting = False
+
+    points = []
+
+    for i,line in enumerate(f):
+        print(line)
+        if "<contourgroup" in line.lower():
+            path_name = get_regexp(line, "path_name")
+            path_id   = get_regexp(line, 'path_id')
+        if "<contour " in line.lower():
+            method = get_regexp(line, "method")
+            c_type = get_regexp(line, "type")
+
+        if "<path_point " in line:
+            point_number = int(get_regexp(line, "id"))
+            pos_line = f[i+1]
+            tan_line = f[i+2]
+            rot_line = f[i+3]
+            i = i+4
+
+            p = parse_point(pos_line)
+            t = parse_point(tan_line)
+            r = parse_point(rot_line)
+
+        if "<contour_points>" in line:
+            contour = []
+            collecting = True
+            continue
+        if "</contour_points>" in line:
+            collecting = False
+            J = {}
+            J['file']         = input_file
+            J['path_name']    = path_name
+            J['method']       = method
+            J['point_number'] = point_number
+            J['p']        = p
+            J['tangent']  = t
+            J['rotation'] = r
+            J['contour3D']  = contour
+            J['contour2D']  = normalizeContour(contour,p,t,r,as_list=True)
+            J['code']     = code
+            J['type']     = c_type
+            output_filename = "{}.{}.{}.json".format(code,path_name,point_number)
+            J['contour_name'] = output_filename
+
+            points.append(J)
+            print(J)
+
+        if collecting:
+            point = parse_point(line)
+            contour.append(point)
+
+    return points
