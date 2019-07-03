@@ -388,7 +388,7 @@ def inception(x, c1x1=64, c3x3_reduce=96, c3x3=128, c5x5_reduce=16,
 
         return o
 
-def GoogleNet(x, activation=tf.nn.relu, init='xavier', drop=0.7,
+def GoogleNet(x, activation=tf.nn.relu, init='xavier', dropout=0.7,
     scope='googlenet', output_size=1000):
     #input branch
     with tf.variable_scope(scope):
@@ -451,7 +451,7 @@ def GoogleNet(x, activation=tf.nn.relu, init='xavier', drop=0.7,
         o_side = fullyConnected(o_side_vec, output_units=1024, activation=activation,
             std='xavier', scope='side_fc1')
 
-        o_side = tf.nn.dropout(o_side, keep_prob=1.0-drop)
+        o_side = tf.nn.dropout(o_side, keep_prob=dropout)
 
         o_side = fullyConnected(o_side, output_units=output_size, activation=tf.identity,
             std='xavier', scope='side_output')
@@ -476,7 +476,7 @@ def GoogleNet(x, activation=tf.nn.relu, init='xavier', drop=0.7,
 
         o = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
 
-        o = tf.nn.dropout(o, keep_prob=0.6)
+        o = tf.nn.dropout(o, keep_prob=dropout)
 
         o = fullyConnected(o, output_units=1024, activation=activation,
             std='xavier', scope='output_fc1')

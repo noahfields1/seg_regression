@@ -532,7 +532,7 @@ class GoogleNet(Model):
         LEAK        = self.config['LEAK']
         LAMBDA      = self.config['L2_REG']
         INIT        = self.config['INIT']
-
+        DROPOUT     = self.config['DROPOUT']
         NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
 
         leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
@@ -541,7 +541,7 @@ class GoogleNet(Model):
         self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
 
         o,o_side = tf_util.GoogleNet(self.x, activation=leaky_relu, init=INIT,
-            scope='googlenet', output_size=NUM_POINTS)
+            scope='googlenet', output_size=NUM_POINTS, dropout=DROPOUT)
 
         print(o)
         print(o_side)
