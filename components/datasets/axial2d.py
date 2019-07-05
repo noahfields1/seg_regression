@@ -50,7 +50,7 @@ def distance_contour(yc,cd, nc):
     c_centered = c_centered[:,:2]
     p = p[:2]
 
-    c_reorient = sv.interpContour(c_centered, num_pts=nc-2)
+    c_reorient = sv.interpContour(c_centered, num_pts=nc)
 
     c_dist = np.sqrt(np.sum(c_reorient**2,axis=1))
 
