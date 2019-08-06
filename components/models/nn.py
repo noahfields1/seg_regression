@@ -554,7 +554,7 @@ class GoogleNet(Model):
         self.saver = tf.train.Saver()
 
         self.dropout_mask_op = op = tf.get_default_graph().get_tensor_by_name(
-            "googlenet/dropout_1/Floor:0")
+            "googlenet/dropout_1/random_uniform:0")
 
         self.dropout_mask = None
         self.dropout_fixed = False

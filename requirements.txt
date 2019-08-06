@@ -1,4 +1,4 @@
-tensorflow==1.9.0
+tensorflow==1.14.0
 numpy==1.14.3
 pandas==0.23.0
 scikit-image==0.14.2

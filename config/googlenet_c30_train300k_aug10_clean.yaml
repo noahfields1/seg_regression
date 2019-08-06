@@ -16,7 +16,7 @@ MODEL_DIR: "./results/googlenet_c30_train300k_aug10_clean/model"
 MODEL_NAME: "googlenet"
 MODEL_TYPE: "googlenet"
 
-LOG_STEP: 2000
+LOG_STEP: 10000
 LEAK: 0.2
 BATCH_SIZE: 4
 LEARNING_RATE: 0.00005
