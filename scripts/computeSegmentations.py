@@ -42,7 +42,7 @@ f = open(args.output_dir+'/'+name,'w')
 
 for i,p in enumerate(points):
 
-    contour_3d = net.segment_normal(p[:3], p[3:6], p[6:])
+    c = net.segment_normal(p[:3], p[3:6], p[6:])
 
     pos = int(p[0])
     f.write('/group/{}/{}\n'.format(name,pos))
