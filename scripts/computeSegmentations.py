@@ -17,7 +17,12 @@ parser.add_argument('-config')
 
 args = parser.parse_args()
 
+if not os.path.isfile(args.config):
+    raise RuntimeError("config file {} does not exist".format(
+        args.config
+    ))
 
+net = SVWrapper(args.config)
 
 p_file = open(args.points_file).readlines()
 p_file = [p.replace('\n','') for p in p_file]
@@ -31,10 +36,7 @@ name = args.points_file.split('/')[-1].replace('.txt','')
 print( name)
 f = open(args.output_dir+'/'+name,'w')
 
-qc = []
-
 for i,p in enumerate(points):
-
 
     c = contours_3d[i]
     pos = int(p[0])

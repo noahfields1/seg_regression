@@ -64,6 +64,29 @@ class SVWrapper(object):
 
         return "ok"
 
+    def segment_normal(self, p,v,n):
+        img = self.image.get_reslice(p,n,v)
+
+        img     = self.preprocessor(img)
+        pred    = self.model.predict(img)
+        contour = self.postprocessor(pred)
+
+        print(contour)
+
+        scale = self.cfg['CROP_DIMS']*self.cfg['SPACING']/2
+
+        # plt.figure()
+        # plt.imshow(img[:,:,0],cmap='gray',extent=[-scale,scale,scale,-scale])
+        # plt.colorbar()
+        # plt.plot(contour[:,0], contour[:,1], color='r', marker='*')
+        # plt.savefig('./images/{}.png'.format(seg['index']), dpi=300)
+        # plt.close()
+
+        contour[:,1] = contour[:,1]*-1
+        contour_3d    = vascular_data.denormalizeContour(contour, p,n,v)
+
+        return contour_3d
+
     def segment(self, point_string):
         print("test: point_string {}".format(point_string))
 
@@ -75,27 +98,9 @@ class SVWrapper(object):
             v     = data["n"]
             n     = data["tx"]
 
+            contour_3d = self.segment_normal(p,v,n)
+
             seg = {}
-
-            img = self.image.get_reslice(p,n,v)
-
-            img     = self.preprocessor(img)
-            pred    = self.model.predict(img)
-            contour = self.postprocessor(pred)
-
-            print(contour)
-
-            scale = self.cfg['CROP_DIMS']*self.cfg['SPACING']/2
-
-            # plt.figure()
-            # plt.imshow(img[:,:,0],cmap='gray',extent=[-scale,scale,scale,-scale])
-            # plt.colorbar()
-            # plt.plot(contour[:,0], contour[:,1], color='r', marker='*')
-            # plt.savefig('./images/{}.png'.format(seg['index']), dpi=300)
-            # plt.close()
-
-            contour[:,1] = contour[:,1]*-1
-            contour_3d    = vascular_data.denormalizeContour(contour, p,n,v)
             seg["points"] = contour_3d.tolist()
 
             return json.dumps(seg)
