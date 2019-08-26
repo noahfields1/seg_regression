@@ -1,9 +1,10 @@
 import argparse
 import os
 import sys
-
+sys.path.append(os.path.abspath('..'))
 
 from modules import vascular_data as sv
+from modules import io
 import numpy as np
 from tqdm import tqdm
 
@@ -30,6 +31,11 @@ if not os.path.isfile(args.image_file):
 net = SVWrapper(args.config)
 net.set_image(args.image_file)
 
+cfg = io.load_yaml(args.config)
+if "DROPOUT_UQ" in cfg:
+    print("sampling net with dropout p {}".format(cfg['DROPOUT_UQ']))
+    net.model.sample(p=cfg['DROPOUT_UQ'])
+
 p_file = open(args.points_file).readlines()
 p_file = [p.replace('\n','') for p in p_file]
 
@@ -41,8 +47,8 @@ print( name)
 f = open(args.output_dir+'/'+name,'w')
 
 for i,p in enumerate(points):
-
-    c = net.segment_normal(p[:3], p[3:6], p[6:])
+    print("{}, {}".format(name,i))
+    c = net.segment_normal(p[1:4], p[7:], p[4:7])
 
     pos = int(p[0])
     f.write('/group/{}/{}\n'.format(name,pos))

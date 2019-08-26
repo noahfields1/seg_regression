@@ -1,13 +1,13 @@
 import argparse
 import os
 import sys
-
+sys.path.append(os.path.abspath('..'))
 from modules import vascular_data as sv
 import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-path_file')
-parser.add_argument('--interval', type=int, default=10)
+parser.add_argument('--interval', type=int, default=5)
 parser.add_argument('-output_dir')
 
 args = parser.parse_args()

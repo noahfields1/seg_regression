@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+sys.path.append(os.path.abspath('..'))
 
 import numpy as np
 from tqdm import tqdm
@@ -35,6 +36,6 @@ if not os.path.isfile(IMAGE) or not os.path.isdir(PATHS) or not os.path.isdir(DI
 
 else:
     for p in path_files:
-        os.system('python scripts/computeSegmentations.py\
+        os.system('python computeSegmentations.py\
              -image_file {} -points_file {} -output_dir {}\
               -config {}'.format(IMAGE, p, OUTPUT, args.config))

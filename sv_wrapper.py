@@ -26,7 +26,8 @@ np.random.seed(0)
 class SVWrapper(object):
     def __init__(self, network_type):
         print("SVWrapper init, {}".format(network_type))
-        self.cfg_fn = os.path.join(CONFIG_DIR,"{}.yaml".format(network_type))
+        self.cfg_fn = os.path.join(CONFIG_DIR,
+        "{}.yaml".format(network_type.replace('.yaml','')))
         print(self.cfg_fn)
 
         if not os.path.isfile(self.cfg_fn):
@@ -70,8 +71,6 @@ class SVWrapper(object):
         img     = self.preprocessor(img)
         pred    = self.model.predict(img)
         contour = self.postprocessor(pred)
-
-        print(contour)
 
         scale = self.cfg['CROP_DIMS']*self.cfg['SPACING']/2
 

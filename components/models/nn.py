@@ -563,8 +563,8 @@ class GoogleNet(Model):
         self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
         self.loss += 0.3*tf.reduce_mean(tf.square(self.y-self.yhat_side))
 
-    def sample(self):
-        self.dropout_mask = (np.random.uniform(size=(1,9216))<=0.6).astype(int)
+    def sample(self, p=0.6):
+        self.dropout_mask = (np.random.uniform(size=(1,9216))<=p).astype(int)
         self.dropout_fixed = True
 
     def _predict(self,x):
