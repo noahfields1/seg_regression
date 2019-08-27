@@ -18,10 +18,10 @@ SRC_DIR    = os.path.dirname(os.path.realpath(__file__))
 CONFIG_DIR = os.path.join(SRC_DIR,"config")
 
 import tensorflow as tf
-tf.set_random_seed(0)
+#tf.set_random_seed(0)
 
 import numpy as np
-np.random.seed(0)
+#np.random.seed(0)
 
 class SVWrapper(object):
     def __init__(self, network_type):
