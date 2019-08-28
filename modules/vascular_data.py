@@ -215,6 +215,20 @@ def parseGroupFile(fn):
 
     return group
 
+def writeGroupFile(data, fn):
+    f = open(fn,'w')
+
+    for i,p in enumerate(points):
+#TODO
+        pos = int(p[0])
+        f.write('/group/{}/{}\n'.format(name,pos))
+        f.write(str(pos) +'\n')
+        f.write('posId {}\n'.format(pos))
+        for j in range(c.shape[0]):
+            f.write('{} {} {}\n'.format(c[j][0],c[j][1],c[j][2]))
+        f.write('\n')
+    f.close()
+
 def parsePathFile(fn):
     """
     parses a simvascular 2.0 path file
