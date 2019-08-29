@@ -34,3 +34,13 @@ for i in range(args.n):
     os.system('python segmentAll.py\
          -input_dir {} -output_dir {} -config {}'.format(
             args.input_dir, odir, args.config))
+
+    del_file = args.input_dir+'/delete.json'
+    cor_file = args.input_dir+'/correct.json'
+
+    os.system('python segmentCorrect.py\
+         -input_dir {} --deletions {} --corrections {}'.format(
+            odir, del_file, cor_file))
+
+    os.system('python segmentJsonToGroups.py\
+         -input_dir {}'.format(odir))

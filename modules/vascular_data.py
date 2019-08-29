@@ -215,12 +215,13 @@ def parseGroupFile(fn):
 
     return group
 
-def writeGroupFile(data, fn):
+def writeGroupFile(data, name, fn):
     f = open(fn,'w')
 
-    for i,p in enumerate(points):
-#TODO
-        pos = int(p[0])
+    for k in data:
+        pos = int(k)
+        c   = np.array(data[k])
+
         f.write('/group/{}/{}\n'.format(name,pos))
         f.write(str(pos) +'\n')
         f.write('posId {}\n'.format(pos))
