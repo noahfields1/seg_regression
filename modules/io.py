@@ -2,6 +2,7 @@ import yaml
 import csv
 import os
 import json
+import numpy as np
 
 def mkdir(fn):
     if not os.path.exists(os.path.abspath(fn)):
@@ -47,3 +48,11 @@ def write_json(data,fn):
 def load_json(fn):
     with open(fn,'r') as f:
         return json.load(f)
+
+def parsePathPointsFile(fn):
+    p_file = open(fn).readlines()
+    p_file = [p.replace('\n','') for p in p_file]
+
+    points = [np.array([float(x) for x in p.split(',')]) for p in p_file]
+
+    return points
