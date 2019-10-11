@@ -7,16 +7,18 @@ import numpy as np
 from tqdm import tqdm
 from shutil import copyfile, rmtree
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-input_dir')
-parser.add_argument('-output_dir')
+import modules.io as io
 
+parser = argparse.ArgumentParser()
 parser.add_argument('-config')
+parser.add_argument('-output_dir')
 args = parser.parse_args()
 
-DIR = os.path.abspath(args.input_dir)
-IMAGE = DIR+'/image.mha'
-PATHS = DIR+'/paths'
+cfg = io.load_json(args.config)
+
+IMAGE = cfg["IMAGE"]
+PATHS = cfg["PATH_FILES"]
+NN_CONFIG = cfg["NN_CONFIG"]
 OUTPUT = os.path.abspath(args.output_dir)
 
 try:
@@ -26,16 +28,11 @@ except:
 
 os.mkdir(OUTPUT)
 
-path_files = os.listdir(PATHS)
-path_files = [PATHS+'/'+p for p in path_files]
-
-copyfile(DIR+'/group_contents.tcl',OUTPUT+'/group_contents.tcl')
-
-if not os.path.isfile(IMAGE) or not os.path.isdir(PATHS) or not os.path.isdir(DIR):
-    raise RuntimeError('error occurred {} {} {}'.format(IMAGE,PATHS,DIR))
+if not os.path.isfile(IMAGE) or not os.path.isdir(OUTPUT):
+    raise RuntimeError('error occurred {} {} {}'.format(IMAGE,PATHS,OUTPUT))
 
 else:
-    for p in path_files:
+    for p in PATHS:
         os.system('python segmentCompute.py\
              -image_file {} -points_file {} -output_dir {}\
-              -config {}'.format(IMAGE, p, OUTPUT, args.config))
+              -config {}'.format(IMAGE, p, OUTPUT, NN_CONFIG))

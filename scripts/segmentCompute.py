@@ -1,5 +1,8 @@
 import argparse
 import os
+
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
+
 import sys
 sys.path.append(os.path.abspath('..'))
 

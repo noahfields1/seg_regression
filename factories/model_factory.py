@@ -24,6 +24,8 @@ def get(config):
         return nn.FcNet(config)
     elif mod == "GoogleNet":
         return nn.GoogleNet(config)
+    elif mod == "GoogleNetUQ":
+        return nn.GoogleNetUQ(config)
 
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']

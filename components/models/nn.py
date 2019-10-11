@@ -580,3 +580,63 @@ class GoogleNet(Model):
             return self.sess.run(self.yhat,{self.x:x,
                 self.dropout_mask_op:self.dropout_mask,
                 self.dropout_scale_op:self.dropout_scale})
+
+class GoogleNetUQ(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+        DROPOUT     = self.config['DROPOUT']
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
+        HIDDEN_UNITS = self.config['HIDDEN_UNITS']
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        o,o_side = tf_util.GoogleNetUQ(self.x, activation=leaky_relu, init=INIT,
+            scope='googlenet', output_size=NUM_POINTS, dropout=DROPOUT,
+            hidden_units=HIDDEN_UNITS)
+
+        print(o)
+        print(o_side)
+
+        self.yhat = tf.nn.sigmoid(o)
+        self.yhat_side = tf.nn.sigmoid(o_side)
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
+        self.dropout_mask_op = tf.get_default_graph().get_tensor_by_name(
+            "googlenet/dropout_1/random_uniform:0")
+
+        self.dropout_scale_op = tf.get_default_graph().get_tensor_by_name(
+            "googlenet/dropout_1/truediv:0")
+
+
+        self.drop_size = self.dropout_mask_op.get_shape().as_list()[1]
+
+        self.dropout_mask = None
+        self.dropout_scale = 1.0
+        self.dropout_fixed = False
+
+    def build_loss(self):
+        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
+        self.loss += 0.3*tf.reduce_mean(tf.square(self.y-self.yhat_side))
+
+    def sample(self, p=0.6):
+        self.dropout_mask = (np.random.uniform(size=(1,self.drop_size))<=p).astype(int)
+        self.dropout_scale = 1.0/p
+        self.dropout_fixed = True
+
+    def _predict(self,x):
+        if not self.dropout_fixed:
+            return self.sess.run(self.yhat,{self.x:x})
+        else:
+            return self.sess.run(self.yhat,{self.x:x,
+                self.dropout_mask_op:self.dropout_mask,
+                self.dropout_scale_op:self.dropout_scale})

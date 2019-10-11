@@ -1,0 +1,33 @@
+{
+"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/image.mha",
+
+"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
+
+"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0110_single_vessel",
+
+"INTERVAL":10,
+
+"NUM_RUNS":1,
+
+"EDGE_SIZE":0.5,
+
+"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/correct.json",
+
+"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/delete.json",
+
+"PATH_FILES":[
+ "/home/marsdenlab/projects/SV/UQ/data/paths/aorta.txt"
+],
+
+"NAMES":[
+    "aorta"
+],
+
+"CAP_NAMES":[
+  "aorta_cap",
+  "aorta_cap_2"
+],
+
+"SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
+"SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
+}
