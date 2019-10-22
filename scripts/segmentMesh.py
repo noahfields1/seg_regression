@@ -164,14 +164,22 @@ else:
             sv.Geom.Intersect(NAMES_CAP[i], s, ss)
             s = ss
 
+sv.Repository.WriteVtkPolyData(nc, 'ascii', OUTPUT_DIR+'/test.vtk')
+
 sv.Solid.SetKernel('PolyData')
 #Create model from polydata
 solid = sv.Solid.pySolidModel()
-solid.NewObject('model_pd')
+solid.NewObject('model')
 solid.SetVtkPolyData(s)
+solid.GetBoundaryFaces(90)
+solid.GetPolyData("model_pd")
+
+sv.MeshUtil.Remesh("model_pd", "model_remesh")
+sv.MeshUtil.Remesh("model_remesh", "model_remesh_2")
+
+solid.SetVtkPolyData("model_remesh_2")
 
 #Extract boundary faces
-solid.GetBoundaryFaces(45)
 print ("Creating model: \nFaceID found: " + str(solid.GetFaceIds()))
 
 fids = {"faceids":solid.GetFaceIds()}
