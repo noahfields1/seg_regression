@@ -182,7 +182,7 @@ def get_dataset(config, key="TRAIN"):
     for i in tqdm(range(X_.shape[0])):
         try:
             c,p = distance_contour(Y_[i],cd,config['NUM_CONTOUR_POINTS'])
-            if outlier(c):
+            if outlier(c) and not "OUTLIER" in config:
                print("outlier")
                continue
 

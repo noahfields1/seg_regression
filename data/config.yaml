@@ -1,0 +1,11 @@
+CASES_DIR: "/home/marsdenlab/projects/seg_regression/data/cases_user_variation"
+CASES_PREFIX: "/home/marsdenlab/datasets/vascular_data"
+DATA_DIR: "/home/marsdenlab/projects/SV/user_variation/NN/files"
+
+SPACING: 0.029
+DIMS: 240
+CROP_DIMS: 160
+NUM_CHANNELS: 1
+NUM_CONTOUR_POINTS: 30
+PATH_START: 2
+LOFT: false

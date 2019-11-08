@@ -1,0 +1,5 @@
+GROUPS: /home/marsdenlab/projects/SV/user_variation/NN/SU0259_2011_1/groups
+IMAGE: /home/marsdenlab/projects/SV/user_variation/NN/SU0259_2011_1/image.mha
+NAME: SU0259_2011_1
+PATHS: /home/marsdenlab/projects/SV/user_variation/NN/SU0259_2011_1/paths.paths
+SEGMENTATION: /home/marsdenlab/projects/SV/user_variation/NN/SU0259_2011_1/image.mha

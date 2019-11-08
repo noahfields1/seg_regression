@@ -174,8 +174,8 @@ solid.SetVtkPolyData(s)
 solid.GetBoundaryFaces(90)
 solid.GetPolyData("model_pd")
 
-sv.MeshUtil.Remesh("model_pd", "model_remesh")
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2")
+sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.05)
+sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.05)
 
 solid.SetVtkPolyData("model_remesh_2")
 
@@ -207,6 +207,8 @@ msh.SetMeshOptions('SurfaceMeshFlag',[1])
 msh.SetMeshOptions('VolumeMeshFlag',[1])
 msh.SetMeshOptions('GlobalEdgeSize',[EDGE_SIZE])
 msh.SetMeshOptions('MeshWallFirst',[1])
+msh.SetMeshOptions('Optimization', [3])
+msh.SetMeshOptions('QualityRatio', [1.4])
 msh.GenerateMesh()
 
 # #Save mesh to file

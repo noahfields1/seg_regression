@@ -1,0 +1,5 @@
+GROUPS: /home/marsdenlab/projects/SV/user_variation/NN/171_2/groups
+IMAGE: /home/marsdenlab/projects/SV/user_variation/NN/171_2/image.mha
+NAME: "171_2"
+PATHS: /home/marsdenlab/projects/SV/user_variation/NN/171_2/paths.paths
+SEGMENTATION: /home/marsdenlab/projects/SV/user_variation/NN/171_2/image.mha

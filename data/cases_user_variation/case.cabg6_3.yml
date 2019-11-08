@@ -1,0 +1,5 @@
+GROUPS: /home/marsdenlab/projects/SV/user_variation/NN/cabg6_3/groups
+IMAGE: /home/marsdenlab/projects/SV/user_variation/NN/cabg6_3/image.mha
+NAME: cabg6_3
+PATHS: /home/marsdenlab/projects/SV/user_variation/NN/cabg6_3/paths.paths
+SEGMENTATION: /home/marsdenlab/projects/SV/user_variation/NN/cabg6_3/image.mha

@@ -1,0 +1,5 @@
+GROUPS: /home/marsdenlab/projects/SV/user_variation/NN/kdr33_2/groups
+IMAGE: /home/marsdenlab/projects/SV/user_variation/NN/kdr33_2/image.mha
+NAME: "kdr33_2"
+PATHS: /home/marsdenlab/projects/SV/user_variation/NN/kdr33_2/paths.paths
+SEGMENTATION: /home/marsdenlab/projects/SV/user_variation/NN/kdr33_2/image.mha

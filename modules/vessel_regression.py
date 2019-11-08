@@ -6,7 +6,15 @@ def pred_to_contour(pred):
     radiuses = pred
     angles   = np.linspace(-0.95,0.95, Npoints)*np.pi
 
-    c = np.zeros((Npoints,2))
+    angles = np.concatenate((angles,np.array([0.975,1.0,1.025])*np.pi))
+
+    add_rad    = np.array([0.0,0.0,0.0])
+    add_rad[0] = 0.75*radiuses[-1] + 0.25*radiuses[0]
+    add_rad[1] = 0.5*radiuses[-1] + 0.5*radiuses[0]
+    add_rad[2] = 0.25*radiuses[-1] + 0.75*radiuses[0]
+    radiuses   = np.concatenate((radiuses, add_rad))
+
+    c = np.zeros((Npoints+3,2))
 
     c[:,0] = np.cos(angles)*radiuses
     c[:,1] = np.sin(angles)*radiuses

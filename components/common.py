@@ -280,7 +280,7 @@ class BaseEvaluation(AbstractEvaluation):
             cpred = np.array(d['yhat_pos'])
             ctrue = np.array(d['c_pos'])
 
-            if outlier(np.array(d['c_raw'])):
+            if outlier(np.array(d['c_raw'])) and not "OUTLIER" in self.config:
                 print("outlier")
                 continue
 
