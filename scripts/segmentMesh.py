@@ -113,7 +113,7 @@ numOutPtsAlongLength = 100
 numPtsInLinearSampleAlongLength = 240
 numLinearPtsAlongLength = 120
 numModes = 20
-useFFT = 0
+useFFT = 1
 useLinearSampleAlongLength = 1
 
 sample_names = {}
@@ -174,8 +174,8 @@ solid.SetVtkPolyData(s)
 solid.GetBoundaryFaces(90)
 solid.GetPolyData("model_pd")
 
-sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.05)
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.05)
+sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.01)
+sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.01)
 
 solid.SetVtkPolyData("model_remesh_2")
 
