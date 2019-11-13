@@ -7,9 +7,9 @@
 
 "INTERVAL":10,
 
-"NUM_RUNS":25,
+"NUM_RUNS":20,
 
-"EDGE_SIZE":0.025,
+"EDGE_SIZE":0.25,
 
 "CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/correct.json",
 

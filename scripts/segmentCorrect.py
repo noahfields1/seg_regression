@@ -19,12 +19,15 @@ args = parser.parse_args()
 
 groups_files = [f for f in os.listdir(args.input_dir) if '.json' in f\
     and not "_corrected" in f]
-    
+
 if len(groups_files)==0:
     raise RuntimeError("No json groups found")
 
 names = [g.split('/')[-1].replace('.json','') for g in groups_files]
 data  = [io.load_json(args.input_dir+'/'+g) for g in groups_files]
+
+data_dict = {}
+for k,v in zip(names,data): data_dict[k] = v
 
 if args.deletions:
     if not os.path.isfile(args.deletions):
@@ -48,7 +51,16 @@ if args.corrections:
         if name in corrections:
             for k in corrections[name]:
                 print("correcting {} {}".format(name,k))
-                d[k] = corrections[name][k]
+
+                path_name = corrections[name][k]['path']
+                seg_point = corrections[name][k]['seg']
+
+                seg = data_dict[path_name][seg_point]
+                seg = np.array(seg)
+                seg_mean = np.mean(seg,axis=0)
+                seg = seg_mean+0.8*(seg-seg_mean)
+
+                d[k] = seg.tolist()
 
 for name,d in zip(names,data):
     io.write_json(d,args.input_dir+'/'+name+'_corrected.json')

@@ -174,10 +174,10 @@ solid.SetVtkPolyData(s)
 solid.GetBoundaryFaces(90)
 solid.GetPolyData("model_pd")
 
-sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.01)
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.01)
+sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.1,0.1)
+sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.1,0.1)
 
-solid.SetVtkPolyData("model_remesh_2")
+solid.SetVtkPolyData("model_remesh")
 
 #Extract boundary faces
 print ("Creating model: \nFaceID found: " + str(solid.GetFaceIds()))

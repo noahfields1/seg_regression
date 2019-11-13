@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --job-name="%JOB_NAME%"
+#SBATCH --output="%JOB_DIR%/log.out"
+#SBATCH --error="%JOB_DIR%/log.err"
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=24
+#SBATCH --time=%JOB_TIME%
+
+cd %JOB_DIR%
+
+./run_cluster.sh
