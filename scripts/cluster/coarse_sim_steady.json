@@ -1,0 +1,5 @@
+{
+  "sim_folder":"/home/gdmaher/2_vessel/sim_steady",
+  "runs_folder":"/home/gdmaher/2_vessel/coarse",
+  "run_file":"/home/gdmaher/seg_regression/scripts/cluster/runCoarse.sh"
+}
