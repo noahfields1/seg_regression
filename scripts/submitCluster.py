@@ -4,7 +4,7 @@ import sys
 import time
 sys.path.append(os.path.abspath('..'))
 
-import modules.io as io
+import json
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-config')
@@ -12,7 +12,8 @@ parser.add_argument('-config')
 args = parser.parse_args()
 
 try:
-    cfg = io.load_json(args.config)
+    with open(args.config) as f:
+        cfg = json.load(f)
 except:
     raise RuntimeError("Failed to load config {}".format(args.config))
 
