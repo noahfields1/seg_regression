@@ -743,3 +743,13 @@ def parse_xml_paths(input_file):
             points.append(J)
 
     return points
+
+def vtkPdFindCellId(pd, coord, tol=0.01):
+    weights = [0.0]*3
+    pcoords = [0.0]*3
+    subid   = 0
+    id_ref  = vtk.reference(subid)
+
+    cell_id = pd.FindCell(coord, None, 0, tol, id_ref, pcoords, weights)
+
+    return cell_id, pcoords, weights
