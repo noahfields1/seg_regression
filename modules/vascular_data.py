@@ -744,7 +744,15 @@ def parse_xml_paths(input_file):
 
     return points
 
-def vtkPdFindCellId(pd, coord, tol=0.01):
+def parsePathPointsFile(fn):
+    p_file = open(fn).readlines()
+    p_file = [p.replace('\n','') for p in p_file]
+
+    points = [np.array([float(x) for x in p.split(',')]) for p in p_file]
+
+    return points
+
+def vtkPdFindCellId(pd, coord, tol=0.05):
     weights = [0.0]*3
     pcoords = [0.0]*3
     subid   = 0
@@ -753,3 +761,16 @@ def vtkPdFindCellId(pd, coord, tol=0.01):
     cell_id = pd.FindCell(coord, None, 0, tol, id_ref, pcoords, weights)
 
     return cell_id, pcoords, weights
+
+def vtkPdGetCellValue(pd, x, label, tol=0.05):
+    cell_id = vtkPdFindCellId(pd, x, tol)[0]
+    if cell_id == -1:
+        return None
+
+    cell    = pd.GetCell(cell_id)
+    ids     = cell.GetPointIds()
+
+    data = pd.GetPointData().GetArray(label)
+    v    = [data.GetValue(ids.GetId(i)) for i in range(3)]
+
+    return (v[0] + v[1] + v[2])*1.0/3
