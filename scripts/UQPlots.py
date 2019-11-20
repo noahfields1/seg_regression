@@ -31,43 +31,53 @@ reader.Update()
 
 pd = reader.GetOutput()
 
+##########################################
+# Plane cut
+##########################################
+p = path[3]
+
+cut_pd = sv.vtkPdPlaneCut(pd, p[1:4], p[4:7])
+writer = vtk.vtkPolyDataWriter()
+writer.SetInputData(cut_pd)
+writer.SetFileName("cut_pd.vtp")
+writer.Write()
 
 ##########################################
 #interpolate
 ##########################################
-N      = pd.GetNumberOfPoints()
-points = pd.GetPoints()
-data   = pd.GetPointData().GetArray(label)
-
-points_arr = []
-data_arr = []
-for i in range(N):
-    p = points.GetPoint(i)
-    d = data.GetTuple(i)[0]
-
-    points_arr.append(p)
-    data_arr.append(d)
-
-points_arr = np.array(points_arr)
-data_arr   = np.array(data_arr)
-
-interp = LinearNDInterpolator(points_arr, data_arr)
-
-vals = []
-
-for p in path:
-    coord = p[1:4]
-    v = interp(coord)
-    print(coord,v)
-    vals.append(v)
-
-vals_center = []
-for p in centerline:
-    v = interp(p)
-    print(p,v)
-    vals_center.append(v)
-
-plt.figure()
-plt.plot(vals, color='b', label='path')
-plt.plot(vals_center, color='r', label='center')
-plt.show()
+# N      = pd.GetNumberOfPoints()
+# points = pd.GetPoints()
+# data   = pd.GetPointData().GetArray(label)
+#
+# points_arr = []
+# data_arr = []
+# for i in range(N):
+#     p = points.GetPoint(i)
+#     d = data.GetTuple(i)[0]
+#
+#     points_arr.append(p)
+#     data_arr.append(d)
+#
+# points_arr = np.array(points_arr)
+# data_arr   = np.array(data_arr)
+#
+# interp = LinearNDInterpolator(points_arr, data_arr)
+#
+# vals = []
+#
+# for p in path:
+#     coord = p[1:4]
+#     v = interp(coord)
+#     print(coord,v)
+#     vals.append(v)
+#
+# vals_center = []
+# for p in centerline:
+#     v = interp(p)
+#     print(p,v)
+#     vals_center.append(v)
+#
+# plt.figure()
+# plt.plot(vals, color='b', label='path')
+# plt.plot(vals_center, color='r', label='center')
+# plt.show()

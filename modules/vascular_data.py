@@ -774,3 +774,15 @@ def vtkPdGetCellValue(pd, x, label, tol=0.05):
     v    = [data.GetValue(ids.GetId(i)) for i in range(3)]
 
     return (v[0] + v[1] + v[2])*1.0/3
+
+def vtkPdPlaneCut(pd, x, n):
+    plane = vtk.vtkPlane()
+    plane.SetOrigin(x)
+    plane.SetNormal(n)
+
+    cutter = vtk.vtkCutter()
+    cutter.SetCutFunction(plane)
+    cutter.SetInputData(pd)
+    cutter.Update()
+
+    return cutter.GetOutput()
