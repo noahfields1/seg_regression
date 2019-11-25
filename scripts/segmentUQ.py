@@ -26,6 +26,7 @@ COR_FILE   = cfg["CORRECT_FILE"]
 
 INTERVAL   = cfg["INTERVAL"]
 NUM_RUNS   = cfg["NUM_RUNS"]
+EDGE_SIZES = cfg["EDGE_SIZES"]
 
 if not os.path.isdir(OUTPUT_DIR):
     raise RuntimeError("output dir doesnt exist")
@@ -36,8 +37,10 @@ if not os.path.isfile(NN_CONFIG):
 for i in range(NUM_RUNS):
     print("\nSEGMENTING {}\n".format(i))
 
-    odir = OUTPUT_DIR+'/'+str(i)
+    od   = OUTPUT_DIR+'/models'
+    odir = od+'/'+str(i)
     try:
+        os.mkdir(od)
         os.mkdir(odir)
     except:
         pass
@@ -56,10 +59,26 @@ for i in range(NUM_RUNS):
          -input_dir {}'.format(odir)
          )
 
-    os.system('python segmentMesh.py\
-         -config {} -output_dir {}'.format(args.config, odir)
-         )
+    for k,e in EDGE_SIZES.items():
 
-    os.system('python segmentMeshComplete.py\
-         -config {} -output_dir {}'.format(args.config, odir)
-         )
+        ed   = OUTPUT_DIR + '/' + k
+        edir = ed + '/' + str(i)
+        print(edir)
+        try:
+            os.mkdir(ed)
+        except:
+            pass
+
+        try:
+            os.mkdir(edir)
+        except:
+            pass
+
+        os.system('python segmentMesh.py\
+             -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
+                args.config, odir,edir,e)
+             )
+
+        os.system('python segmentMeshComplete.py\
+             -config {} -output_dir {}'.format(args.config, edir)
+             )
