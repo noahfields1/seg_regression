@@ -3,7 +3,7 @@
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq2.yaml",
 
-"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/2_vessel_nn/coarse",
+"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/2_vessel_nn",
 
 "INTERVAL":10,
 
