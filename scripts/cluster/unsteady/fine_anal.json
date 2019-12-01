@@ -1,5 +1,5 @@
 {
-  "sim_folder":"/home/gdmaher/UQ/2_vessel/sim_steady",
+  "sim_folder":"/home/gdmaher/UQ/2_vessel/sim_wom_rcr",
   "runs_folder":"/home/gdmaher/UQ/2_vessel/fine",
   "run_file":"/home/gdmaher/seg_regression/scripts/cluster/analFine.sh"
 }
