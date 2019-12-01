@@ -1,0 +1,5 @@
+{
+  "sim_folder":"/oasis/scratch/comet/gdmaher/temp_project/2_vessel_consistent/sim_wom_rcr",
+  "runs_folder":"/oasis/scratch/comet/gdmaher/temp_project/2_vessel_consistent/medium",
+  "run_file":"/home/gdmaher/seg_regression/scripts/cluster/runMedium.sh"
+}
