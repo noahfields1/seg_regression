@@ -1,0 +1,63 @@
+{
+"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/0144_sv/image.mha",
+
+"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
+
+"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0144",
+
+"INTERVAL":10,
+
+"NUM_RUNS":1,
+
+"EDGE_SIZES":{
+  "coarse":0.5
+},
+
+"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144_sv/correct.json",
+
+"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144_sv/delete.json",
+
+"PATH_FILES":[
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/aorta.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/IMA.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/SMA.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/celiac_splenic.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/celiac_hepatic.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/ext_iliac_left.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/int_iliac_left.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/int_iliac_right.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/renal_left.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/renal_right.txt"
+],
+
+"NAMES":[
+    "aorta",
+    "IMA",
+    "SMA",
+    "celiac_splenic",
+    "celiac_hepatic",
+    "ext_iliac_left",
+    "int_iliac_left",
+    "int_iliac_right",
+    "renal_left",
+    "renal_right"
+
+],
+
+"CAP_NAMES":[
+  "cap_aorta",
+  "cap_aorta_2",
+  "cap_IMA",
+  "cap_SMA",
+  "cap_celiac_splenic",
+  "cap_celiac_hepatic",
+  "cap_ext_iliac_left",
+  "cap_int_iliac_left",
+  "cap_int_iliac_right",
+  "cap_renal_left",
+  "cap_renal_right"
+],
+
+"SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
+"SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
+}

@@ -65,6 +65,7 @@ for name,path,group in zip(NAMES, PATHS, GROUPS):
     print(name)
 
     #path
+    import pdb; pdb.set_trace()
     sv_path = sv.Path.pyPath()
     sv_path.NewObject(name)
 

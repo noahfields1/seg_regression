@@ -1,0 +1,20 @@
+{
+  "case_dir":"/home/marsdenlab/projects/SV/UQ/data/2_vessel_consistent/coarse",
+  "models_dir":"/home/marsdenlab/projects/SV/UQ/data/2_vessel_consistent/models",
+  "sim_dir":"sim_steady_highr",
+  "results_file":"all_results.vtu",
+
+  "coord_files":[
+    "/home/marsdenlab/projects/SV/UQ/data/2_vessel_data/aorta_path.txt",
+    "/home/marsdenlab/projects/SV/UQ/data/2_vessel_data/right_iliac_path.txt"
+  ],
+
+  "group_files":[
+    "aorta",
+    "right_iliac"
+  ],
+
+  "labels_file":"/home/marsdenlab/projects/SV/UQ/data/2_vessel_data/labels.txt",
+
+  "output_dir":"/home/marsdenlab/projects/SV/UQ/data/2_vessel_data/coarse"
+}

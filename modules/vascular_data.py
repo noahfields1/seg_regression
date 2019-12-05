@@ -8,6 +8,7 @@ from scipy.interpolate import UnivariateSpline
 from vtk import vtkImageExport
 from vtk.util import numpy_support
 from scipy.ndimage import rotate
+from scipy.interpolate import LinearNDInterpolator
 
 import os
 
@@ -211,6 +212,43 @@ def parseGroupFile(fn):
 
             pos = np.mean(group[group_num]['contour'],axis=0)
             group[group_num]['points'] = list(pos) + nrm + xhat
+            i = j
+
+    return group
+
+def parseGroupFileNew(fn):
+    """
+    parses a simvascular groups file
+    point_number:(points:9x1 array, contour:3xN array)
+    """
+    f = open(fn).readlines()
+    f = [i.replace('\r\n','') for i in f]
+    f = [i.replace('\n','') for i in f]
+    nrmExpr = 'nrm {.*}'
+    posExpr = 'pos {.*}'
+    xhatExpr = 'xhat {.*}'
+
+    group = {}
+    for i in range(len(f)):
+        if 'posId' in f[i]:
+
+            group_num = int(f[i-1])
+
+            s = f[i]
+
+            group[group_num] = {}
+            group[group_num]['contour'] = []
+            j = i+1
+            while f[j] != '':
+
+                tup = [float(x) for x in f[j].split(' ')]
+                group[group_num]['contour'].append(tup)
+                j = j+1
+
+            group[group_num]['contour'] = np.array(group[group_num]['contour'])
+
+            pos = np.mean(group[group_num]['contour'],axis=0)
+
             i = j
 
     return group
@@ -786,3 +824,64 @@ def vtkPdPlaneCut(pd, x, n):
     cutter.Update()
 
     return cutter.GetOutput()
+
+def get_interp(polyd, label, tup_index):
+    N      = polyd.GetNumberOfPoints()
+    points = polyd.GetPoints()
+    data   = polyd.GetPointData().GetArray(label)
+
+    points_arr = []
+    data_arr   = []
+
+    for i in range(N):
+        p = points.GetPoint(i)
+        d = data.GetTuple(i)[tup_index]
+
+        points_arr.append(p)
+        data_arr.append(d)
+
+    points_arr = np.array(points_arr)
+    data_arr   = np.array(data_arr)
+
+    interp = LinearNDInterpolator(points_arr, data_arr)
+    return interp
+
+def read_vtu(vtu_fn):
+    reader = vtk.vtkXMLUnstructuredGridReader()
+    reader.SetFileName(vtu_fn)
+    reader.Update()
+
+    polyd = reader.GetOutput()
+
+    return polyd
+
+def probe_pd_point(pd,p):
+
+    points = vtk.vtkPoints()
+    points.InsertNextPoint(p)
+
+    points_pd = vtk.vtkPolyData()
+    points_pd.SetPoints(points)
+
+    probe = vtk.vtkProbeFilter()
+    probe.SetInputData(points_pd)
+    probe.SetSourceData(pd)
+    probe.Update()
+
+    return probe.GetOutput()
+
+def probe_pd_line(pd,line):
+
+    points = vtk.vtkPoints()
+    for p in line:
+        points.InsertNextPoint(p)
+
+    points_pd = vtk.vtkPolyData()
+    points_pd.SetPoints(points)
+
+    probe = vtk.vtkProbeFilter()
+    probe.SetInputData(points_pd)
+    probe.SetSourceData(pd)
+    probe.Update()
+
+    return probe.GetOutput()
