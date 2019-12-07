@@ -813,18 +813,6 @@ def vtkPdGetCellValue(pd, x, label, tol=0.05):
 
     return (v[0] + v[1] + v[2])*1.0/3
 
-def vtkPdPlaneCut(pd, x, n):
-    plane = vtk.vtkPlane()
-    plane.SetOrigin(x)
-    plane.SetNormal(n)
-
-    cutter = vtk.vtkCutter()
-    cutter.SetCutFunction(plane)
-    cutter.SetInputData(pd)
-    cutter.Update()
-
-    return cutter.GetOutput()
-
 def get_interp(polyd, label, tup_index):
     N      = polyd.GetNumberOfPoints()
     points = polyd.GetPoints()
@@ -885,3 +873,82 @@ def probe_pd_line(pd,line):
     probe.Update()
 
     return probe.GetOutput()
+
+def interp_line_3d(points, num_points):
+
+    distances = np.zeros(len(points))
+    for i in range(1,len(points)):
+        p1 = points[i-1]
+        p2 = points[i]
+
+        l = np.sqrt( (p2[0]-p1[0])**2+(p2[1]-p1[1])**2+(p2[2]-p1[2])**2 )
+
+        distances[i] = l
+
+    L = np.sum(distances)
+
+    s = np.cumsum(distances)*1.0/L
+
+    xp = [p[0] for p in points]
+    yp = [p[1] for p in points]
+    zp = [p[2] for p in points]
+
+    xs = UnivariateSpline(s,xp)
+    ys = UnivariateSpline(s,yp)
+    zs = UnivariateSpline(s,zp)
+
+    snew = np.linspace(0, 1, num_points)
+
+    new_points = np.zeros((num_points,3))
+    for i,a in enumerate(snew):
+        new_points[i][0] = xs(a)
+        new_points[i][1] = ys(a)
+        new_points[i][2] = zs(a)
+
+    return new_points
+
+def vtkPdPlaneCut(pd, x, n):
+    plane = vtk.vtkPlane()
+    plane.SetOrigin(x)
+    plane.SetNormal(n)
+
+    clipper = vtk.vtkCutter()
+    clipper.SetCutFunction(plane)
+    clipper.SetInputData(pd)
+    clipper.Update()
+
+    return clipper.GetOutput()
+
+def clip_plane_rad(pd, x,n,r):
+    """
+    clips a polydata at a specified location
+    on a certain normal
+    with a certain radius
+    """
+    sphere = vtk.vtkSphere()
+    sphere.SetCenter(x[0],x[1],x[2])
+    sphere.SetRadius(r)
+
+    clipper = vtk.vtkClipDataSet()
+    clipper.SetClipFunction(sphere)
+    clipper.SetInputData(pd)
+    clipper.SetInsideOut(True)
+    clipper.Update()
+
+    clip = clipper.GetOutput()
+
+    surf = vtkPdPlaneCut(clip, x, n)
+    return surf
+
+def vtk_integrate_triangle_surface(pd):
+    ncells = pd.GetNumberOfCells()
+    total_area = 0
+    for i in range(ncells):
+        c = pd.GetCell(i)
+
+        p = c.GetPoints()
+        area   = c.TriangleArea(p.GetPoint(0), p.GetPoint(1), p.GetPoint(2))
+
+        total_area += area
+
+    return total_area

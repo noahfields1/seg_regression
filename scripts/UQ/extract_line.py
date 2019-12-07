@@ -22,8 +22,9 @@ LABELS = open(args.label_file,'r').readlines()
 LABELS = [v.replace('\n','') for v in LABELS]
 
 LINE_FILE = io.load_json(args.line_file)
-LINE = LINE_FILE['line']
+LINE       = LINE_FILE['line']
 NUM_POINTS = len(LINE)
+
 data = []
 
 for i,vtu_fn in enumerate(VTUS):
@@ -46,7 +47,7 @@ for i,vtu_fn in enumerate(VTUS):
             for k in range(len(tup)):
                 d[l+'_'+str(k)] = tup[k]
 
-            data.append(d)
+        data.append(d)
 
 df = pandas.DataFrame(data)
 df.to_csv(args.output_fn)
