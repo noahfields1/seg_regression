@@ -15,7 +15,6 @@ parser.add_argument('-vtu_list')
 parser.add_argument('-tube_file')
 parser.add_argument('-label_file')
 parser.add_argument('-output_fn')
-parser.add_argument('-surf_output_dir')
 args = parser.parse_args()
 
 VTUS = open(args.vtu_list,'r').readlines()
@@ -32,7 +31,7 @@ N         = range(len(POINTS))
 
 data = []
 
-for i,vtu_fn in enumerate(VTUS[1:5]):
+for i,vtu_fn in enumerate(VTUS):
     if not os.path.exists(vtu_fn): continue
 
     pd = sv.read_vtu(vtu_fn)
@@ -40,28 +39,31 @@ for i,vtu_fn in enumerate(VTUS[1:5]):
     for j,p,n,r in zip(N, POINTS, NORMALS, RADIUSES):
         surf = sv.clip_plane_rad(pd,p,n,r)
 
-        area = sv.vtk_integrate_pd_area(surf)
-        length = sv.vtk_integrate_pd_boundary_length(surf)
+        try:
+            area = sv.vtk_integrate_pd_area(surf)
+            length = sv.vtk_integrate_pd_boundary_length(surf)
 
-        d = {"model":i,
-            "point":j,
-             "x":p[0], "y":p[1], "z":p[2],
-             "nx":n[0],"ny":n[1],"nz":n[2],
-             "radius_actual":np.sqrt(area/np.pi),
-             "radius_supplied":r,
-             "area":area,
-             "length":length
-             }
+            d = {"model":i,
+                "point":j,
+                 "x":p[0], "y":p[1], "z":p[2],
+                 "nx":n[0],"ny":n[1],"nz":n[2],
+                 "radius_actual":np.sqrt(area/np.pi),
+                 "radius_supplied":r,
+                 "area":area,
+                 "length":length
+                 }
 
-        for l in LABELS:
-            ints    = sv.vtk_integrate_pd_volume(surf, l)
-            ints_bd = sv.vtk_integrate_pd_boundary(surf, l)
+            for l in LABELS:
+                ints    = sv.vtk_integrate_pd_volume(surf, l)
+                ints_bd = sv.vtk_integrate_pd_boundary(surf, l)
 
-            for k in range(len(ints)):
-                d[l+'_'+str(k)] = ints[k]*1.0/area
-                d[l+'_'+str(k)+'_boundary'] = ints_bd[k]*1.0/length
+                for k in range(len(ints)):
+                    d[l+'_'+str(k)] = ints[k]*1.0/area
+                    d[l+'_'+str(k)+'_boundary'] = ints_bd[k]*1.0/length
 
-        data.append(d)
+            data.append(d)
+        except:
+            print("failed vtu {} point {}".format(i,j))
 
 df = pandas.DataFrame(data)
 df.to_csv(args.output_fn)

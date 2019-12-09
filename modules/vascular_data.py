@@ -983,6 +983,7 @@ def vtk_integrate_pd_boundary(pd, label):
     featureEdges.Update()
 
     edge_pd = featureEdges.GetOutput()
+    data    = edge_pd.GetPointData().GetArray(label)
 
     nlines = edge_pd.GetNumberOfLines()
 
@@ -1040,3 +1041,9 @@ def vtk_integrate_pd_area(pd):
         total_area += vtk_integrate_triangle(cell)
 
     return total_area
+
+def vtk_write_polydata(pd,fn):
+    writer = vtk.vtkPolyDataWriter()
+    writer.SetInputData(pd)
+    writer.SetFileName(fn)
+    writer.Write()
