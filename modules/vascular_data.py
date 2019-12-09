@@ -940,15 +940,103 @@ def clip_plane_rad(pd, x,n,r):
     surf = vtkPdPlaneCut(clip, x, n)
     return surf
 
-def vtk_integrate_triangle_surface(pd):
+def vtk_integrate_triangle(triangle):
+    p    = triangle.GetPoints()
+    area = triangle.TriangleArea(p.GetPoint(0), p.GetPoint(1), p.GetPoint(2))
+
+    return area
+
+def vtk_integrate_pd_volume(pd, label):
+    data  = pd.GetPointData().GetArray(label)
+    tdim  = len(data.GetTuple(0))
+
+    ints = [0]*tdim
+
     ncells = pd.GetNumberOfCells()
-    total_area = 0
+
     for i in range(ncells):
-        c = pd.GetCell(i)
+        cell = pd.GetCell(i)
+        area = vtk_integrate_triangle(cell)
 
-        p = c.GetPoints()
-        area   = c.TriangleArea(p.GetPoint(0), p.GetPoint(1), p.GetPoint(2))
+        pt_ids = cell.GetPointIds()
+        for j in range(3):
+            id = pt_ids.GetId(j)
 
-        total_area += area
+            t = data.GetTuple(id)
+
+            for k in range(tdim):
+                ints[k] += t[k]*area*1.0/3
+
+    return ints
+
+def vtk_integrate_pd_boundary(pd, label):
+    data  = pd.GetPointData().GetArray(label)
+    tdim  = len(data.GetTuple(0))
+
+    ints  = [0]*tdim
+
+    featureEdges = vtk.vtkFeatureEdges()
+    featureEdges.SetInputData(pd)
+    featureEdges.BoundaryEdgesOn()
+    featureEdges.ManifoldEdgesOff()
+    featureEdges.NonManifoldEdgesOff()
+    featureEdges.Update()
+
+    edge_pd = featureEdges.GetOutput()
+
+    nlines = edge_pd.GetNumberOfLines()
+
+    for i in range(nlines):
+        line = edge_pd.GetCell(i)
+        length = vtk_line_length(line)
+        pt_ids = line.GetPointIds()
+
+        for j in range(2):
+            id = pt_ids.GetId(j)
+            t = data.GetTuple(id)
+
+            for k in range(tdim):
+                ints[k] += t[k]*length*1.0/2
+
+    return ints
+
+def vtk_integrate_pd_boundary_length(pd):
+    featureEdges = vtk.vtkFeatureEdges()
+    featureEdges.SetInputData(pd)
+    featureEdges.BoundaryEdgesOn()
+    featureEdges.ManifoldEdgesOff()
+    featureEdges.NonManifoldEdgesOff()
+    featureEdges.Update()
+
+    edge_pd = featureEdges.GetOutput()
+
+    nlines = edge_pd.GetNumberOfLines()
+
+    total_length = 0
+
+    for i in range(nlines):
+        line = edge_pd.GetCell(i)
+        length = vtk_line_length(line)
+
+        total_length+=length
+
+    return total_length
+
+def vtk_line_length(line):
+    points = line.GetPoints()
+    p1 = points.GetPoint(0)
+    p2 = points.GetPoint(1)
+
+    l2 = (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2 + (p1[2]-p2[2])**2
+    l = np.sqrt(l2)
+    return l
+
+def vtk_integrate_pd_area(pd):
+    total_area = 0
+    ncells = pd.GetNumberOfCells()
+
+    for i in range(ncells):
+        cell       = pd.GetCell(i)
+        total_area += vtk_integrate_triangle(cell)
 
     return total_area

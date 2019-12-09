@@ -8,6 +8,7 @@ import json
 import modules.io as io
 import modules.vascular_data as sv
 import vtk
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-vtu_list')
@@ -27,6 +28,7 @@ TUBE_FILE = io.load_json(args.tube_file)
 POINTS    = TUBE_FILE['points']
 NORMALS   = TUBE_FILE['normals']
 RADIUSES  = TUBE_FILE['radiuses']
+N         = range(len(POINTS))
 
 data = []
 
@@ -35,32 +37,31 @@ for i,vtu_fn in enumerate(VTUS[1:5]):
 
     pd = sv.read_vtu(vtu_fn)
 
-    for p,n,r in zip(POINTS, NORMALS, RADIUSES):
+    for j,p,n,r in zip(N, POINTS, NORMALS, RADIUSES):
         surf = sv.clip_plane_rad(pd,p,n,r)
 
-        area = sv.vtk_integrate_triangle_surface(surf)
-        print(i,area)
-    # for j in range(NUM_POINTS):
-    #     p = LINE[j]
-    #     d = {"model":i,
-    #         "point":j,
-    #          "x":p[0],
-    #          "y":p[1],
-    #          "z":p[2]}
-    #
-    #     for l in LABELS:
-    #         tup = v.GetPointData().GetArray(l).GetTuple(j)
-    #
-    #         for k in range(len(tup)):
-    #             d[l+'_'+str(k)] = tup[k]
-    #
-    #     data.append(d)
-#
-# df = pandas.DataFrame(data)
-# df.to_csv(args.output_fn)
+        area = sv.vtk_integrate_pd_area(surf)
+        length = sv.vtk_integrate_pd_boundary_length(surf)
 
-writer = vtk.vtkPolyDataWriter()
-for i,d in enumerate(data):
-    writer.SetInputData(d)
-    writer.SetFileName('/home/marsdenlab/projects/SV/UQ/data/2_vessel_data/tubes/'+str(i)+'.vtu')
-    writer.Write()
+        d = {"model":i,
+            "point":j,
+             "x":p[0], "y":p[1], "z":p[2],
+             "nx":n[0],"ny":n[1],"nz":n[2],
+             "radius_actual":np.sqrt(area/np.pi),
+             "radius_supplied":r,
+             "area":area,
+             "length":length
+             }
+
+        for l in LABELS:
+            ints    = sv.vtk_integrate_pd_volume(surf, l)
+            ints_bd = sv.vtk_integrate_pd_boundary(surf, l)
+
+            for k in range(len(ints)):
+                d[l+'_'+str(k)] = ints[k]*1.0/area
+                d[l+'_'+str(k)+'_boundary'] = ints_bd[k]*1.0/length
+
+        data.append(d)
+
+df = pandas.DataFrame(data)
+df.to_csv(args.output_fn)
