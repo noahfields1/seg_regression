@@ -57,8 +57,12 @@ if args.corrections:
 
                 seg = data_dict[path_name][seg_point]
                 seg = np.array(seg)
-                seg_mean = np.mean(seg,axis=0)
-                seg = seg_mean+0.8*(seg-seg_mean)
+                seg_mean_new = np.mean(seg,axis=0)
+
+                seg_old      = np.array(d[k])
+                seg_mean_old = np.mean(seg_old,axis=0)
+
+                seg = seg_mean_old+0.6*(seg-seg_mean_new)
 
                 d[k] = seg.tolist()
 

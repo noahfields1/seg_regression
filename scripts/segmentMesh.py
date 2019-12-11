@@ -93,7 +93,7 @@ for name,path,group in zip(NAMES, PATHS, GROUPS):
         k = int(k)
         group_pos = int(k/INTERVAL)
         pos = int(group_pos*point_per_id)
-
+        print("pos ", pos)
         contour = sv.Contour.pyContour()
 
         contour_name = name+'_'+str(pos)
@@ -155,9 +155,22 @@ for name in NAMES:
 #Set solid kernel
 for nl,nc in zip(NAMES_LOFT, NAMES_CAP):
     sv.VMTKUtils.Cap_with_ids(nl,nc,0,0)
+    sv.Repository.WriteVtkPolyData(nc, 'ascii', OUTPUT_DIR+'/'+nc+'.vtk')
 
 if len(NAMES_CAP) == 1:
     s = NAMES_CAP[0]
+elif "INTERSECTS" in cfg:
+    iscts = cfg['INTERSECTS']
+    s = "model_loft_cap_1"
+    # sv.Geom.Intersect(iscts[0], iscts[1], s)
+    # for i in range(2, len(iscts)):
+    #     print("intersecting "+iscts[i])
+    #     ss = "model_loft_"+str(i)
+    #     sv.Geom.Intersect(s,iscts[i], ss)
+    #     s = ss
+
+    sv.Geom.All_union(iscts,1,s)
+
 else:
     s = "model_loft_cap_1"
     sv.Geom.Intersect(NAMES_CAP[0], NAMES_CAP[1], s)
@@ -176,7 +189,7 @@ solid.NewObject('model')
 solid.SetVtkPolyData(s)
 solid.GetBoundaryFaces(90)
 solid.GetPolyData("model_pd")
-
+print("remeshing")
 sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.1,0.1)
 sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.1,0.1)
 
