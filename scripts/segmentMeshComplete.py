@@ -4,8 +4,9 @@ import sys
 import vtk
 
 sys.path.append(os.path.abspath('..'))
-
+import numpy as np
 import modules.io as io
+import modules.vascular_data as sv
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-config')
@@ -17,30 +18,15 @@ cfg = io.load_json(args.config)
 
 OUTPUT_DIR = args.output_dir
 FACE_FILE = OUTPUT_DIR+'/faceids.json'
+FACE_IDS = io.load_json(FACE_FILE)
 
 CAP_NAMES = cfg["CAP_NAMES"]
-
-fids = io.load_json(FACE_FILE)
-NUM_FACES = len(fids['faceids'])
-NUM_CAPS = len(cfg['CAP_NAMES'])
-NUM_WALLS = NUM_FACES-NUM_CAPS
-print(fids, NUM_FACES, NUM_CAPS, NUM_WALLS)
 
 ################################################################################
 # 1 Set up filepaths
 ################################################################################
 ug_fn = OUTPUT_DIR+"/mesh_ug.vtk"
 pd_fn = OUTPUT_DIR+"/mesh_pd.vtk"
-
-wall_ids = list(range(1,NUM_WALLS+1))
-
-print(wall_ids)
-
-cap_ids = list(range(NUM_WALLS+1, NUM_FACES+1))
-caps = {}
-for cn,ci in zip(CAP_NAMES, cap_ids):
-    caps[ci] = cn
-print(caps)
 
 OUT_DIR  = OUTPUT_DIR+"/mesh-complete"
 SURF_DIR = OUT_DIR+"/mesh-surfaces"
@@ -107,6 +93,35 @@ pdwriter.SetInputDataObject(pd)
 pdwriter.SetFileName(pd_out_fn)
 pdwriter.Write()
 
+################################################################################
+# 3.5 Compute wall and cap ids
+################################################################################
+normals  = cfg['NORMALS']
+norm_tol = cfg['NORMAL_TOLERANCE']
+
+pd = sv.vtk_pd_compute_normals(pd)
+
+pd_norms = pd.GetPointData().GetArray("Normals")
+pd_ids   = pd.GetPointData().GetArray("ModelFaceID")
+N        = pd.GetNumberOfPoints()
+
+cap_ids  = {}
+wall_ids = []
+
+for name,n in normals.items():
+    for i in range(N):
+        no = pd_norms.GetTuple(i)
+
+        ip = np.abs( no[0]*n[0] + no[1]*n[1] + no[2]*n[2] )-1
+        if ip < norm_tol:
+            id = pd_ids.GetTuple(i)[0]
+            cap_ids[name] = id
+            break
+
+import pdb; pdb.set_trace()
+################################################################################
+# 4 Output everything
+################################################################################
 #walls combined
 appender = vtk.vtkAppendPolyData()
 appender.UserManagedInputsOff()

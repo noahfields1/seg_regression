@@ -10,9 +10,7 @@
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.25,
-  "medium":0.175,
-  "fine":0.1
+  "coarse":0.25
 },
 
 "CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144_sv/correct.json",
@@ -52,13 +50,26 @@
 
 "INTERSECTS":[
   "aorta_cap",
-  "SMA_cap",
   "ext_iliac_left_cap",
+  "SMA_cap",
+  "celiac_splenic_cap",
   "renal_left_cap",
   "renal_right_cap",
-  "celiac_splenic_cap",
-  "celiac_hepatic"
+  "celiac_hepatic_cap"
 ],
+
+"NORMALS":{
+  "aorta_cap":[0.138737,0.236429,-0.961693],
+  "aorta_cap_2":[-0.03475,-0.13242,-0.990584],
+  "ext_iliac_left_cap":[0.148178,0.049584,-0.987717],
+  "SMA_cap":[0.606684,-0.272703,-0.746704],
+  "celiac_splenic_cap":[-0.75148,0.096513,-0.652659],
+  "renal_left_cap":[-0.66599,-0.018032,-0.745743],
+  "renal_right_cap":[0.987209,-0.158419,-0.017926],
+  "celiac_hepatic_cap":[0.470366,-0.122107,0.873983]
+},
+
+"NORMAL_TOLERANCE":0.01,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"

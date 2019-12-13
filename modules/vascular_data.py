@@ -1047,3 +1047,67 @@ def vtk_write_polydata(pd,fn):
     writer.SetInputData(pd)
     writer.SetFileName(fn)
     writer.Write()
+
+def vtk_write_native_polydata(pd,fn):
+    writer = vtk.vtkXMLPolyDataWriter()
+    writer.SetInputData(pd)
+    writer.SetFileName(fn)
+    writer.Write()
+
+def vtk_read_polydata(fn):
+    reader = vtk.vtkPolyDataReader()
+    reader.SetFileName(fn)
+    reader.Update()
+    return reader.GetOutput()
+
+def vtk_read_native_polydata(fn):
+    reader = vtk.vtkXMLPolyDataReader()
+    reader.SetFileName(fn)
+    reader.Update()
+    return reader.GetOutput()
+
+def vtk_merge_polydata(pd1,pd2,merge_type="union"):
+    booler = vtk.vtkLoopBooleanPolyDataFilter()
+    booler.SetNoIntersectionOutput(3)
+    if merge_type == "union":
+        booler.SetOperationToUnion()
+    elif merge_type == "intersection":
+        booler.SetOperationToIntersection()
+    elif merge_type == "difference":
+        booler.SetOperationToDifference()
+    else:
+        raise RuntimeError("unknown merge_type")
+
+    booler.SetInputData(0,pd1)
+    booler.SetInputData(1,pd2)
+    booler.Update()
+    return booler.GetOutput()
+
+def vtk_clean_polydata(pd):
+    cleaner=vtk.vtkCleanPolyData()
+    cleaner.PointMergingOn();
+    cleaner.ConvertLinesToPointsOff();
+    cleaner.ConvertPolysToLinesOff();
+    cleaner.SetInputDataObject(pd);
+    cleaner.Update();
+
+    orienter=vtk.vtkPolyDataNormals();
+    orienter.SetInputDataObject(cleaner.GetOutput());
+    orienter.AutoOrientNormalsOn();
+    orienter.ComputePointNormalsOff();
+    orienter.SplittingOff();
+    orienter.ComputeCellNormalsOn();
+    orienter.ConsistencyOn();
+    orienter.NonManifoldTraversalOff();
+    orienter.Update();
+
+    return orienter.GetOutput()
+
+def vtk_pd_compute_normals(pd):
+    normals = vtk.vtkPolyDataNormals()
+    normals.SetInputData(pd)
+    normals.ComputePointNormalsOn()
+    normals.ComputeCellNormalsOff()
+    normals.Update()
+
+    return normals.GetOutput()

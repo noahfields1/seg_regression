@@ -153,86 +153,9 @@ for name in NAMES:
 # 4. Cap lofted vessels and merge into solid model
 ################################################################################
 #Set solid kernel
+sv.Solid.SetKernel('PolyData')
+solid = sv.Solid.pySolidModel()
+
 for nl,nc in zip(NAMES_LOFT, NAMES_CAP):
     sv.VMTKUtils.Cap_with_ids(nl,nc,0,0)
-    sv.Repository.WriteVtkPolyData(nc, 'ascii', OUTPUT_DIR+'/'+nc+'.vtk')
-
-if len(NAMES_CAP) == 1:
-    s = NAMES_CAP[0]
-elif "INTERSECTS" in cfg:
-    iscts = cfg['INTERSECTS']
-    s = "model_loft_cap_1"
-    # sv.Geom.Intersect(iscts[0], iscts[1], s)
-    # for i in range(2, len(iscts)):
-    #     print("intersecting "+iscts[i])
-    #     ss = "model_loft_"+str(i)
-    #     sv.Geom.Intersect(s,iscts[i], ss)
-    #     s = ss
-
-    sv.Geom.All_union(iscts,1,s)
-
-else:
-    s = "model_loft_cap_1"
-    sv.Geom.Intersect(NAMES_CAP[0], NAMES_CAP[1], s)
-    if len(NAMES_CAP)>2:
-        for i in range(2, len(NAMES_CAP)):
-            ss = "model_loft_"+str(i)
-            sv.Geom.Intersect(NAMES_CAP[i], s, ss)
-            s = ss
-
-sv.Repository.WriteVtkPolyData(nc, 'ascii', OUTPUT_DIR+'/test.vtk')
-
-sv.Solid.SetKernel('PolyData')
-#Create model from polydata
-solid = sv.Solid.pySolidModel()
-solid.NewObject('model')
-solid.SetVtkPolyData(s)
-solid.GetBoundaryFaces(90)
-solid.GetPolyData("model_pd")
-print("remeshing")
-sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.1,0.1)
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.1,0.1)
-
-solid.SetVtkPolyData("model_remesh")
-
-#Extract boundary faces
-print ("Creating model: \nFaceID found: " + str(solid.GetFaceIds()))
-
-fids = {"faceids":solid.GetFaceIds()}
-io.write_json(fids,FACE_FILE)
-#Write to file
-solid.WriteNative(EXTERIOR_FILE)
-
-################################################################################
-# 5. Create vtk meshes
-################################################################################
-#Set mesh kernel
-sv.MeshObject.SetKernel('TetGen')
-
-#Create mesh object
-msh = sv.MeshObject.pyMeshObject()
-msh.NewObject('mesh')
-
-#Load Model
-solidFn = EXTERIOR_FILE
-msh.LoadModel(solidFn)
-
-#Create new mesha
-msh.NewMesh()
-msh.SetMeshOptions('SurfaceMeshFlag',[1])
-msh.SetMeshOptions('VolumeMeshFlag',[1])
-msh.SetMeshOptions('GlobalEdgeSize',[EDGE_SIZE])
-msh.SetMeshOptions('MeshWallFirst',[1])
-msh.SetMeshOptions('Optimization', [3])
-msh.SetMeshOptions('QualityRatio', [1.4])
-msh.GenerateMesh()
-
-# #Save mesh to file
-mesh_ug_name = 'mesh_ug'
-mesh_pd_name = 'mesh_pd'
-
-msh.GetUnstructuredGrid(mesh_ug_name)
-msh.GetPolyData(mesh_pd_name)
-
-sv.Repository.WriteVtkUnstructuredGrid(mesh_ug_name,"ascii",UG_FILE)
-sv.Repository.WriteVtkPolyData(mesh_pd_name,"ascii",PD_FILE)
+    sv.Repository.WriteVtkPolyData(nc, 'ascii', OUTPUT_DIR+'/'+nc+'.vtp')

@@ -79,6 +79,16 @@ for i in range(NUM_RUNS):
                 args.config, odir,edir,e)
              )
 
+        os.system('python segmentMeshMerge.py\
+             -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
+                args.config, odir,edir,e)
+             )
+
+        os.system('python segmentMesh2.py\
+             -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
+                args.config, odir,edir,e)
+             )
+
         os.system('python segmentMeshComplete.py\
              -config {} -output_dir {}'.format(args.config, edir)
              )
