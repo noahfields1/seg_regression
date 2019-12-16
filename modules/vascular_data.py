@@ -1107,7 +1107,7 @@ def vtk_pd_compute_normals(pd):
     normals = vtk.vtkPolyDataNormals()
     normals.SetInputData(pd)
     normals.ComputePointNormalsOn()
-    normals.ComputeCellNormalsOff()
+    normals.ComputeCellNormalsOn()
     normals.Update()
 
     return normals.GetOutput()

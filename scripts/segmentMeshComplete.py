@@ -96,29 +96,22 @@ pdwriter.Write()
 ################################################################################
 # 3.5 Compute wall and cap ids
 ################################################################################
-normals  = cfg['NORMALS']
-norm_tol = cfg['NORMAL_TOLERANCE']
+cap_locs = cfg['CAP_LOCS']
 
-pd = sv.vtk_pd_compute_normals(pd)
-
-pd_norms = pd.GetPointData().GetArray("Normals")
-pd_ids   = pd.GetPointData().GetArray("ModelFaceID")
-N        = pd.GetNumberOfPoints()
+pd_ids   = pd.GetCellData().GetArray("ModelFaceID")
+N        = pd.GetNumberOfCells()
 
 cap_ids  = {}
-wall_ids = []
 
-for name,n in normals.items():
-    for i in range(N):
-        no = pd_norms.GetTuple(i)
+for name,p in cap_locs.items():
+    id,coord,weights = sv.vtkPdFindCellId(pd,p)
 
-        ip = np.abs( no[0]*n[0] + no[1]*n[1] + no[2]*n[2] )-1
-        if ip < norm_tol:
-            id = pd_ids.GetTuple(i)[0]
-            cap_ids[name] = id
-            break
+    model_face_id = pd_ids.GetTuple(id)[0]
+    cap_ids[name] = model_face_id
 
-import pdb; pdb.set_trace()
+wall_ids = list(set([pd_ids.GetTuple(i)[0] for i in range(N)]))
+wall_ids = [s for s in wall_ids if not any([s == v for k,v in cap_ids.items()])]
+
 ################################################################################
 # 4 Output everything
 ################################################################################
@@ -142,10 +135,10 @@ pdwriter.SetInputDataObject(cleaner.GetOutput())
 pdwriter.Write()
 
 #caps
-for k,v in caps.items():
+for k,v in cap_ids.items():
 
-    c_pd = thresholdPolyData(pd, "ModelFaceID", (k,k))
-    fn   = SURF_DIR + '/'+v+'.vtp'
+    c_pd = thresholdPolyData(pd, "ModelFaceID", (v,v))
+    fn   = SURF_DIR + '/'+k+'.vtp'
 
     pdwriter.SetFileName(fn)
     pdwriter.SetInputDataObject(c_pd)

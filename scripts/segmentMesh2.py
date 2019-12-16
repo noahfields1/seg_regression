@@ -79,11 +79,15 @@ for i,m in enumerate(MERGE_NAMES[2:]):
 solid.GetBoundaryFaces(50)
 solid.GetFaceIds()
 solid.GetPolyData("model_pd")
+
+#sv.Geom.Set_array_for_local_op_sphere("model_pd","model_pd_1", 3.0, [0.28,15.74,-43.24])
+#sv.Geom.Local_constrain_smooth("model_pd_1","model_pd_2", 10, 0.2)
+
 sv.Repository.WriteVtkPolyData("model_pd","ascii",EXTERIOR_FILE)
 
 print("remeshing")
-sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.05,0.05)
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.05,0.05)
+sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.15,0.15)
+sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.15,0.15)
 
 solid.SetVtkPolyData("model_remesh")
 

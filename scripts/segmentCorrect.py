@@ -54,7 +54,10 @@ if args.corrections:
 
                 path_name = corrections[name][k]['path']
                 seg_point = corrections[name][k]['seg']
-
+                if "seg_scale" in corrections[name][k]:
+                    scale = corrections[name][k]['seg_scale']
+                else:
+                    scale = 0.6
                 seg = data_dict[path_name][seg_point]
                 seg = np.array(seg)
                 seg_mean_new = np.mean(seg,axis=0)
@@ -62,7 +65,7 @@ if args.corrections:
                 seg_old      = np.array(d[k])
                 seg_mean_old = np.mean(seg_old,axis=0)
 
-                seg = seg_mean_old+0.6*(seg-seg_mean_new)
+                seg = seg_mean_old+scale*(seg-seg_mean_new)
 
                 d[k] = seg.tolist()
 
