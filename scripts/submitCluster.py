@@ -17,7 +17,7 @@ try:
 except:
     raise RuntimeError("Failed to load config {0}".format(args.config))
 
-RUNS_DIR    = cfg['runs_folder']
+RUNS_DIRS    = cfg['runs_folder']
 
 SIM_DIR = cfg['sim_folder']
 SIM_NAME = SIM_DIR.split('/')[-1]
@@ -25,9 +25,11 @@ SIM_NAME = SIM_DIR.split('/')[-1]
 RUN_FILE   = cfg['run_file']
 run_file_name = RUN_FILE.split('/')[-1]
 
-run_folders = os.listdir(RUNS_DIR)
-run_folders = [str(RUNS_DIR+'/'+f) for f in run_folders]
-
+run_folders  []
+for d in RUNS_DIRS:
+    rf = os.listdir(d)
+    rf = [str(d+'/'+f) for f in rf]
+    run_folders+=rf
 
 for f in run_folders:
     print(f)

@@ -1,0 +1,10 @@
+{
+  "sim_folder":"/oasis/scratch/comet/gdmaher/temp_project/0110/model_files/sim_steady",
+  "runs_folders":[
+    "/oasis/scratch/comet/gdmaher/temp_project/2_vessel_consistent/generations/1/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/2_vessel_consistent/generations/2/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/2_vessel_consistent/generations/3/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/2_vessel_consistent/generations/4/medium",
+  ],
+  "run_file":"/home/gdmaher/seg_regression/scripts/cluster/steady/runMedium.sh"
+}
