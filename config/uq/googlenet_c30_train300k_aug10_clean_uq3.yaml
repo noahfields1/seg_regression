@@ -1,22 +1,22 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files_clean.txt"
 
-NAME: "googlenet_c30_train300k_aug10_clean_drop4"
+NAME: "googlenet_c30_train300k_aug10_clean"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "GoogleNet"
 DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/googlenet_c30_train300k_aug10_clean_drop4/log/train.txt"
+LOG_FILE: "./results/googlenet_c30_train300k_aug10_clean/log/train.txt"
 
-ITER_FILE: "./results/googlenet_c30_train300k_aug10_clean_drop4/log/iter.txt"
+ITER_FILE: "./results/googlenet_c30_train300k_aug10_clean/log/iter.txt"
 
-MODEL_DIR: "./results/googlenet_c30_train300k_aug10_clean_drop4/model"
+MODEL_DIR: "./results/googlenet_c30_train300k_aug10_clean/model"
 MODEL_NAME: "googlenet"
 MODEL_TYPE: "googlenet"
 
-LOG_STEP: 2000
+LOG_STEP: 10000
 LEAK: 0.2
 BATCH_SIZE: 4
 LEARNING_RATE: 0.00005
@@ -29,7 +29,7 @@ IMAGE_TYPE: "BLUR"
 BLUR_SIGMA: 3
 
 AUGMENT: true
-AUGMENT_FACTOR: 2
+AUGMENT_FACTOR: 10
 AUGMENT_R_SCALE: 0.65
 CENTER: true
 
@@ -49,7 +49,8 @@ CROP_DIMS: 160
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 30
 
-DROPOUT: 0.4
+DROPOUT: 0.6
+DROPOUT_UQ: 0.5
 
 INIT: 'xavier'
 

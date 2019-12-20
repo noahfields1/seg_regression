@@ -1,0 +1,104 @@
+{
+"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/0158_sv/image.mha",
+
+"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
+
+"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0158",
+
+"INTERVAL":15,
+
+"NUM_RUNS":1,
+
+"EDGE_SIZES":{
+  "coarse":0.25
+},
+
+"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0158_sv/correct.json",
+
+"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/0158_sv/delete.json",
+
+"PATH_FILES":[
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/aorta.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LAD.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LAD_1.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LAD_2.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LAD_3.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LAD_4.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LAD_5.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LAD_6.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/LCX.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/left_marginal_artery.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/right_marginal_artery.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/RCA_PAD.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0158_sv/paths/RCA_PAD_1.txt"
+],
+
+"NAMES":[
+  "aorta",
+  "LAD",
+  "LAD_1",
+  "LAD_2",
+  "LAD_3",
+  "LAD_4",
+  "LAD_5",
+  "LAD_6",
+  "LCX",
+  "left_marginal_artery",
+  "right_marginal_artery",
+  "RCA_PAD",
+  "RCA_PAD_1"
+],
+
+"CAP_NAMES":[
+  "cap_aorta",
+  "cap_aorta_2",
+  "cap_LAD",
+  "cap_LAD_1",
+  "cap_LAD_2",
+  "cap_LAD_3",
+  "cap_LAD_4",
+  "cap_LAD_5",
+  "cap_LAD_6",
+  "cap_LCX",
+  "cap_left_marginal_artery",
+  "cap_right_marginal_artery",
+  "cap_RCA_PAD",
+  "cap_RCA_PAD_1"
+],
+
+"INTERSECTS":[
+  "aorta_cap",
+  "LAD_cap",
+  "LAD_1_cap",
+  "LAD_2_cap",
+  "LAD_3_cap",
+  "LAD_4_cap",
+  "LAD_5_cap",
+  "LAD_6_cap",
+  "LCX_cap",
+  "left_marginal_artery_cap",
+  "right_marginal_artery_cap",
+  "RCA_PAD_cap",
+  "RCA_PAD_1_cap"
+],
+
+"CAP_LOCS":{
+  "aorta_cap":[-0.48355324225831,0.595527867806281,163.86882770973227],
+  "aorta_cap_2":[1.296111384330083,0.468224955853471,167.6817635628409],
+  "LAD_cap":[-8.09382733265849,5.025478222079404,160.45300000009593],
+  "LAD_1_cap":[-6.35643997110863,5.344377782112019,161.70300000009593],
+  "LAD_2_cap":[-6.10720487693089,-0.242700356869344,165.17907083549923],
+  "LAD_3_cap":[-6.86793096725512,2.09964400651804,164.8029999998398],
+  "LAD_4_cap":[-6.9776265574134,1.540471217313214,164.7275984126433],
+  "LAD_5_cap":[-3.64028471013544,1.83696989622628,164.21156839556048],
+  "LAD_6_cap":[-5.18348033653887,-1.3603423542835,165.55299999995623],
+  "LCX_cap":[-5.149726301060329,-4.347275585458101,162.35163857730572],
+  "left_marginal_artery_cap":[-0.1822710949246084,-0.5149417547704562,-0.8376229683747382],
+  "right_marginal_artery_cap":[1.536366888257573,5.402583598990619,160.784750743938],
+  "RCA_PAD_cap":[-1.32546790794368,1.546236407318818,156.67707013725834],
+  "RCA_PAD_1_cap":[-0.762653366825857,0.447950000059791,158.27940605905155]
+},
+
+"SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
+"SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
+}

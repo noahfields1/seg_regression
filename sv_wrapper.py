@@ -71,7 +71,7 @@ class SVWrapper(object):
         img     = self.preprocessor(img)
         pred    = self.model.predict(img)
         contour = self.postprocessor(pred)
-
+        contour = vascular_data.smoothContour(contour,num_modes=5)
         scale = self.cfg['CROP_DIMS']*self.cfg['SPACING']/2
 
         # plt.figure()

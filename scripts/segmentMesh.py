@@ -35,9 +35,9 @@ FILES = [INPUT_DIR+'/'+f for f in FILES]
 
 #NOTE: these should all sort into the same order, i.e.
 #paths and group files should use the same names
-GROUPS_FILES  = sorted([f for f in FILES if '_corrected.json' in f])
 PATH_FILES    = sorted(cfg['PATH_FILES'])
 NAMES         = sorted(cfg['NAMES'])
+GROUPS_FILES  = [INPUT_DIR+'/'+n+'_corrected.json' for n in NAMES]
 NAMES_LOFT    = [f+'_loft' for f in NAMES]
 NAMES_CAP     = [f+'_cap' for f in NAMES]
 
@@ -87,13 +87,13 @@ for name,path,group in zip(NAMES, PATHS, GROUPS):
     print(point_per_id)
 
     PD_NAMES[name] = []
-
+    print(group.keys())
     for i,t in enumerate(group.items()):
         k,v = t
         k = int(k)
         group_pos = int(k/INTERVAL)
         pos = int(group_pos*point_per_id)
-        print("pos ", pos)
+        print("pos ", pos,k,group_pos)
         contour = sv.Contour.pyContour()
 
         contour_name = name+'_'+str(pos)

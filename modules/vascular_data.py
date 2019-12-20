@@ -1111,3 +1111,20 @@ def vtk_pd_compute_normals(pd):
     normals.Update()
 
     return normals.GetOutput()
+
+def vec_to_groups(v,groups,group_ids,group_nums, num_points):
+    groups_dict = {}
+    pointer = 0
+    N = num_points*3
+    for g_fn in groups:
+        d = {}
+        ids = list(group_ids[g_fn])
+        num = group_nums[g_fn]
+        for i in range(num):
+            id = ids[i]
+            pointer_end = pointer+N
+            points = v[pointer:pointer_end].reshape((num_points,3)).tolist()
+            d[id] = points
+            pointer = pointer_end
+        groups_dict[g_fn] = d
+    return groups_dict
