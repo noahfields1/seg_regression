@@ -43,7 +43,7 @@
 "CAP_LOCS":{
   "cap_aorta":[-2.939,-3.02,15.136],
   "cap_aorta_2":[-6.235528,6.279334,-21.572036],
-  "cap_right_iliac":[8.371758,7.155283,-22.927951]
+  "cap_right_iliac":[8.226775,6.788543,-22.435208]
 },
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
