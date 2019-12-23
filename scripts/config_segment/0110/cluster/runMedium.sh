@@ -32,10 +32,10 @@
 
 # Modules
 module purge
-module load gnu/4.9.2
+module load gnu/7.2.0
 module load lapack
 #module load gnu openmpi_ib
-module load mvapich2_ib/2.1
+module load mvapich2_ib/2.3.2
 module load python
 module load scipy
 module load boost

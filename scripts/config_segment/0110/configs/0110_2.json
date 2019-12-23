@@ -7,7 +7,7 @@
 
 "INTERVAL":10,
 
-"NUM_RUNS":32,
+"NUM_RUNS":50,
 
 "EDGE_SIZES":{
   "coarse":0.5,
