@@ -1,13 +1,13 @@
 {
-"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/0144_sv/image.mha",
+"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/0144/model_files/image.mha",
 
-"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
+"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq2.yaml",
 
-"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0144",
+"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0144/2",
 
 "INTERVAL":15,
 
-"NUM_RUNS":60,
+"NUM_RUNS":80,
 
 "EDGE_SIZES":{
   "coarse":0.25,
@@ -15,18 +15,18 @@
   "fine":0.1
 },
 
-"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144_sv/correct.json",
+"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144/model_files/correct.json",
 
-"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144_sv/delete.json",
+"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144/model_files/delete.json",
 
 "PATH_FILES":[
-  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/aorta.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/SMA.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/celiac_splenic.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/celiac_hepatic.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/ext_iliac_left.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/renal_left.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144_sv/paths/renal_right.txt"
+  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/aorta.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/SMA.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/celiac_splenic.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/celiac_hepatic.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/ext_iliac_left.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/renal_left.txt",
+  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/renal_right.txt"
 ],
 
 "NAMES":[
