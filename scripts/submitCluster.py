@@ -55,6 +55,7 @@ for i,f in enumerate(run_folders):
 
     time.sleep(0.3)
 
-    if i%NBATCH == 0:
-        time.sleep(SLEEP_BATCH)
+    if (i+1)%NBATCH == 0:
+        print("sleeping for {} minutes".format(SLEEP_BATCH))
+        time.sleep(SLEEP_BATCH*60)
     #import pdb; pdb.set_trace()
