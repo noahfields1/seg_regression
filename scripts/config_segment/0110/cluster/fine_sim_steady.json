@@ -8,5 +8,5 @@
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/runFine.sh",
   "sleep_batch":150,
-  "num_batch":5
+  "num_batch":10
 }

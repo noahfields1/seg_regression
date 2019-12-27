@@ -7,6 +7,6 @@
     "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/4/medium"
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/runMedium.sh",
-  "sleep_batch":60,
+  "sleep_batch":90,
   "num_batch":20
 }
