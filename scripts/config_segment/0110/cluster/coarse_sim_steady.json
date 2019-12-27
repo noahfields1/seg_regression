@@ -1,7 +1,12 @@
 {
   "sim_folder":"/oasis/scratch/comet/gdmaher/temp_project/0110/model_files/sim_steady",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/2/coarse"
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/1/coarse",
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/2/coarse",
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/3/coarse",
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/4/coarse"
   ],
-  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/runCoarse.sh"
+  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/runCoarse.sh",
+  "sleep_batch":30,
+  "num_batch":30
 }

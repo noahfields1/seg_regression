@@ -23,6 +23,9 @@ SIM_DIR = cfg['sim_folder']
 SIM_NAME = SIM_DIR.split('/')[-1]
 
 RUN_FILE   = cfg['run_file']
+NBATCH     = cfg['num_batch']
+SLEEP_BATCH = cfg['sleep_batch']
+
 run_file_name = RUN_FILE.split('/')[-1]
 
 run_folders = []
@@ -31,7 +34,7 @@ for d in RUNS_DIRS:
     rf = [str(d+'/'+f) for f in rf]
     run_folders+=rf
 
-for f in run_folders:
+for i,f in enumerate(run_folders):
     print(f)
 #    print("running in {}".format(f))
 
@@ -52,4 +55,6 @@ for f in run_folders:
 
     time.sleep(0.3)
 
+    if i%NBATCH == 0:
+        time.sleep(SLEEP_BATCH)
     #import pdb; pdb.set_trace()
