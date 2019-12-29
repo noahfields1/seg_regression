@@ -112,6 +112,13 @@ def normalizeContour(c,p,t,tx, as_list=False):
     #print '{}\n{}\n{}\n{}\n{}\n{}\n{}\n'.format(p,t,tx,ty,c,c_p,res)
     return res
 
+def calc_area_3d(c):
+    mu  = np.mean(c,axis=0)
+    c_c = c-mu
+    dists  = np.sqrt(np.sum(c_c**2,axis=1))
+    mean_r = np.mean(dists)
+    return np.pi*mean_r**2
+
 def interpContour(c,num_pts=15, k=1):
     c = smoothContour(c, num_modes=5)
     angles = np.arctan2(c[:,1],c[:,0])
