@@ -20,7 +20,6 @@ except:
 RUNS_DIRS    = cfg['runs_folders']
 
 SIM_NAME = cfg['sim_name']
-SIM_NAME = SIM_DIR.split('/')[-1]
 
 RUN_FILE   = cfg['run_file']
 
@@ -34,7 +33,6 @@ for d in RUNS_DIRS:
 
 for i,f in enumerate(run_folders):
     print(f)
-#    print("running in {}".format(f))
 
     cur_sim_dir = f+'/'+SIM_NAME
 
