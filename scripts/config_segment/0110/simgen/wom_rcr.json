@@ -1,0 +1,11 @@
+{
+  "gen_dirs":[
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/1",
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/2",
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/3",
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/4"
+  ],
+  "mesh_dirs":["coarse","medium","fine"],
+  "num_models":50,
+  "sim_dir":"/home/marsdenlab/projects/SV/UQ/data/0110/model_files/sim_wom_rcr"
+}

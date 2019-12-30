@@ -1,0 +1,12 @@
+{
+  "sim_name":"sim_steady_real",
+  "runs_folders":[
+    "/scratch/users/gdmaher/0110/generations/1/fine",
+    "/scratch/users/gdmaher/0110/generations/2/fine",
+    "/scratch/users/gdmaher/0110/generations/3/fine",
+    "/scratch/users/gdmaher/0110/generations/4/fine"
+  ],
+  "run_file":"/home/users/gdmaher/seg_regression/scripts/config_segment/0110/cluster/sherlock/runFine",
+  "sleep_batch":150,
+  "num_batch":10
+}

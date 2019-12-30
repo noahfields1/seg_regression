@@ -1,8 +1,13 @@
 {
-  "gen_dirs":["/home/gabriel/projects/SV/UQ/data/0110/generations/1/1"],
+  "gen_dirs":[
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/1",
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/2",
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/3",
+    "/home/marsdenlab/projects/SV/UQ/data/0110/generations/4"
+  ],
   "mesh_dirs":["coarse","medium","fine"],
   "num_models":50,
-  "sim_dir":"/home/gabriel/projects/SV/UQ/data/0110/generations/sim_steady_highr",
+  "sim_dir":"/home/marsdenlab/projects/SV/UQ/data/0110/model_files/sim_steady_real",
   "solver_file":"solver.inp",
   "groups":[
     "aorta",
@@ -12,7 +17,7 @@
     "aorta_corrected.json",
     "right_iliac_corrected.json"
   ],
-  "total_r":1333,
+  "total_r":5500,
   "inlet":{
     "group":"aorta_corrected.json",
     "point":"0",
