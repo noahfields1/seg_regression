@@ -36,11 +36,6 @@ for i,f in enumerate(run_folders):
 
     cur_sim_dir = f+'/'+SIM_NAME
 
-    try:
-        os.system("rm -r {0}".format(cur_sim_dir))
-    except:
-        pass
-
     os.system("cp {0} {1}".format(RUN_FILE, cur_sim_dir))
 
     os.chdir(cur_sim_dir)
