@@ -11,7 +11,7 @@
 #SBATCH --error=log.e%j
 
 # The walltime you require for your job
-#SBATCH --time=1:00:00
+#SBATCH --time=10:00:00
 
 # Job priority. Leave as normal for now
 #SBATCH --qos=normal
@@ -42,4 +42,4 @@ module load mesa
 # Name of the executable you want to run
 /share/PI/amarsden/sherlock_extern_executables/svpre.exe model_sim.svpre
 srun /share/PI/amarsden/sherlock_extern_executables/svsolver-openmpi.exe
-/share/PI/amarsden/sherlock_extern_executables/svpost.exe -indir 24-procs_case -outdir . -start 0 -stop 3000 -incr 10 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
+/share/PI/amarsden/sherlock_extern_executables/svpost.exe -indir 24-procs_case -outdir . -start 0 -stop 1500 -incr 5 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
