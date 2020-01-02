@@ -42,4 +42,4 @@ module load mesa
 # Name of the executable you want to run
 /share/PI/amarsden/sherlock_extern_executables/svpre.exe model_sim.svpre
 srun /share/PI/amarsden/sherlock_extern_executables/svsolver-openmpi.exe
-/share/PI/amarsden/sherlock_extern_executables/svpost.exe -indir 48-procs_case -outdir . -start 0 -stop 1500 -incr 5 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
+/share/PI/amarsden/sherlock_extern_executables/svpost.exe -indir 48-procs_case -outdir . -start 0 -stop 2000 -incr 5 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
