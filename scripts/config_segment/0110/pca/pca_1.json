@@ -1,9 +1,9 @@
 {
   "group_files":["aorta_corrected.json","right_iliac_corrected.json"],
-  "input_dir":"/home/marsdenlab/projects/SV/UQ/data/0110/generations/1/models",
-  "output_dir":"/home/marsdenlab/projects/SV/UQ/data/0110/pca/1",
+  "input_dir":"/media/marsdenlab/Data1/UQ/data/0110/generations/1/models",
+  "output_dir":"/media/marsdenlab/Data1/UQ/data/0110/pca/1",
   "num_points":33,
   "modes":5,
   "coeffs":[-7,-4,4,7],
-  "group_contents_file":"/home/marsdenlab/projects/SV/UQ/data/0110/model_files/group_contents.tcl"
+  "group_contents_file":"/media/marsdenlab/Data1/UQ/data/0110/model_files/group_contents.tcl"
 }

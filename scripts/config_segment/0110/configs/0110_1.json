@@ -1,9 +1,9 @@
 {
-"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/0110/model_files/image.mha",
+"IMAGE":"/media/marsdenlab/Data1/UQ/0110/model_files/image.mha",
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
 
-"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0110/generations/1",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0110/generations/1",
 
 "INTERVAL":10,
 
@@ -15,13 +15,13 @@
   "fine":0.125
 },
 
-"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0110/model_files/correct.json",
+"CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/correct.json",
 
-"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/0110/model_files/delete.json",
+"DELETE_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/delete.json",
 
 "PATH_FILES":[
- "/home/marsdenlab/projects/SV/UQ/data/0110/model_files/paths/aorta.txt",
- "/home/marsdenlab/projects/SV/UQ/data/0110/model_files/paths/right_iliac.txt"
+ "/media/marsdenlab/Data1/UQ/0110/model_files/paths/aorta.txt",
+ "/media/marsdenlab/Data1/UQ/0110/model_files/paths/right_iliac.txt"
 ],
 
 "NAMES":[

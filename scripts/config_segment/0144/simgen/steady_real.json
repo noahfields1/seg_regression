@@ -1,0 +1,37 @@
+{
+  "gen_dirs":[
+    "/media/marsdenlab/Data1/UQ/0144/generations/1",
+    "/media/marsdenlab/Data1/UQ/0144/generations/2",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3",
+    "/media/marsdenlab/Data1/UQ/0144/generations/4"
+  ],
+  "mesh_dirs":["coarse","medium","fine"],
+  "num_models":50,
+  "sim_dir":"/media/marsdenlab/Data1/UQ/0144/model_files/sim_steady_real",
+  "solver_file":"solver.inp",
+  "groups":[
+    "SMA",
+    "aorta",
+    "celiac_hepatic",
+    "celiac_splenic",
+    "ext_iliac_left",
+    "renal_left",
+    "renal_right"
+  ],
+  "groups_files":[
+    "SMA.json",
+    "aorta.json",
+    "celiac_hepatic.json",
+    "celiac_splenic.json",
+    "ext_iliac_left.json",
+    "renal_left.json",
+    "renal_right.json"
+  ],
+  "total_r":5500,
+  "inlet":{
+    "group":"aorta_corrected.json",
+    "point":"0",
+    "flow_val":-100,
+    "file":"cap_aorta.flow"
+  }
+}

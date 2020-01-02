@@ -1,6 +1,11 @@
 import os
 
-MESHES = ['coarse','medium','fine']
+CONFIGS = [
+"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady.json",
+"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady_real.json",
+"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/wom_rcr.json"
+]
+
 POINTS = ['inlet',
 'outlet_aorta',
 'outlet_right_iliac',
@@ -18,33 +23,37 @@ TUBES = [
 'right_iliac',
 ]
 
-# print('points')
-# for m in MESHES:
-#     for p in POINTS:
-#         print(m,p)
-#         os.system(
-#             "python extract_point.py -vtu_list ../config_segment/0110/vtu_{}.txt \
-#              -label_file ../config_segment/0110/labels.txt \
-#              -point_file ../config_segment/0110/points/{}.json \
-#              -output_fn /home/marsdenlab/projects/SV/UQ/data/2_vessel_data/data/{}/{}.csv".format(m,p,m,p)
-#              )
-#
-# print('lines')
-# for m in MESHES:
-#     for p in LINES:
-#         print(m,p)
-#         os.system("python extract_line.py -vtu_list ../config_segment/0110/vtu_{}.txt \
-#         -label_file ../config_segment/0110/labels.txt \
-#         -line_file ../config_segment/0110/lines/{}.json \
-#         -output_fn /home/marsdenlab/projects/SV/UQ/data/2_vessel_data/data/{}/{}.csv".format(m,p,m,p)
-#         )
+print('points')
+
+for cfg in CONFIGS:
+    for p in POINTS:
+        print(cfg,p)
+        name = cfg.split('/')[-1].replace('.json','')
+        os.system(
+            "python extract_point.py -config {} \
+             -point_file ../config_segment/0110/points/{}.json \
+             -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}.csv".format(cfg,p,name,p)
+             )
+
+print('lines')
+
+for cfg in CONFIGS:
+    for p in LINES:
+        print(cfg,p)
+        name = cfg.split('/')[-1].replace('.json','')
+        os.system("python extract_line.py -config {} \
+        -line_file ../config_segment/0110/lines/{}.json \
+        -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}.csv".format(cfg,p,name,p)
+        )
 
 print('tubes')
-for m in MESHES:
+
+for cfg in CONFIGS:
     for p in TUBES:
-        print(m,p)
-        os.system("python extract_tube.py -vtu_list ../config_segment/0110/vtu_{}.txt \
-        -label_file ../config_segment/0110/labels.txt \
+        print(cfg, p)
+        name = cfg.split('/')[-1].replace('.json','')
+
+        os.system("python extract_tube.py -config {} \
         -tube_file ../config_segment/0110/tubes/{}.json \
-        -output_fn /home/marsdenlab/projects/SV/UQ/data/2_vessel_data/data/{}/{}_tube.csv".format(m,p,m,p)
+        -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}_tube.csv".format(cfg,p,name,p)
         )

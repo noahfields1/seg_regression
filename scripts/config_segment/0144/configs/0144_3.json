@@ -1,9 +1,9 @@
 {
-"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/0144/model_files/image.mha",
+"IMAGE":"/media/marsdenlab/Data1/UQ/0144/model_files/image.mha",
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq3.yaml",
 
-"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0144/generations/3",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0144/generations/3",
 
 "INTERVAL":15,
 
@@ -15,18 +15,18 @@
   "fine":0.1
 },
 
-"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144/model_files/correct.json",
+"CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",
 
-"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/0144/model_files/delete.json",
+"DELETE_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/delete.json",
 
 "PATH_FILES":[
-  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/aorta.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/SMA.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/celiac_splenic.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/celiac_hepatic.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/ext_iliac_left.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/renal_left.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0144/model_files/paths/renal_right.txt"
+  "/media/marsdenlab/Data1/UQ/0144/model_files/paths/aorta.txt",
+  "/media/marsdenlab/Data1/UQ/0144/model_files/paths/SMA.txt",
+  "/media/marsdenlab/Data1/UQ/0144/model_files/paths/celiac_splenic.txt",
+  "/media/marsdenlab/Data1/UQ/0144/model_files/paths/celiac_hepatic.txt",
+  "/media/marsdenlab/Data1/UQ/0144/model_files/paths/ext_iliac_left.txt",
+  "/media/marsdenlab/Data1/UQ/0144/model_files/paths/renal_left.txt",
+  "/media/marsdenlab/Data1/UQ/0144/model_files/paths/renal_right.txt"
 ],
 
 "NAMES":[

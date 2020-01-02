@@ -1,3 +1,0 @@
-pressure_00400
-velocity_00400
-vWSS_00400

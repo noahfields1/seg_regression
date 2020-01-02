@@ -1,9 +1,9 @@
 {
-"IMAGE":"/home/marsdenlab/projects/SV/UQ/data/0119/model_files/image.mha",
+"IMAGE":"/media/marsdenlab/Data1/UQ/0119/model_files/image.mha",
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq4.yaml",
 
-"OUTPUT_DIR":"/home/marsdenlab/projects/SV/UQ/data/0119/generations/4",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0119/generations/4",
 
 "INTERVAL":25,
 
@@ -15,26 +15,26 @@
   "fine":0.035
 },
 
-"CORRECT_FILE":"/home/marsdenlab/projects/SV/UQ/data/0119/model_files/correct.json",
+"CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0119/model_files/correct.json",
 
-"DELETE_FILE":"/home/marsdenlab/projects/SV/UQ/data/0119/model_files/delete.json",
+"DELETE_FILE":"/media/marsdenlab/Data1/UQ/0119/model_files/delete.json",
 
 "PATH_FILES":[
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA_br1.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA_br3.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA_br4.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA_br5.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA_br6.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA_br9.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/LPA_br10.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/RPA.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/RPA_br1.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/RPA_br2.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/RPA_br5.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/RPA_br6.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/RPA_br7.txt",
-  "/home/marsdenlab/projects/SV/UQ/data/0119/model_files/paths/RPA_br9.txt"
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA_br1.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA_br3.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA_br4.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA_br5.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA_br6.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA_br9.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/LPA_br10.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/RPA.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/RPA_br1.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/RPA_br2.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/RPA_br5.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/RPA_br6.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/RPA_br7.txt",
+  "/media/marsdenlab/Data1/UQ/0119/model_files/paths/RPA_br9.txt"
 ],
 
 "NAMES":[
