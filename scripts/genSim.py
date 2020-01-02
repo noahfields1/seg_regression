@@ -2,12 +2,10 @@ import argparse
 import os
 import sys
 import time
-import numpy as np
 
 sys.path.append(os.path.abspath('..'))
 
 from modules import io
-from modules import vascular_data as sv
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-config')
