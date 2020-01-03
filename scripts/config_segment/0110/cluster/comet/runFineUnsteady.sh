@@ -14,13 +14,13 @@
 #SBATCH --error=log.e%j
 
 # The walltime you require for your simulation
-#SBATCH --time=2:00:00
+#SBATCH --time=1:00:00
 
 # Number of nodes you are requesting for your job. You can have 24 processors per node, so plan accordingly
 # CAN CHANGE THE NUMBER OF NODES
 # 20,000 elements/processor is a good rule of thumb for scaling for FSI. (i.e. 4million FSI mesh is about 192 processors = 8 nodes)
 # 40,0000 elements/processor for rigid (i.e. 4million rigid mesh is about 96 processors = 4 nodes)
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 
 # Number of processors per node
 #SBATCH --ntasks-per-node=24
@@ -44,4 +44,4 @@ module load boost
 # Name of the executable you want to run
 /home/gdmaher/svSolver/svpre.exe model_sim.svpre
 ibrun /home/gdmaher/svSolver/svsolver-mpich.exe
-/home/gdmaher/svSolver/svpost.exe -indir 24-procs_case -outdir . -start 300 -stop 400 -incr 10 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
+/home/gdmaher/svSolver/svpost.exe -indir 48-procs_case -outdir . -start 0 -stop 2000 -incr 5 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all

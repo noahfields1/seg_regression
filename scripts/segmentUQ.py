@@ -4,6 +4,7 @@ import sys
 sys.path.append(os.path.abspath('..'))
 
 import modules.io as io
+import subprocess
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-config')
@@ -27,6 +28,7 @@ COR_FILE   = cfg["CORRECT_FILE"]
 INTERVAL   = cfg["INTERVAL"]
 NUM_RUNS   = cfg["NUM_RUNS"]
 EDGE_SIZES = cfg["EDGE_SIZES"]
+TIMEOUT    = 5*60
 
 if not os.path.isdir(OUTPUT_DIR):
     raise RuntimeError("output dir doesnt exist")
@@ -79,15 +81,45 @@ for i in range(NUM_RUNS):
                 args.config, odir,edir,e)
              )
 
-        os.system('python segmentMeshMerge.py\
-             -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
-                args.config, odir,edir,e)
-             )
+        # p = subprocess.Popen(['python', 'segmentMesh.py',
+        #      '-config', args.config, '-input_dir', odir, '-output_dir',
+        #      edir, '-edge_size', str(e)])
+        # try:
+        #     p.wait(TIMEOUT)
+        # except subprocess.TimeoutExpired:
+        #     p.kill()
+        #     print(k,e,"FAILED")
+        #     break
 
-        os.system('python segmentMesh2.py\
-             -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
-                args.config, odir,edir,e)
-             )
+        # os.system('python segmentMeshMerge.py\
+        #      -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
+        #         args.config, odir,edir,e)
+        #      )
+
+        p = subprocess.Popen(['python', 'segmentMeshMerge.py',
+             '-config', args.config, '-input_dir', odir, '-output_dir',
+             edir, '-edge_size', str(e)])
+        try:
+            p.wait(TIMEOUT)
+        except subprocess.TimeoutExpired:
+            p.kill()
+            print(k,e,"FAILED")
+            break
+
+        # os.system('python segmentMesh2.py\
+        #      -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
+        #         args.config, odir,edir,e)
+        #      )
+
+        p = subprocess.Popen(['python', 'segmentMesh2.py',
+             '-config', args.config, '-input_dir', odir, '-output_dir',
+             edir, '-edge_size', str(e)])
+        try:
+            p.wait(TIMEOUT)
+        except subprocess.TimeoutExpired:
+            p.kill()
+            print(k,e,"FAILED")
+            break
 
         os.system('python segmentMeshComplete.py\
              -config {} -output_dir {}'.format(args.config, edir)

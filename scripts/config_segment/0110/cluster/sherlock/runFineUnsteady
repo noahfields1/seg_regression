@@ -11,7 +11,7 @@
 #SBATCH --error=log.e%j
 
 # The walltime you require for your job
-#SBATCH --time=10:00:00
+#SBATCH --time=1:00:00
 
 # Job priority. Leave as normal for now
 #SBATCH --qos=normal
