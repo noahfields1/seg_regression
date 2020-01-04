@@ -6,7 +6,7 @@
     "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/3/medium",
     "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/4/medium"
   ],
-  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/sherlock/runMediumUnsteady",
+  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/comet/runMediumUnsteady",
   "sleep_batch":90,
   "num_batch":20
 }
