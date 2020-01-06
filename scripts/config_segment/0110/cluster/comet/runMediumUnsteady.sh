@@ -3,7 +3,7 @@
 # Name of your job
 # CHANGE THIS JOB NAME
 #SBATCH --job-name=mediumSteady
-#SBATCH --partition=shared
+#SBATCH --partition=compute
 
 # Specify the name of the output file. The %j specifies the job ID
 # CHANGE THIS JOB OUTPUT FILE NAME
@@ -14,7 +14,7 @@
 #SBATCH --error=log.e%j
 
 # The walltime you require for your simulation
-#SBATCH --time=1:00:00
+#SBATCH --time=5:00:00
 
 # Number of nodes you are requesting for your job. You can have 24 processors per node, so plan accordingly
 # CAN CHANGE THE NUMBER OF NODES
