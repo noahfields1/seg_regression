@@ -971,14 +971,20 @@ def vtk_integrate_pd_volume(pd, label):
 
             t = data.GetTuple(id)
 
-            for k in range(tdim):
-                ints[k] += t[k]*area*1.0/3
-
+            if tdim == 1:
+                for k in range(tdim):
+                    ints[k] += t[k]*area*1.0/3
+            else:
+                for k in range(tdim-1):
+                    ints[k] += t[k]*area*1.0/3
+                ints[tdim-1] += np.sqrt(np.sum(np.array(t)**2))*1.0/3
     return ints
 
 def vtk_integrate_pd_boundary(pd, label):
     data  = pd.GetPointData().GetArray(label)
     tdim  = len(data.GetTuple(0))
+
+    if tdim>1: tdim+=1
 
     ints  = [0]*tdim
 
@@ -1003,9 +1009,13 @@ def vtk_integrate_pd_boundary(pd, label):
             id = pt_ids.GetId(j)
             t = data.GetTuple(id)
 
-            for k in range(tdim):
-                ints[k] += t[k]*length*1.0/2
-
+            if tdim == 1:
+                for k in range(tdim):
+                    ints[k] += t[k]*length*1.0/2
+            else:
+                for k in range(tdim-1):
+                    ints[k] += t[k]*length*1.0/2
+                ints[tdim-1] += np.sqrt(np.sum(np.array(t)**2))*length*1.0/2
     return ints
 
 def vtk_integrate_pd_boundary_length(pd):

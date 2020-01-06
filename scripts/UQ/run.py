@@ -7,6 +7,7 @@ CONFIGS = [
 ]
 
 POINTS = ['inlet',
+'aorta',
 'outlet_aorta',
 'outlet_right_iliac',
 'bifurcation',
@@ -25,15 +26,15 @@ TUBES = [
 
 print('points')
 
-for cfg in CONFIGS:
-    for p in POINTS:
-        print(cfg,p)
-        name = cfg.split('/')[-1].replace('.json','')
-        os.system(
-            "python extract_point.py -config {} \
-             -point_file ../config_segment/0110/points/{}.json \
-             -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}.csv".format(cfg,p,name,p)
-             )
+# for cfg in CONFIGS:
+#     for p in POINTS:
+#         print(cfg,p)
+#         name = cfg.split('/')[-1].replace('.json','')
+#         os.system(
+#             "python extract_point.py -config {} \
+#              -point_file ../config_segment/0110/points/{}.json \
+#              -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}.csv".format(cfg,p,name,p)
+#              )
 
 print('lines')
 

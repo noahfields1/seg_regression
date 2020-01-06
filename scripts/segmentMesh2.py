@@ -83,8 +83,8 @@ solid.GetPolyData("model_pd")
 sv.Repository.WriteVtkPolyData("model_pd","ascii",EXTERIOR_FILE)
 
 print("remeshing")
-sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.07,0.07)
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.07,0.07)
+sv.MeshUtil.Remesh("model_pd", "model_remesh", 0.05,0.05)
+sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.05,0.05)
 
 solid.SetVtkPolyData("model_remesh")
 

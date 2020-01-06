@@ -43,7 +43,7 @@ for g,mo in zip(GEN_DIRS,MODEL_DIRS):
         l_inlet = "0 {}\n1 {}".format(flow_inlet, flow_inlet)
         d = {"area":A_inlet, "flow":flow_inlet}
         io.write_json(d,mo+'/'+str(i)+'/inlet.json')
-        
+
         group_areas = {}
         for group,group_fn in zip(GROUPS,GROUPS_FILES):
             g_fn = mo+'/'+str(i)+'/'+group_fn
@@ -65,26 +65,30 @@ for g,mo in zip(GEN_DIRS,MODEL_DIRS):
         io.write_json(ratios,mo+'/'+str(i)+'/'+'ratios.json')
 
         resistances = {}
-        R = TOTAL_R/np.prod([v for k,v in ratios.items()])
+#        R = TOTAL_R/np.prod([v for k,v in ratios.items()])
+        R = TOTAL_R*len(GROUPS)
         for k,v in ratios.items(): resistances[k]=v*R
         io.write_json(resistances,mo+'/'+str(i)+'/'+'resistances.json')
 
         for me in MESH_DIRS:
             print(i,me)
-            me_dir = g+'/'+me+'/'+str(i)
+            try:
+                me_dir = g+'/'+me+'/'+str(i)
 
-            os.system('cp -r {} {}'.format(SIM_DIR,me_dir))
+                os.system('cp -r {} {}'.format(SIM_DIR,me_dir))
 
-            new_solv_file = me_dir+'/'+SIM_NAME+'/'+SOLVER_FILE
+                new_solv_file = me_dir+'/'+SIM_NAME+'/'+SOLVER_FILE
 
-            with open(new_solv_file,'w') as f:
-                for l in SOLVER_LINES:
-                    if '$' in l:
-                        for k,v in resistances.items():
-                            key = '$'+k+'$'
-                            l = l.replace(key,str(resistances[k]))
-                    f.write(l)
+                with open(new_solv_file,'w') as f:
+                    for l in SOLVER_LINES:
+                        if '$' in l:
+                            for k,v in resistances.items():
+                                key = '$'+k+'$'
+                                l = l.replace(key,str(resistances[k]))
+                        f.write(l)
 
-            new_flow_file = me_dir+'/'+SIM_NAME+'/'+INLET['file']
-            with open(new_flow_file,'w') as f:
-                f.write(l_inlet)
+                new_flow_file = me_dir+'/'+SIM_NAME+'/'+INLET['file']
+                with open(new_flow_file,'w') as f:
+                    f.write(l_inlet)
+            except:
+                print("failed")

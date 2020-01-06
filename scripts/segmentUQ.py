@@ -28,7 +28,7 @@ COR_FILE   = cfg["CORRECT_FILE"]
 INTERVAL   = cfg["INTERVAL"]
 NUM_RUNS   = cfg["NUM_RUNS"]
 EDGE_SIZES = cfg["EDGE_SIZES"]
-TIMEOUT    = 5*60
+TIMEOUT    = 15*60
 
 if not os.path.isdir(OUTPUT_DIR):
     raise RuntimeError("output dir doesnt exist")

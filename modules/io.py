@@ -4,6 +4,10 @@ import os
 import json
 import numpy as np
 
+def rmdir(fn):
+    if os.path.exists(os.path.abspath(fn)):
+        os.system("rm -rf {}".format(os.path.abspath(fn)))
+
 def mkdir(fn):
     if not os.path.exists(os.path.abspath(fn)):
         os.mkdir(os.path.abspath(fn))
