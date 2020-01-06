@@ -3,7 +3,7 @@
 # Name of your job
 # CHANGE THIS JOB NAME
 #SBATCH --job-name=mediumSteady
-#SBATCH --partition=shared
+#SBATCH --partition=compute
 
 # Specify the name of the output file. The %j specifies the job ID
 # CHANGE THIS JOB OUTPUT FILE NAME
