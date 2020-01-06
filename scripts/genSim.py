@@ -5,7 +5,7 @@ import time
 
 sys.path.append(os.path.abspath('..'))
 
-from modules import io
+from modules import io_cluster as io
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-config')

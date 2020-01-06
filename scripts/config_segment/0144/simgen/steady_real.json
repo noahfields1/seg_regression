@@ -27,7 +27,7 @@
     "renal_left.json",
     "renal_right.json"
   ],
-  "total_r":5500,
+  "total_r":33000,
   "inlet":{
     "group":"aorta_corrected.json",
     "point":"0",

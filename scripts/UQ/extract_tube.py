@@ -42,7 +42,7 @@ data = []
 
 for gen in GENS:
     for mesh in MESH_LABELS:
-        for nm in range(NUM_MODELS):
+        for nm in range(3):
             vtu_fn = DIR+'/'+str(gen)+'/'+mesh+'/'+str(nm)+'/'+SIM_NAME+'/'+RESULTS_FILE
             print(vtu_fn)
             if not os.path.exists(vtu_fn): continue
