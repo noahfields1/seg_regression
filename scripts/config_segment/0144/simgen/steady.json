@@ -6,6 +6,6 @@
     "/media/marsdenlab/Data1/UQ/0144/generations/4"
   ],
   "mesh_dirs":["coarse","medium","fine"],
-  "num_models":50,
+  "num_models":65,
   "sim_dir":"/media/marsdenlab/Data1/UQ/0144/model_files/sim_steady"
 }

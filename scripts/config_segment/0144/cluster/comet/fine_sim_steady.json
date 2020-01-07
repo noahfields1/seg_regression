@@ -1,0 +1,12 @@
+{
+  "sim_folder":"/oasis/scratch/comet/gdmaher/0144/model_files/sim_steady_real",
+  "runs_folders":[
+    "/oasis/scratch/comet/gdmaher/0144/generations/1/fine",
+    "/oasis/scratch/comet/gdmaher/0144/generations/2/fine",
+    "/oasis/scratch/comet/gdmaher/0144/generations/3/fine",
+    "/oasis/scratch/comet/gdmaher/0144/generations/4/fine"
+  ],
+  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0144/cluster/runFine.sh",
+  "sleep_batch":150,
+  "num_batch":10
+}

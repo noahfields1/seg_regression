@@ -957,6 +957,7 @@ def vtk_integrate_pd_volume(pd, label):
     data  = pd.GetPointData().GetArray(label)
     tdim  = len(data.GetTuple(0))
 
+    if tdim>1: tdim+=1
     ints = [0]*tdim
 
     ncells = pd.GetNumberOfCells()
@@ -977,7 +978,7 @@ def vtk_integrate_pd_volume(pd, label):
             else:
                 for k in range(tdim-1):
                     ints[k] += t[k]*area*1.0/3
-                ints[tdim-1] += np.sqrt(np.sum(np.array(t)**2))*1.0/3
+                ints[tdim-1] += np.sqrt(np.sum(np.array(t)**2))*area*1.0/3
     return ints
 
 def vtk_integrate_pd_boundary(pd, label):
