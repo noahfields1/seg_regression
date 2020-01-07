@@ -34,12 +34,15 @@ for d in RUNS_DIRS:
 for i,f in enumerate(run_folders):
     print(f)
 
-    cur_sim_dir = f+'/'+SIM_NAME
+    try:
+    	cur_sim_dir = f+'/'+SIM_NAME
 
-    os.system("cp {0} {1}".format(RUN_FILE, cur_sim_dir))
+    	os.system("cp {0} {1}".format(RUN_FILE, cur_sim_dir))
 
-    os.chdir(cur_sim_dir)
+    	os.chdir(cur_sim_dir)
 
-    os.system("sbatch {0}".format(run_file_name))
+    	os.system("sbatch {0}".format(run_file_name))
 
-    time.sleep(0.3)
+    	time.sleep(0.3)
+    except:
+	print("failed")

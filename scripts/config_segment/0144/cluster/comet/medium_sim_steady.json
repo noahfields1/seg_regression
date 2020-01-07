@@ -1,12 +1,12 @@
 {
-  "sim_folder":"/oasis/scratch/comet/gdmaher/0144/model_files/sim_steady_real",
+  "sim_name":"sim_steady_real",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/0144/generations/1/medium",
-    "/oasis/scratch/comet/gdmaher/0144/generations/2/medium",
-    "/oasis/scratch/comet/gdmaher/0144/generations/3/medium",
-    "/oasis/scratch/comet/gdmaher/0144/generations/4/medium"
+    "/oasis/scratch/comet/gdmaher/temp_project/0144/generations/1/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/0144/generations/2/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/0144/generations/3/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/0144/generations/4/medium"
   ],
-  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0144/cluster/runMedium.sh",
+  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0144/cluster/comet/runMedium.sh",
   "sleep_batch":90,
   "num_batch":20
 }
