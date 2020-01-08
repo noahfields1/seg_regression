@@ -76,7 +76,7 @@ os.system("cp {} {}".format(GROUP_CONTENTS, mean_dir))
 for i in range(MODES):
     for j,c in enumerate(COEFFS):
         print("vec {} coeff {} {}".format(i,j,c))
-        vec = mean_groups + V[j]*c
+        vec = mean_groups + V[i]*c
 
         groups_dict = sv.vec_to_groups(vec,GROUP_FILES,group_ids,group_nums,NUM_POINTS)
         dir = OUTPUT_DIR+'/{}_{}'.format(i,j)

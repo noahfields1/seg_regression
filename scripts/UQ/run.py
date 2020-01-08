@@ -1,23 +1,23 @@
 import os
 
 CONFIGS = [
-"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady.json",
-"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady_real.json",
+#"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady.json",
+#"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady_real.json",
 "/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/wom_rcr.json"
 ]
 
-POINTS = ['inlet',
-'aorta',
-'outlet_aorta',
-'outlet_right_iliac',
-'bifurcation',
-'bifurcation_aorta',
-'bifurcation_right_iliac']
-
-LINES = [
-'aorta_center',
-'right_iliac_center',
-]
+# POINTS = ['inlet',
+# 'aorta',
+# 'outlet_aorta',
+# 'outlet_right_iliac',
+# 'bifurcation',
+# 'bifurcation_aorta',
+# 'bifurcation_right_iliac']
+#
+# LINES = [
+# 'aorta_center',
+# 'right_iliac_center',
+# ]
 
 TUBES = [
 'aorta',
@@ -36,16 +36,16 @@ print('points')
 #              -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}.csv".format(cfg,p,name,p)
 #              )
 
-print('lines')
-
-for cfg in CONFIGS:
-    for p in LINES:
-        print(cfg,p)
-        name = cfg.split('/')[-1].replace('.json','')
-        os.system("python extract_line.py -config {} \
-        -line_file ../config_segment/0110/lines/{}.json \
-        -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}.csv".format(cfg,p,name,p)
-        )
+# print('lines')
+#
+# for cfg in CONFIGS:
+#     for p in LINES:
+#         print(cfg,p)
+#         name = cfg.split('/')[-1].replace('.json','')
+#         os.system("python extract_line.py -config {} \
+#         -line_file ../config_segment/0110/lines/{}.json \
+#         -output_fn /media/marsdenlab/Data1/UQ/0110/csv/{}/{}.csv".format(cfg,p,name,p)
+#         )
 
 print('tubes')
 
