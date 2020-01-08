@@ -1,0 +1,27 @@
+{
+  "gen_dirs":[
+    "/media/marsdenlab/Data1/UQ/0110/generations/1",
+    "/media/marsdenlab/Data1/UQ/0110/generations/2",
+    "/media/marsdenlab/Data1/UQ/0110/generations/3",
+    "/media/marsdenlab/Data1/UQ/0110/generations/4"
+  ],
+  "mesh_dirs":["coarse","medium","fine"],
+  "num_models":50,
+  "sim_dir":"/media/marsdenlab/Data1/UQ/0110/model_files/sim_steady_real_out",
+  "solver_file":"solver.inp",
+  "groups":[
+    "aorta",
+    "right_iliac"
+  ],
+  "groups_files":[
+    "aorta_corrected.json",
+    "right_iliac_corrected.json"
+  ],
+  "total_r":5500,
+  "inlet":{
+    "group":"aorta_corrected.json",
+    "point":"0",
+    "flow_val":-100,
+    "file":"cap_aorta.flow"
+  }
+}
