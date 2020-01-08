@@ -29,8 +29,16 @@ LABS = cfg['labels']
 LABELS = []
 for i in range(cfg['start'], cfg['end'], cfg['incr']):
     for l in LABS:
-        new_l = l+"_00"+str(i)
-        LABELS.append(new_l)
+        new_l = str(i)
+        if len(new_l) == 1:
+            new_l = "0000"+new_l
+        if len(new_l) == 2:
+            new_l = "000"+new_l
+        if len(new_l) == 3:
+            new_l = "00"+new_l
+        if len(new_l) == 4:
+            new_l = "0"+new_l
+        LABELS.append(l+'_'+new_l)
 
 TUBE_FILE = io.load_json(args.tube_file)
 POINTS    = TUBE_FILE['points']
@@ -42,7 +50,7 @@ data = []
 
 for gen in GENS:
     for mesh in MESH_LABELS:
-        for nm in range(NUM_MODELS):
+        for nm in range(2):
             vtu_fn = DIR+'/'+str(gen)+'/'+mesh+'/'+str(nm)+'/'+SIM_NAME+'/'+RESULTS_FILE
             print(vtu_fn)
             if not os.path.exists(vtu_fn): continue
@@ -52,33 +60,34 @@ for gen in GENS:
             for j,p,n,r in zip(N, POINTS, NORMALS, RADIUSES):
                 surf = sv.clip_plane_rad(pd,p,n,r)
 
-                try:
-                    area = sv.vtk_integrate_pd_area(surf)
-                    length = sv.vtk_integrate_pd_boundary_length(surf)
+                #try:
+                area = sv.vtk_integrate_pd_area(surf)
+                length = sv.vtk_integrate_pd_boundary_length(surf)
 
-                    d = {"generation":gen,
-                        "mesh":mesh,
-                        "model":nm,
-                        "point":j,
-                         "x":p[0], "y":p[1], "z":p[2],
-                         "nx":n[0],"ny":n[1],"nz":n[2],
-                         "radius_actual":np.sqrt(area/np.pi),
-                         "radius_supplied":r,
-                         "area":area,
-                         "length":length
-                         }
+                d = {"generation":gen,
+                    "mesh":mesh,
+                    "model":nm,
+                    "point":j,
+                     "x":p[0], "y":p[1], "z":p[2],
+                     "nx":n[0],"ny":n[1],"nz":n[2],
+                     "radius_actual":np.sqrt(area/np.pi),
+                     "radius_supplied":r,
+                     "area":area,
+                     "length":length
+                     }
 
-                    for l in LABELS:
-                        ints    = sv.vtk_integrate_pd_volume(surf, l)
-                        ints_bd = sv.vtk_integrate_pd_boundary(surf, l)
+                for l in LABELS:
+                    print(l)
+                    ints    = sv.vtk_integrate_pd_volume(surf, l)
+                    ints_bd = sv.vtk_integrate_pd_boundary(surf, l)
 
-                        for k in range(len(ints)):
-                            d[l+'_'+str(k)] = ints[k]*1.0/area
-                            d[l+'_'+str(k)+'_boundary'] = ints_bd[k]*1.0/length
+                    for k in range(len(ints)):
+                        d[l+'_'+str(k)] = ints[k]*1.0/area
+                        d[l+'_'+str(k)+'_boundary'] = ints_bd[k]*1.0/length
 
-                    data.append(d)
-                except:
-                    print("failed vtu {} point {}".format(i,j))
+                data.append(d)
+                #except:
+                    #print("failed vtu {} point {}".format(i,j))
 
 df = pandas.DataFrame(data)
 df.to_csv(args.output_fn)
