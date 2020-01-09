@@ -1,0 +1,13 @@
+{
+  "path_files":"/media/marsdenlab/Data1/UQ/0144/model_files/paths/aorta.txt",
+  "image_fn":"/media/marsdenlab/Data1/UQ/0144/model_files/image.mha",
+  "group_files":[
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/0/aorta.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/1/aorta.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/2/aorta.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/3/aorta.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/4/aorta.json"
+  ],
+  "color":"r",
+  "out_dir":"/media/marsdenlab/Data1/UQ/0144/figures/groups/3/aorta"
+}
