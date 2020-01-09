@@ -20,8 +20,9 @@ CONFIGS = [
 # ]
 
 TUBES = [
-'aorta',
-'right_iliac',
+'aorta_single',
+'aorta_single_2',
+'right_iliac_single'
 ]
 
 print('points')

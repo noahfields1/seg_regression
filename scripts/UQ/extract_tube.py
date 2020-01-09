@@ -50,7 +50,7 @@ data = []
 
 for gen in GENS:
     for mesh in MESH_LABELS:
-        for nm in range(2):
+        for nm in range(3):
             vtu_fn = DIR+'/'+str(gen)+'/'+mesh+'/'+str(nm)+'/'+SIM_NAME+'/'+RESULTS_FILE
             print(vtu_fn)
             if not os.path.exists(vtu_fn): continue
@@ -64,28 +64,34 @@ for gen in GENS:
                 area = sv.vtk_integrate_pd_area(surf)
                 length = sv.vtk_integrate_pd_boundary_length(surf)
 
-                d = {"generation":gen,
-                    "mesh":mesh,
-                    "model":nm,
-                    "point":j,
-                     "x":p[0], "y":p[1], "z":p[2],
-                     "nx":n[0],"ny":n[1],"nz":n[2],
-                     "radius_actual":np.sqrt(area/np.pi),
-                     "radius_supplied":r,
-                     "area":area,
-                     "length":length
-                     }
-
                 for l in LABELS:
                     print(l)
                     ints    = sv.vtk_integrate_pd_volume(surf, l)
                     ints_bd = sv.vtk_integrate_pd_boundary(surf, l)
 
                     for k in range(len(ints)):
-                        d[l+'_'+str(k)] = ints[k]*1.0/area
-                        d[l+'_'+str(k)+'_boundary'] = ints_bd[k]*1.0/length
+                        q = l.split('_')[0]
+                        t = int(l.split('_')[1])
+                        c = k
 
-                data.append(d)
+                        d = {"generation":gen,
+                            "mesh":mesh,
+                            "model":nm,
+                            "point":j,
+                            "time":t,
+                            "component":c,
+                             "x":p[0], "y":p[1], "z":p[2],
+                             "nx":n[0],"ny":n[1],"nz":n[2],
+                             "radius_actual":np.sqrt(area/np.pi),
+                             "radius_supplied":r,
+                             "area":area,
+                             "length":length
+                             }
+
+                        d[q] = ints[k]*1.0/area
+                        d[q+'_boundary'] = ints_bd[k]*1.0/length
+
+                        data.append(d)
                 #except:
                     #print("failed vtu {} point {}".format(i,j))
 
