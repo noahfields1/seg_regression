@@ -1,0 +1,15 @@
+{
+  "path_files":"/media/marsdenlab/Data1/UQ/0110/model_files/paths/aorta.txt",
+  "image_fn":"/media/marsdenlab/Data1/UQ/0110/model_files/image.mha",
+  "group_files":[
+    "/media/marsdenlab/Data1/UQ/0110/pca/1/mean_groups/aorta_corrected.json",
+    "/media/marsdenlab/Data1/UQ/0110/pca/1/1_0/aorta_corrected.json",
+    "/media/marsdenlab/Data1/UQ/0110/pca/1/1_3/aorta_corrected.json"
+  ],
+  "colors":[
+    "g",
+    "r",
+    "y"
+    ],
+  "out_dir":"/media/marsdenlab/Data1/UQ/0110/figures/groups_pca/1/aorta_1"
+}

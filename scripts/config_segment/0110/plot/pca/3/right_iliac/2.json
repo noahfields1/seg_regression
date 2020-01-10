@@ -1,0 +1,15 @@
+{
+  "path_files":"/media/marsdenlab/Data1/UQ/0110/model_files/paths/right_iliac.txt",
+  "image_fn":"/media/marsdenlab/Data1/UQ/0110/model_files/image.mha",
+  "group_files":[
+    "/media/marsdenlab/Data1/UQ/0110/pca/3/mean_groups/right_iliac_corrected.json",
+    "/media/marsdenlab/Data1/UQ/0110/pca/3/1_0/right_iliac_corrected.json",
+    "/media/marsdenlab/Data1/UQ/0110/pca/3/1_3/right_iliac_corrected.json"
+  ],
+  "colors":[
+    "g",
+    "r",
+    "y"
+    ],
+  "out_dir":"/media/marsdenlab/Data1/UQ/0110/figures/groups_pca/3/right_iliac_1"
+}
