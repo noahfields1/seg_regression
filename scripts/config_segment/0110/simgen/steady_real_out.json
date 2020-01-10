@@ -17,7 +17,7 @@
     "aorta_corrected.json",
     "right_iliac_corrected.json"
   ],
-  "total_r":5500,
+  "total_r":11000,
   "inlet":{
     "group":"aorta_corrected.json",
     "point":"0",

@@ -31,6 +31,7 @@ TUBE_FILE = io.load_json(args.tube_file)
 POINTS    = TUBE_FILE['points']
 NORMALS   = TUBE_FILE['normals']
 RADIUSES  = TUBE_FILE['radiuses']
+PATH      = TUBE_FILE['path']
 N         = range(len(POINTS))
 
 data = []
@@ -55,6 +56,7 @@ for gen in GENS:
                     d = {"generation":gen,
                         "mesh":mesh,
                         "model":nm,
+                        "path":PATH,
                         "point":j,
                         "time":i,
                          "x":p[0], "y":p[1], "z":p[2],
