@@ -75,6 +75,7 @@ for g,mo in zip(GEN_DIRS,MODEL_DIRS):
             try:
                 me_dir = g+'/'+me+'/'+str(i)
 
+                os.system('rm -r {}'.format(me_dir+'/'+SIM_NAME))
                 os.system('cp -r {} {}'.format(SIM_DIR,me_dir))
 
                 # new_solv_file = me_dir+'/'+SIM_NAME+'/'+SOLVER_FILE
