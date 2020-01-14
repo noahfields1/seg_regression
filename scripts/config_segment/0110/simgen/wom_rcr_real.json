@@ -7,8 +7,8 @@
   ],
   "mesh_dirs":["coarse","medium","fine"],
   "num_models":50,
-  "sim_dir":"/media/marsdenlab/Data1/UQ/0110/model_files/sim_steady_real",
-  "solver_file":"solver.inp",
+  "sim_dir":"/media/marsdenlab/Data1/UQ/0110/model_files/sim_wom_rcr_real",
+  "rcr_file":"rcrt.dat",
   "groups":[
     "aorta",
     "right_iliac"
@@ -17,11 +17,6 @@
     "aorta_corrected.json",
     "right_iliac_corrected.json"
   ],
-  "total_r":1200,
-  "inlet":{
-    "group":"aorta_corrected.json",
-    "point":"0",
-    "flow_val":-100,
-    "file":"cap_aorta.flow"
-  }
+  "total_r":1600,
+  "capacitance":0.0005
 }
