@@ -2,7 +2,7 @@
 
 # Name of your job
 # CHANGE THIS JOB NAME
-#SBATCH --job-name=coarseSteady
+#SBATCH --job-name=coarseUnSteady
 #SBATCH --partition=shared
 
 # Specify the name of the output file. The %j specifies the job ID
