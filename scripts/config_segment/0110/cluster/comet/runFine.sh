@@ -14,7 +14,7 @@
 #SBATCH --error=log.e%j
 
 # The walltime you require for your simulation
-#SBATCH --time=1:00:00
+#SBATCH --time=3:00:00
 
 # Number of nodes you are requesting for your job. You can have 24 processors per node, so plan accordingly
 # CAN CHANGE THE NUMBER OF NODES

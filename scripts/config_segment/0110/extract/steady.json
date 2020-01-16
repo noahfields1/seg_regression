@@ -1,6 +1,6 @@
 {
   "dir":"/media/marsdenlab/Data1/UQ/0110/generations",
-  "output_dir":"/media/marsdenlab/Data1/UQ/0110/steady/",
+  "output_dir":"/media/marsdenlab/Data1/UQ/0110/steady/csv",
   "mesh_labels":["coarse","medium","fine"],
   "generations":[1,2,3,4],
   "num_models":50,
