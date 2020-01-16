@@ -13,7 +13,6 @@ import numpy as np
 parser = argparse.ArgumentParser()
 parser.add_argument('-config')
 parser.add_argument('-tube_file')
-parser.add_argument('-output_fn')
 args = parser.parse_args()
 
 cfg = io.load_json(args.config)
@@ -33,6 +32,8 @@ NORMALS   = TUBE_FILE['normals']
 RADIUSES  = TUBE_FILE['radiuses']
 PATH      = TUBE_FILE['path']
 N         = range(len(POINTS))
+
+OUTPUT_FN = cfg['output_dir']+'/'+PATH+'.csv'
 
 data = []
 
@@ -89,4 +90,4 @@ for gen in GENS:
                     data.append(d)
 
 df = pandas.DataFrame(data)
-df.to_csv(args.output_fn)
+df.to_csv(OUTPUT_FN)
