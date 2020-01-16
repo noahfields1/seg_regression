@@ -45,3 +45,4 @@ module load boost
 /home/gdmaher/svSolver/svpre.exe model_sim.svpre
 ibrun /home/gdmaher/svSolver/svsolver-mpich.exe
 /home/gdmaher/svSolver/svpost.exe -indir 24-procs_case -outdir . -start 300 -stop 400 -incr 10 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
+rm -rf 24-procs_case
