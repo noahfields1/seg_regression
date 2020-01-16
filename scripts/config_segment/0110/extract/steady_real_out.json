@@ -1,10 +1,11 @@
 {
   "dir":"/media/marsdenlab/Data1/UQ/0110/generations",
-  "output_dir":"/media/marsdenlab/Data1/UQ/0110/steady_real_out/csv",
+  "output_dir":"/media/marsdenlab/Data1/UQ/0110/sim_steady_real_out/csv",
+  "case_dir":"/media/marsdenlab/Data1/UQ/0110/sim_steady_real_out",
   "mesh_labels":["coarse","medium","fine"],
   "generations":[1,2,3,4],
   "num_models":50,
-  "sim_name":"sim_steady_real",
+  "sim_name":"sim_steady_real_out",
   "results_file":"all_results.vtu",
   "labels":[
     "pressure",
