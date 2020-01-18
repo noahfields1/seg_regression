@@ -25,6 +25,11 @@ INTERVAL = cfg["INTERVAL"]
 
 EDGE_SIZE = args.edge_size
 
+if "MODES" in cfg:
+    NUM_MODES = cfg['MODES']
+else:
+    NUM_MODES = 5
+
 EXTERIOR_FILE = OUTPUT_DIR+'/exterior.vtp'
 UG_FILE = OUTPUT_DIR+'/mesh_ug.vtk'
 PD_FILE = OUTPUT_DIR+'/mesh_pd.vtk'
@@ -102,20 +107,21 @@ for name,path,group in zip(NAMES, PATHS, GROUPS):
 
         ctrlPts = v
         contour.SetCtrlPts(v)
-        contour.Create()
+        smoothed_contour = contour.CreateSmoothCt(NUM_MODES)
+        smoothed_contour.Create()
 
         pd_name = contour_name+'_pd'
         PD_NAMES[name].append(pd_name)
-        contour.GetPolyData(pd_name)
+        smoothed_contour.GetPolyData(pd_name)
 
 ################################################################################
 # 3. Loft Segmentations
 ################################################################################
-numOutPtsInSegs = 60
-numOutPtsAlongLength = 100
+numOutPtsInSegs = 30
+numOutPtsAlongLength = 200
 numPtsInLinearSampleAlongLength = 240
 numLinearPtsAlongLength = 120
-numModes = 20
+numModes = 3
 useFFT = 1
 useLinearSampleAlongLength = 1
 

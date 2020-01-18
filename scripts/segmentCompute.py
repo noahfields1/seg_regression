@@ -18,7 +18,7 @@ parser.add_argument('-image_file')
 parser.add_argument('-points_file')
 parser.add_argument('-output_dir')
 parser.add_argument('-config')
-parser.add_argument('-modes')
+parser.add_argument('-modes',type=int)
 
 args = parser.parse_args()
 
@@ -51,7 +51,6 @@ print( name)
 fn = args.output_dir+'/'+name+'.json'
 
 data = {}
-print("segmenting with {} fourier modes".format(args.modes))
 for i,p in enumerate(points):
     print("{}, {}".format(name,i))
     c = net.segment_normal(p[1:4], p[7:], p[4:7], modes=args.modes)
