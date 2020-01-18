@@ -19,6 +19,11 @@ cfg = io.load_json(args.config)
 IMAGE = cfg["IMAGE"]
 PATHS = cfg["PATH_FILES"]
 NN_CONFIG = cfg["NN_CONFIG"]
+if "MODES" in cfg:
+    MODES = cfg['MODES']
+else:
+    MODES = 5
+
 OUTPUT = os.path.abspath(args.output_dir)
 
 try:
@@ -35,4 +40,4 @@ else:
     for p in PATHS:
         os.system('python segmentCompute.py\
              -image_file {} -points_file {} -output_dir {}\
-              -config {}'.format(IMAGE, p, OUTPUT, NN_CONFIG))
+              -config {} -modes {}'.format(IMAGE, p, OUTPUT, NN_CONFIG, MODES))

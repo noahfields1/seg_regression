@@ -1,20 +1,18 @@
 {
 "IMAGE":"/media/marsdenlab/Data1/UQ/0144/model_files/image.mha",
 
-"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq2.yaml",
+"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
 
-"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0144/generations/2",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0144/generations/test",
 
 "INTERVAL":15,
 
-"NUM_RUNS":65,
+"NUM_RUNS":1,
 
-"MODES":5,
+"MODES":3,
 
 "EDGE_SIZES":{
-  "coarse":0.25,
-  "medium":0.15,
-  "fine":0.1
+  "coarse":0.225
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",

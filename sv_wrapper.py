@@ -65,13 +65,13 @@ class SVWrapper(object):
 
         return "ok"
 
-    def segment_normal(self, p,v,n):
+    def segment_normal(self, p,v,n, modes=5):
         img = self.image.get_reslice(p,n,v)
 
         img     = self.preprocessor(img)
         pred    = self.model.predict(img)
         contour = self.postprocessor(pred)
-        contour = vascular_data.smoothContour(contour,num_modes=5)
+        contour = vascular_data.smoothContour(contour,num_modes=modes)
         scale = self.cfg['CROP_DIMS']*self.cfg['SPACING']/2
 
         # plt.figure()
