@@ -3,7 +3,7 @@
 # Name of your job
 # CHANGE THIS JOB NAME
 #SBATCH --job-name=fineUnSteady
-#SBATCH --partition=compute
+#SBATCH --partition=shared
 
 # Specify the name of the output file. The %j specifies the job ID
 # CHANGE THIS JOB OUTPUT FILE NAME
@@ -45,5 +45,5 @@ module load boost
 rm -rf *procs_case
 /home/gdmaher/svSolver/svpre.exe model_sim.svpre
 ibrun /home/gdmaher/svSolver/svsolver-mpich.exe
-/home/gdmaher/svSolver/svpost.exe -indir 48-procs_case -outdir . -start 1500 -stop 2000 -incr 5 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
+/home/gdmaher/svSolver/svpost.exe -indir 23-procs_case -outdir . -start 1500 -stop 2000 -incr 5 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
 rm -rf *procs_case
