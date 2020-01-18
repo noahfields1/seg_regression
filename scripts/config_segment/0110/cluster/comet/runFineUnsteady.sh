@@ -20,10 +20,10 @@
 # CAN CHANGE THE NUMBER OF NODES
 # 20,000 elements/processor is a good rule of thumb for scaling for FSI. (i.e. 4million FSI mesh is about 192 processors = 8 nodes)
 # 40,0000 elements/processor for rigid (i.e. 4million rigid mesh is about 96 processors = 4 nodes)
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 
 # Number of processors per node
-#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-node=23
 
 # Send an email to this address when you job starts and finishes
 # CHANGE THIS EMAIL ADDRESS

@@ -23,7 +23,7 @@
 #SBATCH --nodes=1
 
 # Number of processors per node
-#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-node=23
 
 # Send an email to this address when you job starts and finishes
 # CHANGE THIS EMAIL ADDRESS
