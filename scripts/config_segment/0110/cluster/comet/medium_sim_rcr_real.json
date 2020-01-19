@@ -1,10 +1,10 @@
 {
   "sim_name":"sim_wom_rcr_real",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/1/coarse",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/2/coarse",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/3/coarse",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/4/coarse"
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/1/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/2/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/3/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/4/medium"
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/comet/runMediumUnsteady.sh",
   "sleep_batch":15,

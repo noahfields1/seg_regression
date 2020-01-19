@@ -107,21 +107,21 @@ for name,path,group in zip(NAMES, PATHS, GROUPS):
 
         ctrlPts = v
         contour.SetCtrlPts(v)
-        smoothed_contour = contour.CreateSmoothCt(NUM_MODES)
-        smoothed_contour.Create()
+        #smoothed_contour = contour.CreateSmoothCt(NUM_MODES)
+        contour.Create()
 
         pd_name = contour_name+'_pd'
         PD_NAMES[name].append(pd_name)
-        smoothed_contour.GetPolyData(pd_name)
+        contour.GetPolyData(pd_name)
 
 ################################################################################
 # 3. Loft Segmentations
 ################################################################################
-numOutPtsInSegs = 30
+numOutPtsInSegs = 15
 numOutPtsAlongLength = 200
 numPtsInLinearSampleAlongLength = 240
 numLinearPtsAlongLength = 120
-numModes = 3
+numModes = 20
 useFFT = 1
 useLinearSampleAlongLength = 1
 
