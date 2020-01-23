@@ -3,9 +3,9 @@
 #SBATCH --output="/home/gdmaher/output/singularity.%j.out"
 #SBATCH --error="/home/gdmaher/output/singularity.%j.err"
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-node=23
 #SBATCH --time=48:00:00
-
+#SBATCH --partition=shared
 module load singularity
 
 CONTAINER=/home/gdmaher/tf.img
