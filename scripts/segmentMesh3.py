@@ -53,52 +53,45 @@ sys.path.append(SV_PATH)
 os.chdir(SV_BUILD_PATH)
 
 import sv
-sv.Solid.SetKernel('PolyData')
-solid = sv.Solid.pySolidModel()
 
-#Create model from polydata
-MERGE_NAMES = cfg['INTERSECTS']
-pds = []
+# # ################################################################################
+# # # 5. Create vtk meshes
+# # ################################################################################
+# # # #Set mesh kernel
 
-for nc in MERGE_NAMES:
-    fn = OUTPUT_DIR+'/'+nc+'.vtp'
-    solid.NewObject(nc)
-    sv.Repository.ReadVtkPolyData(nc+'_pd', fn)
-    solid.SetVtkPolyData(nc+'_pd')
+CAP_IDS = io.load_json(OUTPUT_DIR+'/cap_ids.json')
+CAP_IDS = [v for k,v in CAP_IDS.items()]
 
-solid.Union("model_0", MERGE_NAMES[0], MERGE_NAMES[1])
-for i,m in enumerate(MERGE_NAMES[2:]):
-    solid.Union("model_"+str(i+1), "model_"+str(i), m)
+sv.MeshObject.SetKernel('TetGen')
 
+#Create mesh object
+msh = sv.MeshObject.pyMeshObject()
+msh.NewObject('mesh')
 
-#sv.Geom.Clean("model_pd","model_pd_clean")
-#solid.SetVtkPolyData("model_pd_clean")
-solid.GetBoundaryFaces(50)
-solid.GetFaceIds()
-solid.GetPolyData("model_pd")
+#Load Model
+solidFn = EXTERIOR_FILE
+msh.LoadModel(solidFn)
 
-if "LOCAL_SMOOTH" in cfg:
-    points = cfg['LOCAL_SMOOTH']['POINTS']
-    radius = cfg['LOCAL_SMOOTH']['RADIUS']
+#Create new mesha
+msh.NewMesh()
+msh.SetMeshOptions('SurfaceMeshFlag',[1])
+msh.SetMeshOptions('VolumeMeshFlag',[1])
+msh.SetMeshOptions('GlobalEdgeSize',[EDGE_SIZE])
+msh.SetMeshOptions('MeshWallFirst',[1])
+msh.SetMeshOptions('Optimization', [3])
+msh.SetMeshOptions('QualityRatio', [1.4])
+msh.SetMeshOptions('UseMMG',[0])
+for v in CAP_IDS:
+    print("local edge size {}".format(v))
+    msh.SetMeshOptions('LocalEdgeSize',[v,EDGE_SIZE*1.0/3])
+msh.GenerateMesh()
 
-    for p,r in zip(points,radius):
-        sv.Geom.Set_array_for_local_op_sphere("model_pd","model_pd_1", r, p)
-        sv.Geom.Local_constrain_smooth("model_pd_1","model_pd_2", 10, 0.2)
-else:
-    solid.GetPolyData("model_pd_2")
-    
-#sv.Repository.WriteVtkPolyData("model_pd","ascii",EXTERIOR_FILE)
-sv.Repository.WriteVtkPolyData("model_pd_2","ascii",EXTERIOR_FILE)
-print("remeshing")
-sv.MeshUtil.Remesh("model_pd_2", "model_remesh", 0.05,0.05)
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.05,0.05)
+# #Save mesh to file
+mesh_ug_name = 'mesh_ug'
+mesh_pd_name = 'mesh_pd'
 
-solid.SetVtkPolyData("model_remesh")
+msh.GetUnstructuredGrid(mesh_ug_name)
+msh.GetPolyData(mesh_pd_name)
 
-#Extract boundary faces
-print ("Creating model: \nFaceID found: " + str(solid.GetFaceIds()))
-
-fids = {"faceids":solid.GetFaceIds()}
-io.write_json(fids,FACE_FILE)
-#Write to file
-solid.WriteNative(EXTERIOR_FILE)
+sv.Repository.WriteVtkUnstructuredGrid(mesh_ug_name,"ascii",UG_FILE)
+sv.Repository.WriteVtkPolyData(mesh_pd_name,"ascii",PD_FILE)

@@ -583,3 +583,33 @@ def GoogleNetUQ(x, activation=tf.nn.relu, init='xavier', dropout=0.7,
             std='xavier', scope='output')
 
         return o, o_side
+
+def UNetUQ(x,activation=tf.nn.relu,nfilters=32,init=1e-3,
+    dropout=0.7,hidden_units=1024, output_size=1000,scope='unet'):
+    with tf.variable_scope(scope):
+        o1_down,o1 = unetBlock(x,nfilters=nfilters,scope='layer1',init=init,activation=activation)
+        print( o1,o1_down)
+        o2_down,o2 = unetBlock(o1_down,nfilters=2*nfilters,scope='layer2',init=init,activation=activation)
+        print( o2,o2_down)
+        o3_down,o3 = unetBlock(o2_down,nfilters=4*nfilters,scope='layer3',init=init,activation=activation)
+        print( o3,o3_down)
+        o4_down,o4 = unetBlock(o3_down,nfilters=8*nfilters,scope='layer4',init=init,activation=activation)
+        print( o4,o4_down)
+
+        a_3 = unetUpsampleBlock(o3,o4,nfilters=8*nfilters,scope='o_layer3',init=init,activation=activation)
+        print( a_3)
+        a_2 = unetUpsampleBlock(o2,a_3,nfilters=4*nfilters,scope='o_layer2',init=init,activation=activation)
+        print( a_2)
+        a_1 = unetUpsampleBlock(o1,a_2,nfilters=2*nfilters,scope='o_layer1',init=init,activation=activation)
+        print( a_1)
+        o = tf.nn.pool(a_1, [5,5], "MAX", "VALID", strides=[4,4])
+        s = o.get_shape().as_list()
+        o = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+        o = fullyConnected(o, output_units=hidden_units, activation=activation,
+            std='xavier', scope='output_fc1')
+
+        o = tf.nn.dropout(o, keep_prob=dropout)
+
+        o = fullyConnected(o, output_units=output_size, activation=tf.identity,
+            std='xavier', scope='output')
+        return o

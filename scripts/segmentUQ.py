@@ -121,6 +121,21 @@ for i in range(NUM_RUNS):
             print(k,e,"FAILED")
             break
 
+        os.system('python segmentCapIds.py\
+             -config {} -output_dir {}'.format(
+                args.config, edir)
+             )
+
+        p = subprocess.Popen(['python', 'segmentMesh3.py',
+             '-config', args.config, '-input_dir', odir, '-output_dir',
+             edir, '-edge_size', str(e)])
+        try:
+            p.wait(TIMEOUT)
+        except subprocess.TimeoutExpired:
+            p.kill()
+            print(k,e,"FAILED")
+            break
+
         os.system('python segmentMeshComplete.py\
              -config {} -output_dir {}'.format(args.config, edir)
              )
