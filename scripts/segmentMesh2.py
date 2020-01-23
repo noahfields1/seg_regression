@@ -86,7 +86,7 @@ if "LOCAL_SMOOTH" in cfg:
         sv.Geom.Local_constrain_smooth("model_pd_1","model_pd_2", 10, 0.2)
 else:
     solid.GetPolyData("model_pd_2")
-    
+
 #sv.Repository.WriteVtkPolyData("model_pd","ascii",EXTERIOR_FILE)
 sv.Repository.WriteVtkPolyData("model_pd_2","ascii",EXTERIOR_FILE)
 print("remeshing")
