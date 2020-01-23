@@ -81,21 +81,6 @@ for i in range(NUM_RUNS):
                 args.config, odir,edir,e)
              )
 
-        # p = subprocess.Popen(['python', 'segmentMesh.py',
-        #      '-config', args.config, '-input_dir', odir, '-output_dir',
-        #      edir, '-edge_size', str(e)])
-        # try:
-        #     p.wait(TIMEOUT)
-        # except subprocess.TimeoutExpired:
-        #     p.kill()
-        #     print(k,e,"FAILED")
-        #     break
-
-        # os.system('python segmentMeshMerge.py\
-        #      -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
-        #         args.config, odir,edir,e)
-        #      )
-
         p = subprocess.Popen(['python', 'segmentMeshMerge.py',
              '-config', args.config, '-input_dir', odir, '-output_dir',
              edir, '-edge_size', str(e)])
@@ -106,12 +91,7 @@ for i in range(NUM_RUNS):
             print(k,e,"FAILED")
             break
 
-        # os.system('python segmentMesh2.py\
-        #      -config {} -input_dir {} -output_dir {} -edge_size {}'.format(
-        #         args.config, odir,edir,e)
-        #      )
-
-        p = subprocess.Popen(['python', 'segmentMesh2.py',
+        p = subprocess.Popen(['python', 'segmentMesh_smooth.py',
              '-config', args.config, '-input_dir', odir, '-output_dir',
              edir, '-edge_size', str(e)])
         try:
@@ -126,7 +106,7 @@ for i in range(NUM_RUNS):
                 args.config, edir)
              )
 
-        p = subprocess.Popen(['python', 'segmentMesh3.py',
+        p = subprocess.Popen(['python', 'segmentMesh_tetgen.py',
              '-config', args.config, '-input_dir', odir, '-output_dir',
              edir, '-edge_size', str(e)])
         try:

@@ -10,8 +10,8 @@
 "NUM_RUNS":60,
 
 "EDGE_SIZES":{
-  "coarse":0.075,
-  "medium":0.05,
+  "coarse":0.125,
+  "medium":0.06,
   "fine":0.035
 },
 

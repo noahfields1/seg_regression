@@ -26,8 +26,8 @@ def get(config):
         return nn.GoogleNet(config)
     elif mod == "GoogleNetUQ":
         return nn.GoogleNetUQ(config)
-    elif mod == "UNetUQ":
-        return nn.UNetUQ(config)
+    elif mod == "UNet":
+        return nn.UNet(config)
 
     elif mod == "edge_fit":
         c = './config/'+config['MODEL_YAML']

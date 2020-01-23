@@ -70,28 +70,31 @@ solid.Union("model_0", MERGE_NAMES[0], MERGE_NAMES[1])
 for i,m in enumerate(MERGE_NAMES[2:]):
     solid.Union("model_"+str(i+1), "model_"+str(i), m)
 
-
-#sv.Geom.Clean("model_pd","model_pd_clean")
-#solid.SetVtkPolyData("model_pd_clean")
 solid.GetBoundaryFaces(50)
 solid.GetFaceIds()
-solid.GetPolyData("model_pd")
+solid.GetPolyData("model_pd_smooth_0")
 
-if "LOCAL_SMOOTH" in cfg:
-    points = cfg['LOCAL_SMOOTH']['POINTS']
-    radius = cfg['LOCAL_SMOOTH']['RADIUS']
-
-    for p,r in zip(points,radius):
-        sv.Geom.Set_array_for_local_op_sphere("model_pd","model_pd_1", r, p)
-        sv.Geom.Local_constrain_smooth("model_pd_1","model_pd_2", 10, 0.2)
-else:
-    solid.GetPolyData("model_pd_2")
-
-#sv.Repository.WriteVtkPolyData("model_pd","ascii",EXTERIOR_FILE)
-sv.Repository.WriteVtkPolyData("model_pd_2","ascii",EXTERIOR_FILE)
+# if "LOCAL_SMOOTH" in cfg:
+#     points = cfg['LOCAL_SMOOTH']['POINTS']
+#     radius = cfg['LOCAL_SMOOTH']['RADIUS']
+#     n = len(points)
+#     for i,p,r in zip(range(n),points,radius):
+#         s1 = "model_pd_smooth_{}".format(i)
+#         s2 = "model_pd_sphere_{}".format(i)
+#         s3 = "model_pd_smooth_{}".format(i+1)
+#         print(s1,s2,s3)
+#         sv.Geom.Set_array_for_local_op_sphere(s1,s2, r, p)
+#         sv.Geom.Local_constrain_smooth(s2,s3, 10, 0.2)
+# else:
+#     s3 = "model_pd_smooth_0"
+s3 = "model_pd_smooth_0"
+print("done smoothing")
+# sv.Geom.Set_array_for_local_op_sphere("model_pd_smooth_0","model_pd_smooth_1", 3, [0.88,15.74,-43.04])
+# sv.Geom.Local_constrain_smooth("model_pd_smooth_1","model_pd_smooth_2", 10, 0.2)
+#solid.GetPolyData(s3)
 print("remeshing")
-sv.MeshUtil.Remesh("model_pd_2", "model_remesh", 0.05,0.05)
-sv.MeshUtil.Remesh("model_remesh", "model_remesh_2", 0.05,0.05)
+sv.MeshUtil.Remesh(s3, "model_remesh", 0.15,0.15)
+sv.Repository.WriteVtkPolyData("model_remesh","ascii",EXTERIOR_FILE)
 
 solid.SetVtkPolyData("model_remesh")
 

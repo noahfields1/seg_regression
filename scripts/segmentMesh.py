@@ -122,7 +122,7 @@ numOutPtsAlongLength = 200
 numPtsInLinearSampleAlongLength = 240
 numLinearPtsAlongLength = 120
 numModes = 20
-useFFT = 1
+useFFT = 0
 useLinearSampleAlongLength = 1
 
 sample_names = {}

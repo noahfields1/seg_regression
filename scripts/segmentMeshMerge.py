@@ -61,12 +61,3 @@ for nc in MERGE_NAMES:
     pds.append(pd)
 
     sv.vtk_write_polydata(pd,fn)
-
-# merge_pd = sv.vtk_merge_polydata(pds[0],pds[1])
-# merge_pd = sv.vtk_clean_polydata(merge_pd)
-#
-# for pd in pds[2:]:
-#     merge_pd = sv.vtk_merge_polydata(merge_pd,pd)
-#     merge_pd = sv.vtk_clean_polydata(merge_pd)
-#
-# sv.vtk_write_polydata(merge_pd, EXTERIOR_FILE)

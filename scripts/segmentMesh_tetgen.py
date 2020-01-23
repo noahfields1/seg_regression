@@ -69,8 +69,7 @@ msh = sv.MeshObject.pyMeshObject()
 msh.NewObject('mesh')
 
 #Load Model
-solidFn = EXTERIOR_FILE
-msh.LoadModel(solidFn)
+msh.LoadModel(EXTERIOR_FILE)
 
 #Create new mesha
 msh.NewMesh()
