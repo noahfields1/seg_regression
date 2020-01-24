@@ -691,12 +691,7 @@ class UNet(Model):
         self.dropout_fixed = True
 
     def _predict(self,x):
-        if not self.dropout_fixed:
-            return self.sess.run(self.yhat,{self.x:x})
-        else:
-            return self.sess.run(self.yhat,{self.x:x,
-                self.dropout_mask_op:self.dropout_mask,
-                self.dropout_scale_op:self.dropout_scale})
+        self.sess.run(self.yhat,{self.x:x})
 
 class UNetUQ(Model):
     def build_model(self):
