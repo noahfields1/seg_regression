@@ -1,0 +1,16 @@
+{
+  "dir":"/media/marsdenlab/Data1/UQ/0110/generations",
+  "mesh_labels":["coarse"],
+  "generations":[1,2,3,4],
+  "num_models":50,
+  "sim_name":"sim_steady_real_in",
+  "results_file":"all_results.vtu",
+  "labels":[
+    "pressure",
+    "velocity",
+    "vWSS"
+  ],
+  "start":400,
+  "end":410,
+  "incr":10
+}
