@@ -113,9 +113,9 @@ def get_dataset(config, key="TRAIN"):
 
 
     N    = X.shape[0]
-    # X_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
-    # Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
-    #
+    X_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
+    Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
+
     # print("centering images")
     for i,yc in tqdm(enumerate(Yc)):
     #     if key == 'TRAIN':
