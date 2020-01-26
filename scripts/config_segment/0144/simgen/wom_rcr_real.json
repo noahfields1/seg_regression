@@ -21,12 +21,12 @@
   "groups_files":[
     "aorta_corrected.json",
     "SMA_corrected.json",
-    "celiac_hepatic_corrected.json"
+    "celiac_hepatic_corrected.json",
     "celiac_splenic_corrected.json",
     "ext_iliac_left_corrected.json",
     "renal_left_corrected.json",
     "renal_right_corrected.json"
   ],
-  "total_r":16000,
-  "capacitance":0.005
+  "total_r":10700,
+  "capacitance":0.001
 }
