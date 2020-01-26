@@ -1,7 +1,7 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files_clean.txt"
 
-NAME: "googlenet_c30_train300k_aug10_clean_point"
+NAME: "googlenet_c30_clean_point"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
@@ -9,11 +9,11 @@ MODEL: "GoogleNet"
 POST_PROCESSOR: "POINT"
 DATASET:    "axial2d_point"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/googlenet_c30_train300k_aug10_clean_point/log/train.txt"
+LOG_FILE: "./results/googlenet_c30_clean_point/log/train.txt"
 
-ITER_FILE: "./results/googlenet_c30_train300k_aug10_clean_point/log/iter.txt"
+ITER_FILE: "./results/googlenet_c30_clean_point/log/iter.txt"
 
-MODEL_DIR: "./results/googlenet_c30_train300k_aug10_clean_point/model"
+MODEL_DIR: "./results/googlenet_c30_clean_point/model"
 MODEL_NAME: "googlenet"
 MODEL_TYPE: "googlenet"
 
