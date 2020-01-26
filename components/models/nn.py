@@ -58,7 +58,6 @@ class Model(AbstractModel):
             out = []
             for i in range(S[0]):
                 x_ = x[i].reshape([1]+S[1:4])
-                import pdb; pdb.set_trace()
                 y = self._predict(x_)[0].copy()
                 out.append(y)
             return np.array(out)
