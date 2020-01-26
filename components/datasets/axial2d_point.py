@@ -106,8 +106,8 @@ def get_dataset(config, key="TRAIN"):
         if config.get('SIZE_SPLIT') == 'SMALL':
             indexes = [i for i in range(X.shape[0]) if radiuses[i] <= r_thresh]
 
-        X_        = np.array([X[i] for i in indexes])
-        Y_      = np.array([Yc[i] for i in indexes])
+        X        = np.array([X[i] for i in indexes])
+        Yc       = np.array([Yc[i] for i in indexes])
         meta     = [meta[i] for i in indexes]
 
 
@@ -133,9 +133,9 @@ def get_dataset(config, key="TRAIN"):
     #         X_center[i] = X[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
     #         Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
     #     else:
-    #         X_center[i] = X[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
-    #         Y_center[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
-    #
+    X_[i] = X[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
+    Y_[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
+
     # X  = None
     # Yc = None
     #
