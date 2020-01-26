@@ -15,7 +15,7 @@
   "coarse":0.25,
   "medium":0.175,
   "fine":0.1,
-  "very_fine":0.5
+  "fine_2":0.05
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",
