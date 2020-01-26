@@ -50,26 +50,24 @@ for g,mo in zip(GEN_DIRS,MODEL_DIRS):
         total_area = 0
         for k,v in group_areas.items(): total_area+=v
         ratios = {}
-        for k,v in group_areas.items(): ratios[k] = 1.0/v
-        total_ratios = 0
-        for k,v in ratios.items(): total_ratios+=v
-        for k in ratios: ratios[k] = ratios[k]/total_ratios*len(GROUPS)
+        for k,v in group_areas.items(): ratios[k] = total_area*1.0/v
+
         io.write_json(ratios,mo+'/'+str(i)+'/'+'ratios.json')
 
         resistances = {}
 #        R = TOTAL_R/np.prod([v for k,v in ratios.items()])
-        R = TOTAL_R*len(GROUPS)
+        R = TOTAL_R
         for k,v in ratios.items(): resistances[k]=v*R
         io.write_json(resistances,mo+'/'+str(i)+'/'+'resistances_rcr.json')
 
 
-        for k,v in group_areas.items(): ratios[k] = v
-        total_ratios = 0
-        for k,v in ratios.items(): total_ratios+=v
-        for k in ratios: ratios[k] = ratios[k]/total_ratios*len(GROUPS)
+        # for k,v in group_areas.items(): ratios[k] = v
+        # total_ratios = 0
+        # for k,v in ratios.items(): total_ratios+=v
+        # for k in ratios: ratios[k] = ratios[k]/total_ratios*len(GROUPS)
 
         capacitances = {}
-        for k,v in ratios.items(): capacitances[k]=v*C
+        for k,v in ratios.items(): capacitances[k]=(1.0/v)*C
         io.write_json(capacitances,mo+'/'+str(i)+'/'+'capacitances.json')
 
         for me in MESH_DIRS:
@@ -89,9 +87,9 @@ for g,mo in zip(GEN_DIRS,MODEL_DIRS):
                             r = resistances[lk]
                             c = capacitances[lk]
 
-                            f.write(str(r/10)+'\n')
+                            f.write(str(r*0.09)+'\n')
                             f.write(str(c)+'\n')
-                            f.write(str(r)+'\n')
+                            f.write(str(r*0.91)+'\n')
 
                         else:
                             f.write(l)

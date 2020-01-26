@@ -58,6 +58,7 @@ class Model(AbstractModel):
             out = []
             for i in range(S[0]):
                 x_ = x[i].reshape([1]+S[1:4])
+                import pdb; pdb.set_trace()
                 y = self._predict(x_)[0].copy()
                 out.append(y)
             return np.array(out)
@@ -749,3 +750,65 @@ class UNetUQ(Model):
             return self.sess.run(self.yhat,{self.x:x,
                 self.dropout_mask_op:self.dropout_mask,
                 self.dropout_scale_op:self.dropout_scale})
+
+class LargeSmallNet(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+        DROPOUT     = self.config['DROPOUT']
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
+        HIDDEN_UNITS = self.config['HIDDEN_UNITS']
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        self.y_class = tf.placeholder(shape=[None],dtype=tf.float32)
+
+        self.x_small = tf.nn.pool(self.x, [3,3], "MAX", "VALID", strides=[2,2])
+
+        o_large,o_large_side = tf_util.GoogleNet(self.x, activation=leaky_relu, init=INIT,
+            scope='googlenet_large', output_size=NUM_POINTS, dropout=DROPOUT)
+
+        o_small,o_small_side = tf_util.GoogleNet(self.x, activation=leaky_relu, init=INIT,
+            scope='googlenet_small', output_size=NUM_POINTS, dropout=DROPOUT)
+
+        self.p_small = tf_util.GoogleNet(self.x, activation=leaky_relu, init=INIT,
+            scope='googlenet_class', output_size=1, dropout=DROPOUT)
+
+        self.p_small = tf.nn.sigmoid(p_small)
+
+        self.yhat_large = tf.nn.sigmoid(o_large)
+        self.yhat_small = tf.nn.sigmoid(o_small)
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
+        # self.dropout_mask_op = tf.get_default_graph().get_tensor_by_name(
+        #     "unet/dropout/random_uniform:0")
+        #
+        # self.dropout_scale_op = tf.get_default_graph().get_tensor_by_name(
+        #     "unet/dropout/truediv:0")
+        #
+        #
+        # self.drop_size = self.dropout_mask_op.get_shape().as_list()[1]
+        #
+        # self.dropout_mask = None
+        # self.dropout_scale = 1.0
+        # self.dropout_fixed = False
+
+    def build_loss(self):
+        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
+
+    def sample(self, p=0.6):
+        self.dropout_mask = (np.random.uniform(size=(1,self.drop_size))<=p).astype(int)
+        self.dropout_scale = 1.0/p
+        self.dropout_fixed = True
+
+    def _predict(self,x):
+        self.sess.run(self.yhat,{self.x:x})

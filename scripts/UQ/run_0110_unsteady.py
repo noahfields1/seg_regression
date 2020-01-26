@@ -5,9 +5,13 @@ CONFIGS = [
 ]
 
 TUBES = [
-'aorta_single',
-'aorta_single_2',
-'right_iliac_single'
+#'aorta_single',
+#'aorta_single_1',
+#'aorta_single_2',
+#'aorta_single_3',
+'right_iliac_single',
+'right_iliac_single_1',
+'right_iliac_single_2',
 ]
 
 
