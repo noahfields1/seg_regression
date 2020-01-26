@@ -113,66 +113,66 @@ def get_dataset(config, key="TRAIN"):
 
 
     N    = X.shape[0]
-    X_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
-    Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
-
-    print("centering images")
-    for i,yc in tqdm(enumerate(Yc)):
-        if key == 'TRAIN':
-            contour = sv.marchingSquares(yc, iso=0.5)
-            contour = sv.reorder_contour(contour)
-
-            cx = int(np.mean(contour[:,0]))
-            cy = int(np.mean(contour[:,1]))
-            if cx > cc+2*(cr-cc): cx = int(cc+2*(cr-cc))
-            if cx < cc: cx=cc
-
-            if cy > cc+2*(cr-cc): cy = int(cc+2*(cr-cc))
-            if cy < cc: cy=cc
-
-            X_center[i] = X[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
-            Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
-        else:
-            X_center[i] = X[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
-            Y_center[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
-
-    X  = None
-    Yc = None
-
-    if config['BALANCE_RADIUS'] and key=='TRAIN':
-        X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
-        config['R_SMALL'], config['N_SAMPLE'])
-
-    if  key == 'TRAIN':
-        aug_x = []
-        aug_y = []
-        aug_m = []
-        for k in range(config['AUGMENT_FACTOR']):
-            for i in tqdm(range(len(X_center))):
-                x = X_center[i]
-                y = Y_center[i]
-
-                x,y = sv.random_rotate((x,y))
-
-                rpix = meta[i]['radius']*config['SPACING']
-                lim  = int(config['PP_BIAS'] + config['PP_SLOPE']*rpix)
-                x_shift = np.random.randint(-lim,lim)
-                y_shift = np.random.randint(-lim,lim)
-
-                x_ = x[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd]
-                if not x_.shape[1] == config['CROP_DIMS'] or not x_.shape[0] == config['CROP_DIMS'] or len(x.shape) < 2:
-                    continue
-
-                aug_x.append( x_ )
-                aug_y.append( y[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
-                aug_m.append( meta[i] )
-
-        X_ = np.array(aug_x)
-        Y_ = np.array(aug_y)
-        meta = aug_m
-    else:
-        X_ = np.array(X_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
-        Y_ = np.array(Y_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
+    # X_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
+    # Y_center = np.zeros((N,config['CENTER_DIMS'],config['CENTER_DIMS']))
+    #
+    # print("centering images")
+    # for i,yc in tqdm(enumerate(Yc)):
+    #     if key == 'TRAIN':
+    #         contour = sv.marchingSquares(yc, iso=0.5)
+    #         contour = sv.reorder_contour(contour)
+    #
+    #         cx = int(np.mean(contour[:,0]))
+    #         cy = int(np.mean(contour[:,1]))
+    #         if cx > cc+2*(cr-cc): cx = int(cc+2*(cr-cc))
+    #         if cx < cc: cx=cc
+    #
+    #         if cy > cc+2*(cr-cc): cy = int(cc+2*(cr-cc))
+    #         if cy < cc: cy=cc
+    #
+    #         X_center[i] = X[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
+    #         Y_center[i] = Yc[i,cy-cc:cy+cc, cx-cc:cx+cc].copy()
+    #     else:
+    #         X_center[i] = X[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
+    #         Y_center[i] = Yc[i,cr-cc:cr+cc, cr-cc:cr+cc].copy()
+    #
+    # X  = None
+    # Yc = None
+    #
+    # if config['BALANCE_RADIUS'] and key=='TRAIN':
+    #     X_center,Y_center,meta = radius_balance(X_center,Y_center,meta,
+    #     config['R_SMALL'], config['N_SAMPLE'])
+    #
+    # if  key == 'TRAIN':
+    #     aug_x = []
+    #     aug_y = []
+    #     aug_m = []
+    #     for k in range(config['AUGMENT_FACTOR']):
+    #         for i in tqdm(range(len(X_center))):
+    #             x = X_center[i]
+    #             y = Y_center[i]
+    #
+    #             x,y = sv.random_rotate((x,y))
+    #
+    #             rpix = meta[i]['radius']*config['SPACING']
+    #             lim  = int(config['PP_BIAS'] + config['PP_SLOPE']*rpix)
+    #             x_shift = np.random.randint(-lim,lim)
+    #             y_shift = np.random.randint(-lim,lim)
+    #
+    #             x_ = x[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd]
+    #             if not x_.shape[1] == config['CROP_DIMS'] or not x_.shape[0] == config['CROP_DIMS'] or len(x.shape) < 2:
+    #                 continue
+    #
+    #             aug_x.append( x_ )
+    #             aug_y.append( y[cc+y_shift-cd:cc+y_shift+cd, cc+x_shift-cd:cc+x_shift+cd] )
+    #             aug_m.append( meta[i] )
+    #
+    #     X_ = np.array(aug_x)
+    #     Y_ = np.array(aug_y)
+    #     meta = aug_m
+    # else:
+    #     X_ = np.array(X_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
+    #     Y_ = np.array(Y_center)[:,cc-cd:cc+cd, cc-cd:cc+cd]
 
 
     #get contours
