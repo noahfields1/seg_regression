@@ -1,0 +1,29 @@
+{
+  "gen_dirs":[
+    "/media/marsdenlab/Data1/UQ/0144/generations/converge"
+  ],
+  "mesh_dirs":["coarse","medium","fine","fine_2"],
+  "num_models":1,
+  "sim_dir":"/media/marsdenlab/Data1/UQ/0144/model_files/sim_wom_rcr_real",
+  "rcr_file":"rcrt.dat",
+  "groups":[
+    "aorta",
+    "SMA",
+    "celiac_hepatic",
+    "celiac_splenic",
+    "ext_iliac_left",
+    "renal_left",
+    "renal_right"
+  ],
+  "groups_files":[
+    "aorta_corrected.json",
+    "SMA_corrected.json",
+    "celiac_hepatic_corrected.json",
+    "celiac_splenic_corrected.json",
+    "ext_iliac_left_corrected.json",
+    "renal_left_corrected.json",
+    "renal_right_corrected.json"
+  ],
+  "total_r":10700,
+  "capacitance":0.001
+}

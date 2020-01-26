@@ -1,0 +1,12 @@
+{
+  "sim_name":"sim_wom_rcr_real",
+  "runs_folders":[
+    "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/converge/coarse",
+    "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/converge/medium",
+    "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/converge/fine",
+    "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/converge/fine_2"
+  ],
+  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0119/cluster/comet/runFineUnsteady.sh",
+  "sleep_batch":15,
+  "num_batch":30
+}
