@@ -10,9 +10,9 @@
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.5,
-  "medium":0.33,
-  "fine":0.22,
+  "coarse":0.4,
+  "medium":0.3,
+  "fine":0.2,
   "fine_2":0.15,
   "fine_3":0.1
 },
