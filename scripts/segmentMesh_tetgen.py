@@ -3,7 +3,6 @@ import os
 import sys
 
 sys.path.append(os.path.abspath('..'))
-
 import modules.io as io
 
 parser = argparse.ArgumentParser()
@@ -26,6 +25,7 @@ INTERVAL = cfg["INTERVAL"]
 EDGE_SIZE = args.edge_size
 
 EXTERIOR_FILE = OUTPUT_DIR+'/exterior.vtp'
+EXTERIOR_NAME = "exterior"
 UG_FILE = OUTPUT_DIR+'/mesh_ug.vtk'
 PD_FILE = OUTPUT_DIR+'/mesh_pd.vtk'
 FACE_FILE = OUTPUT_DIR+'/faceids.json'
@@ -53,6 +53,7 @@ sys.path.append(SV_PATH)
 os.chdir(SV_BUILD_PATH)
 
 import sv
+#import radius_mesh
 
 # # ################################################################################
 # # # 5. Create vtk meshes
@@ -62,7 +63,7 @@ import sv
 CAP_IDS = io.load_json(OUTPUT_DIR+'/cap_ids.json')
 CAP_IDS = [v for k,v in CAP_IDS.items()]
 
-sv.MeshObject.SetKernel('TetGen')
+WALL_IDS = io.load_json(OUTPUT_DIR+'/wall_ids.json')
 
 #Create mesh object
 msh = sv.MeshObject.pyMeshObject()
@@ -80,9 +81,36 @@ msh.SetMeshOptions('MeshWallFirst',[1])
 msh.SetMeshOptions('Optimization', [3])
 msh.SetMeshOptions('QualityRatio', [1.4])
 msh.SetMeshOptions('UseMMG',[0])
-for v in CAP_IDS:
-    print("local edge size {}".format(v))
-    msh.SetMeshOptions('LocalEdgeSize',[v,EDGE_SIZE*1.0/3])
+if EDGE_SIZE > 0.05:
+    for v in CAP_IDS:
+        print("local edge size {}".format(v))
+        msh.SetMeshOptions('LocalEdgeSize',[v,EDGE_SIZE*1.0/3])
+
+# for v in CAP_IDS:
+#     msh.SetMeshOptions('BoundaryLayerMesh',[1,v,4,0.8])
+# for v in WALL_IDS:
+#     msh.SetMeshOptions('BoundaryLayerMesh',[1,v,4,0.8])
+
+# RADIUS = True
+# if RADIUS:
+#     model_name = EXTERIOR_NAME
+#
+#     solid, model_polydata_name, solid_file_name = radius_mesh.read_solid_model(EXTERIOR_NAME, EXTERIOR_FILE)
+#
+#     source_ids = CAP_IDS[0:1]
+#     target_ids = CAP_IDS[1:]
+#
+#     dist_name = radius_mesh.calculate_centerlines(model_name, model_polydata_name, source_ids, target_ids)
+#
+#     mesh.SetWalls(WALL_IDS)
+#     cl_name = "mesh_centerlines"
+#     dist_name = "mesh_dist"
+#     mesh.CenterlinesDistance(cl_name, dist_name)
+#     mesh.SetVtkPolyData(dist_name)
+#     # Set the mesh edge size using the "DistanceToCenterlines" array.
+#     mesh.SetSizeFunctionBasedMesh(edge_size, "DistanceToCenterlines")
+
+
 msh.GenerateMesh()
 
 # #Save mesh to file

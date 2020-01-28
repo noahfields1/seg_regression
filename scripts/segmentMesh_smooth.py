@@ -93,7 +93,7 @@ print("done smoothing")
 # sv.Geom.Local_constrain_smooth("model_pd_smooth_1","model_pd_smooth_2", 10, 0.2)
 #solid.GetPolyData(s3)
 print("remeshing")
-sv.MeshUtil.Remesh(s3, "model_remesh", 0.15,0.15)
+sv.MeshUtil.Remesh(s3, "model_remesh", 0.04,0.04)
 sv.Repository.WriteVtkPolyData("model_remesh","ascii",EXTERIOR_FILE)
 
 solid.SetVtkPolyData("model_remesh")

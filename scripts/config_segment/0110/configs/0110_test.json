@@ -3,18 +3,14 @@
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
 
-"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0110/generations/converge",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0110/generations/test",
 
 "INTERVAL":10,
 
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.5,
-  "medium":0.33,
-  "fine":0.22,
-  "fine_2":0.15,
-  "fine_3":0.1
+  "coarse":0.5
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/correct.json",
