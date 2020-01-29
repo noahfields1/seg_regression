@@ -14,7 +14,7 @@
 "FFT":0,
 
 "EDGE_SIZES":{
-  "coarse":0.35
+  "coarse":0.2
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",

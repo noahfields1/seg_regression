@@ -17,6 +17,6 @@
     "aorta_corrected.json",
     "right_iliac_corrected.json"
   ],
-  "total_r":1500,
-  "capacitance":0.001
+  "total_r":1600,
+  "capacitance":0.0015
 }
