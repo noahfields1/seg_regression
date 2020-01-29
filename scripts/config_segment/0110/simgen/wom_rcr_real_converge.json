@@ -2,7 +2,7 @@
   "gen_dirs":[
     "/media/marsdenlab/Data1/UQ/0110/generations/converge"
   ],
-  "mesh_dirs":["coarse","medium","fine","fine_2"],
+  "mesh_dirs":["coarse","medium","fine","fine_2","fine_3"],
   "num_models":1,
   "sim_dir":"/media/marsdenlab/Data1/UQ/0110/model_files/sim_wom_rcr_real",
   "rcr_file":"rcrt.dat",

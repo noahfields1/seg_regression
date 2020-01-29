@@ -69,11 +69,21 @@ WALL_IDS = io.load_json(OUTPUT_DIR+'/wall_ids.json')
 msh = sv.MeshObject.pyMeshObject()
 msh.NewObject('mesh')
 
+sv.Solid.SetKernel('PolyData')
+solid = sv.Solid.pySolidModel()
+solid.ReadNative("model", EXTERIOR_FILE)
+solid.GetBoundaryFaces(60)
+print ("Model face IDs: " + str(solid.GetFaceIds()))
+model_polydata_name = "model" + "_pd"
+solid.GetPolyData(model_polydata_name)
+
 #Load Model
 msh.LoadModel(EXTERIOR_FILE)
-
 #Create new mesha
+#msh.SetVtkPolyData(model_polydata_name)
 msh.NewMesh()
+#msh.GetBoundaryFaces(60)
+#msh.GetModelFaceInfo()
 msh.SetMeshOptions('SurfaceMeshFlag',[1])
 msh.SetMeshOptions('VolumeMeshFlag',[1])
 msh.SetMeshOptions('GlobalEdgeSize',[EDGE_SIZE])
@@ -87,9 +97,9 @@ msh.SetMeshOptions('UseMMG',[1])
 #         msh.SetMeshOptions('LocalEdgeSize',[v,EDGE_SIZE*1.0/3])
 
 # for v in CAP_IDS:
-#     msh.SetMeshOptions('BoundaryLayerMesh',[1,v,4,0.8])
+#     msh.SetBoundaryLayer(1,int(v),1,2,[0.8,0.8])
 # for v in WALL_IDS:
-#     msh.SetMeshOptions('BoundaryLayerMesh',[1,v,4,0.8])
+#     msh.SetBoundaryLayer(1,int(v),1,2,[0.8,0.8])
 
 # RADIUS = True
 # if RADIUS:

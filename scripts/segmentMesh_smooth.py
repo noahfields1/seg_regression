@@ -25,6 +25,11 @@ INTERVAL = cfg["INTERVAL"]
 
 EDGE_SIZE = args.edge_size
 
+if "REMESH_SIZE" in cfg:
+    REMESH_SIZE = cfg['REMESH_SIZE']
+else:
+    REMESH_SIZE = 0.1
+
 EXTERIOR_FILE = OUTPUT_DIR+'/exterior.vtp'
 UG_FILE = OUTPUT_DIR+'/mesh_ug.vtk'
 PD_FILE = OUTPUT_DIR+'/mesh_pd.vtk'
@@ -72,31 +77,32 @@ for i,m in enumerate(MERGE_NAMES[2:]):
 
 solid.GetBoundaryFaces(50)
 solid.GetFaceIds()
-solid.GetPolyData("model_pd_smooth_0")
+solid.GetPolyData("model_pd")
 
-# if "LOCAL_SMOOTH" in cfg:
-#     points = cfg['LOCAL_SMOOTH']['POINTS']
-#     radius = cfg['LOCAL_SMOOTH']['RADIUS']
-#     n = len(points)
-#     for i,p,r in zip(range(n),points,radius):
-#         s1 = "model_pd_smooth_{}".format(i)
-#         s2 = "model_pd_sphere_{}".format(i)
-#         s3 = "model_pd_smooth_{}".format(i+1)
-#         print(s1,s2,s3)
-#         sv.Geom.Set_array_for_local_op_sphere(s1,s2, r, p)
-#         sv.Geom.Local_constrain_smooth(s2,s3, 10, 0.2)
-# else:
-#     s3 = "model_pd_smooth_0"
-s3 = "model_pd_smooth_0"
-print("done smoothing")
-# sv.Geom.Set_array_for_local_op_sphere("model_pd_smooth_0","model_pd_smooth_1", 3, [0.88,15.74,-43.04])
-# sv.Geom.Local_constrain_smooth("model_pd_smooth_1","model_pd_smooth_2", 10, 0.2)
 #solid.GetPolyData(s3)
 print("remeshing")
-sv.MeshUtil.Remesh(s3, "model_remesh", 0.025,0.025)
-sv.Repository.WriteVtkPolyData("model_remesh","ascii",EXTERIOR_FILE)
+sv.MeshUtil.Remesh("model_pd", "model_remesh", REMESH_SIZE,REMESH_SIZE)
+sv.MeshUtil.Remesh("model_remesh", "model_pd_smooth_0", REMESH_SIZE,REMESH_SIZE)
 
-solid.SetVtkPolyData("model_remesh")
+#Constrain smoothing
+s3 = "model_pd_smooth_0"
+if "LOCAL_SMOOTH" in cfg:
+    points = cfg['LOCAL_SMOOTH']['POINTS']
+    radius = cfg['LOCAL_SMOOTH']['RADIUS']
+    n = len(points)
+    for i,p,r in zip(range(n),points,radius):
+        s1 = "model_pd_smooth_{}".format(i)
+        s2 = "model_pd_sphere_{}".format(i)
+        s3 = "model_pd_smooth_{}".format(i+1)
+        print(s1,s2,s3)
+        sv.Geom.Set_array_for_local_op_sphere(s1,s2, r, p)
+        sv.Geom.Local_constrain_smooth(s2,s3, 10, 0.8)
+
+print("done smoothing")
+
+sv.Repository.WriteVtkPolyData(s3,"ascii",EXTERIOR_FILE)
+
+solid.SetVtkPolyData(s3)
 
 #Extract boundary faces
 print ("Creating model: \nFaceID found: " + str(solid.GetFaceIds()))
