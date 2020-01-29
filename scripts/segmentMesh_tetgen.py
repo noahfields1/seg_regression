@@ -80,11 +80,11 @@ msh.SetMeshOptions('GlobalEdgeSize',[EDGE_SIZE])
 msh.SetMeshOptions('MeshWallFirst',[1])
 msh.SetMeshOptions('Optimization', [3])
 msh.SetMeshOptions('QualityRatio', [1.4])
-msh.SetMeshOptions('UseMMG',[0])
-if EDGE_SIZE > 0.05:
-    for v in CAP_IDS:
-        print("local edge size {}".format(v))
-        msh.SetMeshOptions('LocalEdgeSize',[v,EDGE_SIZE*1.0/3])
+msh.SetMeshOptions('UseMMG',[1])
+# if EDGE_SIZE > 0.05:
+#     for v in CAP_IDS:
+#         print("local edge size {}".format(v))
+#         msh.SetMeshOptions('LocalEdgeSize',[v,EDGE_SIZE*1.0/3])
 
 # for v in CAP_IDS:
 #     msh.SetMeshOptions('BoundaryLayerMesh',[1,v,4,0.8])
