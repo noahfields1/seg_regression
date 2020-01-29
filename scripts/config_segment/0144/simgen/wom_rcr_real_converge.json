@@ -2,7 +2,7 @@
   "gen_dirs":[
     "/media/marsdenlab/Data1/UQ/0144/generations/converge"
   ],
-  "mesh_dirs":["coarse","medium","fine","fine_2"],
+  "mesh_dirs":["coarse","medium","fine","fine_2","fine_3"],
   "num_models":1,
   "sim_dir":"/media/marsdenlab/Data1/UQ/0144/model_files/sim_wom_rcr_real",
   "rcr_file":"rcrt.dat",
@@ -25,5 +25,5 @@
     "renal_right_corrected.json"
   ],
   "total_r":1500,
-  "capacitance":0.001
+  "capacitance":0.0015
 }
