@@ -1,8 +1,8 @@
 {
   "gen_dirs":[
-    "/media/marsdenlab/Data1/UQ/0119/generations/converge"
+    "/media/marsdenlab/Data1/UQ/0119/generations/test"
   ],
-  "mesh_dirs":["coarse","medium","fine","fine_2"],
+  "mesh_dirs":["coarse"],
   "num_models":1,
   "sim_dir":"/media/marsdenlab/Data1/UQ/0119/model_files/sim_wom_rcr_real",
   "rcr_file":"rcrt.dat",
@@ -40,6 +40,6 @@
     "RPA_br7_corrected.json",
     "RPA_br9_corrected.json"
   ],
-  "total_r":1500,
-  "capacitance":0.0015
+  "total_r":240,
+  "capacitance":0.05
 }

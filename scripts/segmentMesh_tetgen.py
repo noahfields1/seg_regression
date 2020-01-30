@@ -24,6 +24,22 @@ INTERVAL = cfg["INTERVAL"]
 
 EDGE_SIZE = args.edge_size
 
+if "RADIUS_MESH" in cfg:
+    RADIUS_MESH = cfg['RADIUS_MESH']
+else:
+    RADIUS_MESH = False
+
+if "LOCAL_EDGE" in cfg:
+    LOCAL_EDGE = cfg['LOCAL_EDGE']
+else:
+    LOCAL_EDGE = False
+
+if "BOUNDARY_LAYER" in cfg:
+    BOUNDARY_LAYER = cfg['BOUNDARY_LAYER']
+    print("Boundary layer {}".format(cfg['BOUNDARY_LAYER']))
+else:
+    BOUNDARY_LAYER = False
+
 EXTERIOR_FILE = OUTPUT_DIR+'/exterior.vtp'
 EXTERIOR_NAME = "exterior"
 UG_FILE = OUTPUT_DIR+'/mesh_ug.vtk'
@@ -53,13 +69,13 @@ sys.path.append(SV_PATH)
 os.chdir(SV_BUILD_PATH)
 
 import sv
-#import radius_mesh
+import radius_mesh
 
 # # ################################################################################
 # # # 5. Create vtk meshes
 # # ################################################################################
 # # # #Set mesh kernel
-
+print("starting mesh")
 CAP_IDS = io.load_json(OUTPUT_DIR+'/cap_ids.json')
 CAP_IDS = [v for k,v in CAP_IDS.items()]
 
@@ -69,21 +85,16 @@ WALL_IDS = io.load_json(OUTPUT_DIR+'/wall_ids.json')
 msh = sv.MeshObject.pyMeshObject()
 msh.NewObject('mesh')
 
-sv.Solid.SetKernel('PolyData')
-solid = sv.Solid.pySolidModel()
-solid.ReadNative("model", EXTERIOR_FILE)
-solid.GetBoundaryFaces(60)
-print ("Model face IDs: " + str(solid.GetFaceIds()))
-model_polydata_name = "model" + "_pd"
-solid.GetPolyData(model_polydata_name)
-
 #Load Model
 msh.LoadModel(EXTERIOR_FILE)
+#msh.GetBoundaryFaces(50)
+#msh.SetWalls(WALL_IDS)
 #Create new mesha
 #msh.SetVtkPolyData(model_polydata_name)
 msh.NewMesh()
 #msh.GetBoundaryFaces(60)
-#msh.GetModelFaceInfo()
+print(msh.GetModelFaceInfo())
+print(WALL_IDS)
 msh.SetMeshOptions('SurfaceMeshFlag',[1])
 msh.SetMeshOptions('VolumeMeshFlag',[1])
 msh.SetMeshOptions('GlobalEdgeSize',[EDGE_SIZE])
@@ -91,18 +102,26 @@ msh.SetMeshOptions('MeshWallFirst',[1])
 msh.SetMeshOptions('Optimization', [3])
 msh.SetMeshOptions('QualityRatio', [1.4])
 msh.SetMeshOptions('UseMMG',[1])
-# if EDGE_SIZE > 0.05:
-#     for v in CAP_IDS:
-#         print("local edge size {}".format(v))
-#         msh.SetMeshOptions('LocalEdgeSize',[v,EDGE_SIZE*1.0/3])
 
+# if LOCAL_EDGE:
+#     msh.SetMeshOptions('UseMMG',[0])
+#     # for v in CAP_IDS:
+#     #     print("local edge size {}".format(v))
+#     #     msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/4])
+#
+#     for v in WALL_IDS[1:]:
+#         print("wall local edge size {}".format(v))
+#         msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/4])
+# print("pre boundary layer")
+# if BOUNDARY_LAYER:
+#     print("boundary layer")
+#     for v in WALL_IDS:
+#         msh.SetBoundaryLayer(1,int(v),1,2,[0.8,0.8])
 # for v in CAP_IDS:
 #     msh.SetBoundaryLayer(1,int(v),1,2,[0.8,0.8])
-# for v in WALL_IDS:
-#     msh.SetBoundaryLayer(1,int(v),1,2,[0.8,0.8])
-
 # RADIUS = True
-# if RADIUS:
+# if RADIUS_MESH:
+#     msh.SetMeshOptions('UseMMG',[0])
 #     model_name = EXTERIOR_NAME
 #
 #     solid, model_polydata_name, solid_file_name = radius_mesh.read_solid_model(EXTERIOR_NAME, EXTERIOR_FILE)
@@ -118,8 +137,9 @@ msh.SetMeshOptions('UseMMG',[1])
 #     mesh.CenterlinesDistance(cl_name, dist_name)
 #     mesh.SetVtkPolyData(dist_name)
 #     # Set the mesh edge size using the "DistanceToCenterlines" array.
-#     mesh.SetSizeFunctionBasedMesh(edge_size, "DistanceToCenterlines")
-
+#     mesh.SetSizeFunctionBasedMesh(EDGE_SIZE, "DistanceToCenterlines")
+# else:
+#     msh.SetMeshOptions('UseMMG',[1])
 
 msh.GenerateMesh()
 

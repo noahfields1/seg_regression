@@ -1,13 +1,13 @@
 {
   "gen_dirs":[
-    "/media/marsdenlab/Data1/UQ/0144/generations/1",
-    "/media/marsdenlab/Data1/UQ/0144/generations/2",
-    "/media/marsdenlab/Data1/UQ/0144/generations/3",
-    "/media/marsdenlab/Data1/UQ/0144/generations/4"
+    "/media/marsdenlab/Data1/UQ/0119/generations/1",
+    "/media/marsdenlab/Data1/UQ/0119/generations/2",
+    "/media/marsdenlab/Data1/UQ/0119/generations/3",
+    "/media/marsdenlab/Data1/UQ/0119/generations/4"
   ],
-  "mesh_dirs":["coarse","medium","fine"],
+  "mesh_dirs":["coarse", "medium","fine"],
   "num_models":50,
-  "sim_dir":"/media/marsdenlab/Data1/UQ/0144/model_files/sim_wom_rcr_real",
+  "sim_dir":"/media/marsdenlab/Data1/UQ/0119/model_files/sim_wom_rcr_real",
   "rcr_file":"rcrt.dat",
   "groups":[
     "LPA",
@@ -43,6 +43,6 @@
     "RPA_br7_corrected.json",
     "RPA_br9_corrected.json"
   ],
-  "total_r":16000,
-  "capacitance":0.001
+  "total_r":240,
+  "capacitance":0.05
 }

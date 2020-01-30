@@ -3,14 +3,14 @@
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
 
-"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0119/generations/1",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0119/generations/test",
 
 "INTERVAL":25,
 
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.125
+  "coarse":0.1
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0119/model_files/correct.json",
@@ -108,6 +108,41 @@
   "RPA_br7_cap":[9.917411122647907,12.709369162042114,-15.429002310790713],
   "RPA_br9_cap":[10.192142060549235,7.884630741498853,-17.17792235906545]
 },
+
+"REMESH_SIZE":0.04,
+
+"LOCAL_SMOOTH":{
+  "POINTS":[
+    [-0.9399219894789748,13.955712036960186,-10.192340082013363],
+    [-2.4594,12.7007,-9.45723],
+    [-2.8825,11.8749,-9.62336],
+    [-3.6433,11.2883,-10.1722],
+    [-3.5691,11.135,-10.1857],
+    [-4.139,10.2527,-11.168],
+    [-4.2025,9.08966,-12.2063],
+    [-3.8477,8.24646,-13.2436],
+    [1.4104,12.9178,-10.3013],
+    [3.2481,12.3155,-10.8505],
+    [3.9115,11.8001,-11.3575],
+    [4.6756,10.4903,-12.4655],
+    [4.083768558441022,11.434338259064015,-11.547499999869615],
+    [4.926864634675594,9.594335990551636,-13.147499999846332]
+  ],
+  "RADIUS":[
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+  ]
+},
+
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
