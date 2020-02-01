@@ -10,10 +10,11 @@
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.15,
-  "medium":0.1,
-  "fine":0.075,
-  "fine_2":0.05
+  "coarse":0.1,
+  "medium":0.084,
+  "fine":0.063,
+  "fine_2":0.05,
+  "fine_3":0.04
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0119/model_files/correct.json",
@@ -111,6 +112,8 @@
   "RPA_br7_cap":[9.917411122647907,12.709369162042114,-15.429002310790713],
   "RPA_br9_cap":[10.192142060549235,7.884630741498853,-17.17792235906545]
 },
+
+"REMESH_SIZE":0.075,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"

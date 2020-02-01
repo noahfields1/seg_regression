@@ -2,7 +2,7 @@
   "gen_dirs":[
     "/media/marsdenlab/Data1/UQ/0110/generations/converge"
   ],
-  "mesh_dirs":["coarse","medium","fine","fine_2","fine_3","fine_4"],
+  "mesh_dirs":["coarse","medium","fine","fine_2","fine_3","fine_4","fine_5"],
   "num_models":1,
   "sim_dir":"/media/marsdenlab/Data1/UQ/0110/model_files/sim_wom_rcr_real",
   "rcr_file":"rcrt.dat",
@@ -15,5 +15,5 @@
     "right_iliac_corrected.json"
   ],
   "total_r":1600,
-  "capacitance":0.0015
+  "capacitance":0.002
 }

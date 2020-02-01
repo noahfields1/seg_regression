@@ -12,12 +12,11 @@
 "MODES":5,
 
 "EDGE_SIZES":{
-  "coarse":0.2,
-  "medium":0.15,
-  "fine":0.1125,
-  "fine_2":0.084,
-  "fine_3":0.063,
-  "fine_4":0.055
+  "coarse":0.3,
+  "medium":0.26,
+  "fine":0.19,
+  "fine_2":0.147,
+  "fine_3":0.11
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",

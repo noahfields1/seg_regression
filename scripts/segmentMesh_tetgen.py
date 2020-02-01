@@ -77,24 +77,26 @@ import radius_mesh
 # # # #Set mesh kernel
 print("starting mesh")
 CAP_IDS = io.load_json(OUTPUT_DIR+'/cap_ids.json')
-CAP_IDS = [v for k,v in CAP_IDS.items()]
+CAP_IDS = [int(v) for k,v in CAP_IDS.items()]
 
 WALL_IDS = io.load_json(OUTPUT_DIR+'/wall_ids.json')
-
+WALL_IDS = [int(v) for v in WALL_IDS]
+print(WALL_IDS)
+print(CAP_IDS)
 #Create mesh object
 msh = sv.MeshObject.pyMeshObject()
 msh.NewObject('mesh')
 
 #Load Model
 msh.LoadModel(EXTERIOR_FILE)
-#msh.GetBoundaryFaces(50)
-#msh.SetWalls(WALL_IDS)
+msh.GetBoundaryFaces(80)
+msh.SetWalls(WALL_IDS)
 #Create new mesha
 #msh.SetVtkPolyData(model_polydata_name)
 msh.NewMesh()
 #msh.GetBoundaryFaces(60)
 print(msh.GetModelFaceInfo())
-print(WALL_IDS)
+
 msh.SetMeshOptions('SurfaceMeshFlag',[1])
 msh.SetMeshOptions('VolumeMeshFlag',[1])
 msh.SetMeshOptions('GlobalEdgeSize',[EDGE_SIZE])
@@ -102,6 +104,11 @@ msh.SetMeshOptions('MeshWallFirst',[1])
 msh.SetMeshOptions('Optimization', [3])
 msh.SetMeshOptions('QualityRatio', [1.4])
 msh.SetMeshOptions('UseMMG',[1])
+
+# for v in WALL_IDS:
+#     msh.SetBoundaryLayer(0,v,0,2,[0.5]*2)
+# for v in CAP_IDS:
+#     msh.SetBoundaryLayer(0,v,0,2,[0.5]*2)
 
 # if LOCAL_EDGE:
 #     msh.SetMeshOptions('UseMMG',[0])

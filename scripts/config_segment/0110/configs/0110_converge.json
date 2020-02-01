@@ -14,8 +14,7 @@
   "medium":0.33,
   "fine":0.22,
   "fine_2":0.148,
-  "fine_3":0.098,
-  "fine_4":0.065
+  "fine_3":0.098
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/correct.json",
