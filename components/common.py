@@ -5,7 +5,7 @@ from tqdm import tqdm
 from sklearn.ensemble import RandomForestRegressor
 
 import matplotlib
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import pandas as pd
