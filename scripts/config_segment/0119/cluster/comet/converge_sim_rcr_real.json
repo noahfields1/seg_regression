@@ -6,7 +6,7 @@
     "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/converge/fine",
     "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/converge/fine_2"
   ],
-  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0119/cluster/comet/runFineUnsteady.sh",
+  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0119/cluster/comet/runConvergeUnsteady.sh",
   "sleep_batch":15,
   "num_batch":30
 }
