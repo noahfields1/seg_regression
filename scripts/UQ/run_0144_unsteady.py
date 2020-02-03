@@ -5,7 +5,8 @@ CONFIGS = [
 ]
 
 TUBES = [
-'aorta_single_1',
+'aorta_outlet'
+#'aorta_single_1',
 # 'aorta_single_2',
 # 'aorta_single_3',
 # 'aorta_single_4',
