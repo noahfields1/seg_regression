@@ -12,9 +12,7 @@
 "MODES":5,
 
 "EDGE_SIZES":{
-  "coarse":0.25,
-  "medium":0.175,
-  "fine":0.1
+  "coarse":0.1
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",
@@ -71,6 +69,19 @@
   "renal_left_cap":[-4.475401,15.314423,-46.594873],
   "renal_right_cap":[4.995237,15.53222,-47.101223],
   "celiac_hepatic_cap":[4.202913,20.575872,-43.60706]
+},
+
+"REMESH_SIZE":0.075,
+
+"LOCAL_SMOOTH":{
+  "POINTS":[
+    [0.88,15.74,-43.04],
+    [0.78,16.34,-55.04]
+  ],
+  "RADIUS":[
+    4,
+    2
+  ]
 },
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
