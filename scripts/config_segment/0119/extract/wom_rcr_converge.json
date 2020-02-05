@@ -1,0 +1,18 @@
+{
+  "dir":"/media/marsdenlab/Data1/UQ/0119/generations",
+  "output_dir":"/media/marsdenlab/Data1/UQ/0119/sim_wom_rcr_real/converge",
+  "case_dir":"/media/marsdenlab/Data1/UQ/0119/sim_wom_rcr_real",
+  "mesh_labels":["coarse","medium","fine"],
+  "generations":["converge"],
+  "num_models":1,
+  "sim_name":"sim_wom_rcr_real",
+  "results_file":"all_results.vtu",
+  "labels":[
+    "pressure",
+    "velocity",
+    "vWSS"
+  ],
+  "start":1500,
+  "end":1805,
+  "incr":5
+}

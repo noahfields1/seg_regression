@@ -1,11 +1,11 @@
 import os
 
 CONFIGS = [
-"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0144/extract/wom_rcr_converge.json"
+"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0119/extract/wom_rcr_converge.json"
 ]
 
 TUBES = [
-'aorta_outlet'
+'LPA_outlet'
 #'aorta_single_1',
 # 'aorta_single_2',
 # 'aorta_single_3',
@@ -34,5 +34,5 @@ for cfg in CONFIGS:
         name = cfg.split('/')[-1].replace('.json','')
 
         os.system("python extract_tube_new.py -config {} \
-        -tube_file ../config_segment/0144/tubes/{}.json".format(cfg,p)
+        -tube_file ../config_segment/0119/tubes/{}.json".format(cfg,p)
         )
