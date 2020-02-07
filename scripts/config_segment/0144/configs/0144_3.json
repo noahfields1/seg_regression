@@ -7,7 +7,7 @@
 
 "INTERVAL":15,
 
-"NUM_RUNS":50,
+"NUM_RUNS":80,
 
 "MODES":5,
 
@@ -71,7 +71,7 @@
   "celiac_hepatic_cap":[4.202913,20.575872,-43.60706]
 },
 
-"REMESH_SIZE":0.075,
+"REMESH_SIZE":0.1,
 
 "LOCAL_SMOOTH":{
   "POINTS":[
