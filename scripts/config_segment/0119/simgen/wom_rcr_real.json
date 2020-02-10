@@ -43,6 +43,6 @@
     "RPA_br7_corrected.json",
     "RPA_br9_corrected.json"
   ],
-  "total_r":240,
-  "capacitance":0.05
+  "total_r":1000,
+  "capacitance":0.005
 }
