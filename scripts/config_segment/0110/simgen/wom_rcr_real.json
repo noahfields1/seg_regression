@@ -1,7 +1,5 @@
 {
   "gen_dirs":[
-    "/media/marsdenlab/Data1/UQ/0110/generations/1",
-    "/media/marsdenlab/Data1/UQ/0110/generations/2",
     "/media/marsdenlab/Data1/UQ/0110/generations/3"
   ],
   "mesh_dirs":["coarse"],

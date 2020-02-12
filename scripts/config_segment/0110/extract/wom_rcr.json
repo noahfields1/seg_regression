@@ -1,9 +1,9 @@
 {
   "dir":"/media/marsdenlab/Data1/UQ/0110/generations",
-  "output_dir":"/media/marsdenlab/Data1/UQ/0110/sim_wom_rcr_real/converge",
+  "output_dir":"/media/marsdenlab/Data1/UQ/0110/sim_wom_rcr_real/csv",
   "case_dir":"/media/marsdenlab/Data1/UQ/0110/sim_wom_rcr_real",
   "mesh_labels":["coarse"],
-  "generations":["converge"],
+  "generations":[3],
   "num_models":50,
   "sim_name":"sim_wom_rcr_real",
   "results_file":"all_results.vtu",
@@ -12,7 +12,7 @@
     "velocity",
     "vWSS"
   ],
-  "start":800,
-  "end":1005,
+  "start":1300,
+  "end":1805,
   "incr":5
 }
