@@ -1,7 +1,7 @@
 {
   "sim_name":"sim_wom_rcr_real",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/3/coarse"
+    "/oasis/scratch/comet/gdmaher/temp_project/0119/generations/1/coarse"
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0119/cluster/comet/runCoarseUnsteady.sh",
   "sleep_batch":15,
