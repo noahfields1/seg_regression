@@ -30,6 +30,11 @@ TUBE_FILE = io.load_json(args.tube_file)
 POINTS    = TUBE_FILE['points']
 NORMALS   = TUBE_FILE['normals']
 RADIUSES  = TUBE_FILE['radiuses']
+
+POINTS   = sv.interp_arr(POINTS,cfg['scale'])
+NORMALS  = sv.interp_arr(NORMALS,cfg['scale'])
+RADIUSES = sv.interp_list(RADIUSES,cfg['scale'])
+
 PATH      = TUBE_FILE['path']
 N         = range(len(POINTS))
 
@@ -47,6 +52,7 @@ for gen in GENS:
             pd = sv.read_vtu(vtu_fn)
 
             for j,p,n,r in zip(N, POINTS, NORMALS, RADIUSES):
+                print(j,p,n,r)
                 surf = sv.clip_plane_rad(pd,p,n,r)
 
                 #try:

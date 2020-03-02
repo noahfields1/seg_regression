@@ -1,0 +1,24 @@
+{
+  "path_files":"/media/marsdenlab/Data1/UQ/0144/model_files/paths/renal_left.txt",
+  "image_fn":"/media/marsdenlab/Data1/UQ/0144/model_files/image.mha",
+  "group_files":[
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/0/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/1/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/2/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/3/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/5/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/6/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/7/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/8/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/9/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/10/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/11/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/12/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/13/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/14/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/15/renal_left.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/1/models/16/renal_left.json"
+  ],
+  "color":"r",
+  "out_dir":"/media/marsdenlab/Data1/UQ/0144/figures/groups/1/renal_left"
+}

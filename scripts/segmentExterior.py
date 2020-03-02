@@ -107,5 +107,3 @@ solid.GetPolyData("model_pd")
 #sv.Geom.Local_constrain_smooth("model_pd_1","model_pd_2", 10, 0.2)
 print(EXTERIOR_FILE)
 sv.Repository.WriteVtkPolyData("model_pd","ascii",EXTERIOR_FILE)
-
-import pdb; pdb.set_trace()

@@ -1,0 +1,24 @@
+{
+  "path_files":"/media/marsdenlab/Data1/UQ/0144/model_files/paths/SMA.txt",
+  "image_fn":"/media/marsdenlab/Data1/UQ/0144/model_files/image.mha",
+  "group_files":[
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/0/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/1/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/2/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/3/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/5/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/6/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/7/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/8/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/9/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/10/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/11/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/12/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/13/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/14/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/15/SMA.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/16/SMA.json"
+  ],
+  "color":"r",
+  "out_dir":"/media/marsdenlab/Data1/UQ/0144/figures/groups/3/SMA"
+}

@@ -1,0 +1,24 @@
+{
+  "path_files":"/media/marsdenlab/Data1/UQ/0144/model_files/paths/celiac_hepatic.txt",
+  "image_fn":"/media/marsdenlab/Data1/UQ/0144/model_files/image.mha",
+  "group_files":[
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/0/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/1/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/2/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/3/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/5/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/6/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/7/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/8/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/9/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/10/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/11/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/12/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/13/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/14/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/15/celiac_hepatic.json",
+    "/media/marsdenlab/Data1/UQ/0144/generations/3/models/16/celiac_hepatic.json"
+  ],
+  "color":"r",
+  "out_dir":"/media/marsdenlab/Data1/UQ/0144/figures/groups/3/celiac_hepatic"
+}

@@ -14,6 +14,40 @@ import os
 
 import json
 
+def interp_list(l,scale):
+    N = len(l)
+    l_new = []
+
+    SCALE = scale+2
+
+    for i in range(N-1):
+        p1 = l[i]
+        p2 = l[i+1]
+
+        for j in range(SCALE):
+            p = (SCALE-j)*1.0/SCALE*p1 + (j)*1.0/SCALE*p2
+            l_new.append(p)
+
+    return l_new
+
+
+def interp_arr(l,scale):
+    l_arr = np.array(l)
+    N = l_arr.shape[0]
+    l_new = []
+
+    SCALE = scale+2
+
+    for i in range(N-1):
+        p1 = l_arr[i,:]
+        p2 = l_arr[i+1,:]
+
+        for j in range(SCALE):
+            p = (SCALE-j)*1.0/SCALE*p1 + (j)*1.0/SCALE*p2
+            l_new.append(p)
+
+    return l_new
+
 def random_rotate(image_pair):
     angle = np.random.randint(360)
     return_images = []

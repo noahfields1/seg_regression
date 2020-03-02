@@ -7,9 +7,9 @@
     "/media/marsdenlab/Data1/UQ/0110/pca/3/0_3/aorta_corrected.json"
   ],
   "colors":[
-    "g",
+    "magenta",
     "r",
-    "y"
+    "b"
     ],
   "out_dir":"/media/marsdenlab/Data1/UQ/0110/figures/groups_pca/3/aorta_0"
 }

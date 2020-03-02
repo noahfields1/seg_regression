@@ -5,24 +5,13 @@ CONFIGS = [
 ]
 
 TUBES = [
-'aorta_outlet'
-#'aorta_single_1',
-# 'aorta_single_2',
-# 'aorta_single_3',
-# 'aorta_single_4',
-# 'aorta_single_5',
-# "celiac_hepatic_1",
-# "celiac_hepatic_2",
-# "celiac_splenic_1",
-# "celiac_splenic_2",
-# "ext_iliac_left_single_1",
-# "ext_iliac_left_single_2",
-# "renal_left_1",
-# "renal_left_2",
-# "renal_right_1",
-# "renal_right_2",
-# "SMA_1",
-# "SMA_2"
+'aorta',
+'celiac_hepatic',
+'celiac_splenic',
+'ext_iliac_left',
+'renal_left',
+'renal_right',
+'SMA'
 ]
 
 
