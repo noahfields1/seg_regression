@@ -3,7 +3,7 @@
   "input_dir":"/media/marsdenlab/Data1/UQ/0110/generations/3/models",
   "output_dir":"/media/marsdenlab/Data1/UQ/0110/pca/3",
   "num_points":33,
-  "modes":5,
+  "modes":10,
   "coeffs":[-7,-4,4,7],
   "group_contents_file":"/media/marsdenlab/Data1/UQ/0110/model_files/group_contents.tcl"
 }
