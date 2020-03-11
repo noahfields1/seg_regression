@@ -1,0 +1,9 @@
+{
+  "gen_dirs":[
+    "/media/marsdenlab/Data1/UQ/0110/generations/4",
+    "/media/marsdenlab/Data1/UQ/0110/generations/5"
+  ],
+  "mesh_dirs":["coarse"],
+  "num_models":50,
+  "sim_dir":"/media/marsdenlab/Data1/UQ/0110/model_files/sim_wom_rcr"
+}
