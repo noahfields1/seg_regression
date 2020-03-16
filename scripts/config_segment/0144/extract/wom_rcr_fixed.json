@@ -1,0 +1,19 @@
+{
+  "dir":"/media/marsdenlab/Data1/UQ/0144/generations",
+  "output_dir":"/media/marsdenlab/Data1/UQ/0144/sim_wom_rcr/csv",
+  "case_dir":"/media/marsdenlab/Data1/UQ/0144/sim_wom_rcr",
+  "mesh_labels":["coarse"],
+  "generations":[4,5],
+  "num_models":80,
+  "sim_name":"sim_wom_rcr",
+  "results_file":"all_results.vtu",
+  "labels":[
+    "pressure",
+    "velocity",
+    "vWSS"
+  ],
+  "start":1600,
+  "end":1805,
+  "incr":5,
+  "scale":2
+}

@@ -1,7 +1,8 @@
 import os
 
 CONFIGS = [
-"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/wom_rcr.json"
+"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/wom_rcr.json",
+#"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/wom_rcr_fixed.json"
 ]
 
 TUBES = [
