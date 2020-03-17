@@ -30,3 +30,13 @@ for i in range(args.n):
     except subprocess.TimeoutExpired:
         p.kill()
         print("moving on...")
+
+    o = args.output_dir+'/{}_back.png'.format(i)
+
+    p = subprocess.Popen(['python', 'screenvtk_array_back.py',
+         '-vtp', args.vtp, '-label', str(i), '-output_fn', o])
+    try:
+        p.wait(3)
+    except subprocess.TimeoutExpired:
+        p.kill()
+        print("moving on...")
