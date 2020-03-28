@@ -35,8 +35,8 @@ AUGMENT_R_SCALE: 0.65
 CENTER: true
 
 INPUT_DIMS:
-  - 160
-  - 160
+  - 224
+  - 224
   - 1
 
 BALANCE_RADIUS: false
