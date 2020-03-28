@@ -811,3 +811,91 @@ class LargeSmallNet(Model):
 
     def _predict(self,x):
         self.sess.run(self.yhat,{self.x:x})
+
+import tensornets
+class PretrainedNet(Model):
+    def build_model(self):
+        CROP_DIMS   = self.config['CROP_DIMS']
+        C           = self.config['NUM_CHANNELS']
+        LEAK        = self.config['LEAK']
+        LAMBDA      = self.config['L2_REG']
+        INIT        = self.config['INIT']
+        DROPOUT     = self.config['DROPOUT']
+        NUM_POINTS  = self.config['NUM_CONTOUR_POINTS']
+
+        leaky_relu = tf.contrib.keras.layers.LeakyReLU(LEAK)
+
+        self.x = tf.placeholder(shape=[None,CROP_DIMS,CROP_DIMS,C],dtype=tf.float32)
+        self.y = tf.placeholder(shape=[None,NUM_POINTS],dtype=tf.float32)
+
+        x_rgb = tf.concat([self.x,self.x,self.x],axis=3)*20
+
+        if self.config['PRETRAINED_MODEL']=='googlenet':
+            o = tensornets.Inception1(x_rgb, stem=True)
+            o.pretrained()
+
+        o = tf_util.PretrainedNet(o, activation=leaky_relu, init=INIT,
+            scope='pretrainednet', output_size=NUM_POINTS, dropout=DROPOUT)
+
+        print(o)
+
+        self.yhat = tf.nn.sigmoid(o)
+
+        self.opt_tensors = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES,
+            scope='pretrainednet')
+        print(self.opt_tensors)
+
+        self.build_loss()
+
+        self.saver = tf.train.Saver()
+
+        self.dropout_mask_op = tf.get_default_graph().get_tensor_by_name(
+            "pretrainednet/dropout/random_uniform:0")
+
+        self.dropout_scale_op = tf.get_default_graph().get_tensor_by_name(
+            "pretrainednet/dropout/truediv:0")
+
+
+        self.dropout_mask = None
+        self.dropout_scale = 1.0
+        self.dropout_fixed = False
+
+    def build_loss(self):
+        self.loss = tf.reduce_mean(tf.square(self.y-self.yhat))
+
+    def sample(self, p=0.6):
+        self.dropout_mask = (np.random.uniform(size=(1,1024))<=p).astype(int)
+        self.dropout_scale = 1.0/p
+        self.dropout_fixed = True
+
+    def _predict(self,x):
+        if not self.dropout_fixed:
+            return self.sess.run(self.yhat,{self.x:x})
+        else:
+            return self.sess.run(self.yhat,{self.x:x,
+                self.dropout_mask_op:self.dropout_mask,
+                self.dropout_scale_op:self.dropout_scale})
+
+    def configure_trainer(self):
+        LEARNING_RATE = self.config["LEARNING_RATE"]
+        self.global_step = tf.Variable(0, trainable=False)
+        boundaries = [2000,
+                      5000,
+                      10000,
+                      15000,
+                      150000]
+
+        values = [LEARNING_RATE,
+                  LEARNING_RATE/3,
+                  LEARNING_RATE/10,
+                  LEARNING_RATE/100,
+                  LEARNING_RATE/1000,
+                  LEARNING_RATE/10000,]
+
+        learning_rate = tf.train.piecewise_constant(self.global_step, boundaries, values)
+
+
+        self.opt = tf.train.AdamOptimizer(learning_rate)
+
+        #self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
+        self.train_op = self.opt.minimize(self.loss,var_list=self.opt_tensors)

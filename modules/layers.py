@@ -613,3 +613,27 @@ def UNetUQ(x,activation=tf.nn.relu,nfilters=32,init=1e-3,
         o = fullyConnected(o, output_units=output_size, activation=tf.identity,
             std='xavier', scope='output')
         return o
+
+def PretrainedNet(x, activation=tf.nn.relu, init='xavier', dropout=0.7,
+    scope='pretrainednet', output_size=1000):
+    #input branch
+    with tf.variable_scope(scope):
+
+        #final output
+        #o = tf.nn.pool(x, [5,5], "MAX", "VALID", strides=[4,4])
+        o = x
+        print("pool final", o)
+
+        s = o.get_shape().as_list()
+
+        o = tf.reshape(o,shape=[-1,s[1]*s[2]*s[3]])
+
+        o = fullyConnected(o, output_units=1024, activation=activation,
+            std='xavier', scope='output_fc1')
+
+        o = tf.nn.dropout(o, keep_prob=dropout)
+
+        o = fullyConnected(o, output_units=output_size, activation=tf.identity,
+            std='xavier', scope='output')
+
+        return o

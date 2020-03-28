@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 img = sitk.ReadImage(args.i)
 
-imgnp = sitk.GetArrayFromImage(img)
+imgnp = sitk.GetArrayFromImage(img)[::-1,:,:]
 
 #plot maximum intensity projections
 axes = [0,1,2]
@@ -23,4 +23,5 @@ for a in axes:
     plt.figure()
     plt.imshow(i, cmap='gray')
     plt.savefig('{}/{}.png'.format(args.o,a),dpi=500)
+    plt.savefig('{}/{}.pdf'.format(args.o,a),dpi=300)
     plt.close()
