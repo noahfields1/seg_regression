@@ -898,4 +898,5 @@ class PretrainedNet(Model):
         self.opt = tf.train.AdamOptimizer(learning_rate)
 
         #self.opt = tf.train.MomentumOptimizer(learning_rate, momentum=0.9)
-        self.train_op = self.opt.minimize(self.loss,var_list=self.opt_tensors)
+#        self.train_op = self.opt.minimize(self.loss,var_list=self.opt_tensor)
+        self.train_op = self.opt.minimize(self.loss)
