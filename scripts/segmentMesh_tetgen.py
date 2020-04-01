@@ -116,7 +116,7 @@ if LOCAL_EDGE:
         print("local edge size {}".format(v))
         msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
 
-    for v in WALL_IDS[1:]:
+    for v in WALL_IDS:
         print("wall local edge size {}".format(v))
         msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
 # print("pre boundary layer")
