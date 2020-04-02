@@ -8,3 +8,4 @@ scipy==1.2.0
 matplotlib==2.2.2
 medpy==0.3.0
 PyYaml
+tensornets

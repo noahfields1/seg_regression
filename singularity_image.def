@@ -20,7 +20,7 @@ MirrorURL: http://us.archive.ubuntu.com/ubuntu/
     apt-get update
     apt-get -y --force-yes install vim software-properties-common
 
-    add-apt-repository ppa:jonathonf/python-3.6
+    add-apt-repository ppa:deadsnakes/ppa/python-3.6
     apt-get update
 
     apt-get install -y --force-yes --no-install-recommends \
