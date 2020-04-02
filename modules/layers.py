@@ -389,7 +389,7 @@ def inception(x, c1x1=64, c3x3_reduce=96, c3x3=128, c5x5_reduce=16,
         return o
 
 def GoogleNet(x, activation=tf.nn.relu, init='xavier', dropout=0.7,
-    scope='googlenet', output_size=1000):
+    scope='googlenet', output_size=1000, pool=True):
     #input branch
     with tf.variable_scope(scope):
         o = conv2D(x, nfilters=64, dims=[7,7], strides=[1,1], activation=activation,
@@ -437,7 +437,10 @@ def GoogleNet(x, activation=tf.nn.relu, init='xavier', dropout=0.7,
             c5x5=128, c1x1_pool=129, activation=activation, init=init, scope="inception_4e")
 
         #side output 1
-        o_side = tf.nn.pool(o, [5,5], "AVG", "VALID", strides=[3,3])
+        if pool:
+            o_side = tf.nn.pool(o, [5,5], "AVG", "VALID", strides=[3,3])
+        else:
+            o_side = o
 
         print("pool side", o_side)
 
@@ -457,7 +460,8 @@ def GoogleNet(x, activation=tf.nn.relu, init='xavier', dropout=0.7,
             std='xavier', scope='side_output')
 
         #inception layers 5
-        o = tf.nn.pool(o, [3,3], "MAX", "VALID", strides=[2,2])
+        if pool:
+            o = tf.nn.pool(o, [3,3], "MAX", "VALID", strides=[2,2])
 
         print("pool 5", o)
 
@@ -468,7 +472,8 @@ def GoogleNet(x, activation=tf.nn.relu, init='xavier', dropout=0.7,
             c5x5=128, c1x1_pool=128, activation=activation, init=init, scope="inception_5b")
 
         #final output
-        o = tf.nn.pool(o, [7,7], "AVG", "VALID", strides=[1,1])
+        if pool:
+            o = tf.nn.pool(o, [7,7], "AVG", "VALID", strides=[1,1])
 
         print("pool final", o)
 
