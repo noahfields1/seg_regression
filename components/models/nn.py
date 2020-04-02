@@ -3,9 +3,9 @@ import numpy as np
 import tensorflow as tf
 import modules.layers as tf_util
 
-import matplotlib
-#matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+# import matplotlib
+# #matplotlib.use('Agg')
+# import matplotlib.pyplot as plt
 
 import modules.vessel_regression as vr
 
@@ -149,52 +149,52 @@ class Model(AbstractModel):
             ctrue = vr.pred_to_contour(y_)
             cpred = vr.pred_to_contour(yhat)
 
-        plt.figure()
-        plt.imshow(x_,cmap='gray',extent=[-1, 1, 1, -1])
-        plt.colorbar()
-        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
-        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
-        plt.show()
-        plt.close()
-
-        W = x_.shape[0]
-        s = int(0.25*W)
-        e = int(0.75*W)
-
-        plt.figure()
-        plt.imshow(x_[s:e,s:e],cmap='gray',extent=[-0.5, 0.5, 0.5, -0.5])
-        plt.colorbar()
-        plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
-        plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
-        plt.show()
-        plt.close()
-
-
-        c = self.config
-        log_dir = c['RESULTS_DIR']+'/'+c['NAME']+'/log/'
-
-        plt.figure()
-        plt.plot(self.iters, self.losses)
-        plt.savefig(log_dir+'loss.png',dpi=300)
-        plt.close()
-
-        plt.figure()
-        plt.plot(self.iters, self.losses)
-        plt.ylim(0,1)
-        plt.savefig(log_dir+'loss_1.png',dpi=300)
-        plt.close()
-
-        plt.figure()
-        plt.plot(self.iters, self.losses)
-        plt.ylim(0,0.1)
-        plt.savefig(log_dir+'loss_2.png',dpi=300)
-        plt.close()
-
-        plt.figure()
-        plt.plot(self.iters, self.losses)
-        plt.ylim(0,0.01)
-        plt.savefig(log_dir+'loss_3.png',dpi=300)
-        plt.close()
+        # plt.figure()
+        # plt.imshow(x_,cmap='gray',extent=[-1, 1, 1, -1])
+        # plt.colorbar()
+        # plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
+        # plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
+        # plt.show()
+        # plt.close()
+        #
+        # W = x_.shape[0]
+        # s = int(0.25*W)
+        # e = int(0.75*W)
+        #
+        # plt.figure()
+        # plt.imshow(x_[s:e,s:e],cmap='gray',extent=[-0.5, 0.5, 0.5, -0.5])
+        # plt.colorbar()
+        # plt.scatter(cpred[:,0], cpred[:,1], color='r', label='predicted',s=4)
+        # plt.scatter(ctrue[:,0], ctrue[:,1], color='y', label='true', s=4)
+        # plt.show()
+        # plt.close()
+        #
+        #
+        # c = self.config
+        # log_dir = c['RESULTS_DIR']+'/'+c['NAME']+'/log/'
+        #
+        # plt.figure()
+        # plt.plot(self.iters, self.losses)
+        # plt.savefig(log_dir+'loss.png',dpi=300)
+        # plt.close()
+        #
+        # plt.figure()
+        # plt.plot(self.iters, self.losses)
+        # plt.ylim(0,1)
+        # plt.savefig(log_dir+'loss_1.png',dpi=300)
+        # plt.close()
+        #
+        # plt.figure()
+        # plt.plot(self.iters, self.losses)
+        # plt.ylim(0,0.1)
+        # plt.savefig(log_dir+'loss_2.png',dpi=300)
+        # plt.close()
+        #
+        # plt.figure()
+        # plt.plot(self.iters, self.losses)
+        # plt.ylim(0,0.01)
+        # plt.savefig(log_dir+'loss_3.png',dpi=300)
+        # plt.close()
 
 class FcNet(Model):
     def build_model(self):
