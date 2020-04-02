@@ -1,23 +1,22 @@
 DATA_DIR: "/media/marsdenlab/Data2/datasets/DeepLofting/files"
 FILE_LIST: "/media/marsdenlab/Data2/datasets/DeepLofting/files/files_clean.txt"
 
-NAME: "googlenet_c30_clean_point"
+NAME: "googlenet_c30_train300k_aug10_clean_small"
 TRAINER: "base"
 PREDICTOR: "base"
 EVALUATION: "base"
 MODEL: "GoogleNet"
-POST_PROCESSOR: "POINT"
-DATASET:    "axial2d_point"
+DATASET:    "axial2d"
 RESULTS_DIR: "./results"
-LOG_FILE: "./results/googlenet_c30_clean_point/log/train.txt"
+LOG_FILE: "./results/googlenet_c30_train300k_aug10_clean_small/log/train.txt"
 
-ITER_FILE: "./results/googlenet_c30_clean_point/log/iter.txt"
+ITER_FILE: "./results/googlenet_c30_train300k_aug10_clean_small/log/iter.txt"
 
-MODEL_DIR: "./results/googlenet_c30_clean_point/model"
+MODEL_DIR: "./results/googlenet_c30_train300k_aug10_clean_small/model"
 MODEL_NAME: "googlenet"
 MODEL_TYPE: "googlenet"
 
-LOG_STEP: 1000
+LOG_STEP: 10000
 LEAK: 0.2
 BATCH_SIZE: 4
 LEARNING_RATE: 0.00005
@@ -29,27 +28,31 @@ NUM_FILTERS: 32
 IMAGE_TYPE: "BLUR"
 BLUR_SIGMA: 3
 
-AUGMENT_FACTOR: 5
+AUGMENT: true
+AUGMENT_FACTOR: 10
+AUGMENT_R_SCALE: 0.65
+CENTER: true
 
-BALANCE_RADIUS: false
-R_SMALL: 0.5
-N_SAMPLE: 10000
-
-PP_BIAS: 6
-PP_SLOPE: 4
+SIZE_SPLIT: "SMALL"
 
 INPUT_DIMS:
   - 160
   - 160
   - 1
 
+BALANCE_RADIUS: false
+R_SMALL: 0.75
+N_SAMPLE: 10000
+
 SPACING: 0.029
 DIMS: 240
-CENTER_DIMS: 160
+CENTER_DIMS: 200
 CROP_DIMS: 160
 NUM_CHANNELS: 1
 NUM_CONTOUR_POINTS: 30
+
 DROPOUT: 0.6
+
 INIT: 'xavier'
 
 VAL_PATTERNS:
