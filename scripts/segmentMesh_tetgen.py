@@ -89,7 +89,7 @@ msh.NewObject('mesh')
 
 #Load Model
 msh.LoadModel(EXTERIOR_FILE)
-msh.GetBoundaryFaces(80.)
+msh.GetBoundaryFaces(60.)
 msh.SetWalls(WALL_IDS)
 #msh.GetBoundaryFaces(80)
 #Create new mesha
@@ -124,9 +124,9 @@ print("pre boundary layer")
 if BOUNDARY_LAYER:
     print("boundary layer")
     for v in WALL_IDS:
-        msh.SetBoundaryLayer(1,int(v),1,4,[0.5,0.5,0])
+        msh.SetBoundaryLayer(0,int(v),0,4,[0.5,0.5,0])
     for v in CAP_IDS:
-        msh.SetBoundaryLayer(1,int(v),1,4,[0.5,0.5,0])
+        msh.SetBoundaryLayer(0,int(v),0,4,[0.5,0.5,0])
 
 # RADIUS = True
 # if RADIUS_MESH:
