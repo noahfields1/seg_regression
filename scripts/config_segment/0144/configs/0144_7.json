@@ -7,12 +7,12 @@
 
 "INTERVAL":15,
 
-"NUM_RUNS":10,
+"NUM_RUNS":5,
 
 "MODES":5,
 
 "EDGE_SIZES":{
-  "coarse":0.05
+  "coarse":0.1
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",
@@ -71,7 +71,7 @@
   "celiac_hepatic_cap":[4.202913,20.575872,-43.60706]
 },
 
-"REMESH_SIZE":0.05,
+"REMESH_SIZE":0.1,
 
 "LOCAL_SMOOTH":{
   "POINTS":[
@@ -84,7 +84,7 @@
   ]
 },
 
-"BOUNDARY_LAYER":true,
+"BOUNDARY_LAYER":false,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
