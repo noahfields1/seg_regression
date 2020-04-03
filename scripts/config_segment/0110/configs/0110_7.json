@@ -10,7 +10,7 @@
 "NUM_RUNS":3,
 
 "EDGE_SIZES":{
-  "coarse":0.3
+  "coarse":0.25
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/correct.json",
