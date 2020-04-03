@@ -71,7 +71,7 @@
   "celiac_hepatic_cap":[4.202913,20.575872,-43.60706]
 },
 
-"REMESH_SIZE":0.1,
+"REMESH_SIZE":0.05,
 
 "LOCAL_SMOOTH":{
   "POINTS":[
