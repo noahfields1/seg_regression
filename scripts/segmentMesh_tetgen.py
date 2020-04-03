@@ -90,7 +90,7 @@ msh.NewObject('mesh')
 #Load Model
 msh.LoadModel(EXTERIOR_FILE)
 if BOUNDARY_LAYER:
-    msh.GetBoundaryFaces(80.)
+    msh.GetBoundaryFaces(60.)
     msh.SetWalls(WALL_IDS)
 #msh.GetBoundaryFaces(80)
 #Create new mesha
