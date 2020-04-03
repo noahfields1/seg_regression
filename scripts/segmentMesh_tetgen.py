@@ -96,6 +96,7 @@ if BOUNDARY_LAYER:
 #Create new mesha
 #msh.SetVtkPolyData(model_polydata_name)
 msh.NewMesh()
+print("face info")
 print(msh.GetModelFaceInfo())
 
 msh.SetMeshOptions('SurfaceMeshFlag',[1])
