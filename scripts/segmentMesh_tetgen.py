@@ -110,22 +110,24 @@ msh.SetMeshOptions('UseMMG',[1])
 # for v in CAP_IDS:
 #     msh.SetBoundaryLayer(0,v,0,2,[0.5]*2)
 
-if LOCAL_EDGE:
-    msh.SetMeshOptions('UseMMG',[0])
-    for v in CAP_IDS:
-        print("local edge size {}".format(v))
-        msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
-
-    for v in WALL_IDS:
-        print("wall local edge size {}".format(v))
-        msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
-# print("pre boundary layer")
-# if BOUNDARY_LAYER:
-#     print("boundary layer")
+# if LOCAL_EDGE:
+#     msh.SetMeshOptions('UseMMG',[0])
+#     for v in CAP_IDS:
+#         print("local edge size {}".format(v))
+#         msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
+#
 #     for v in WALL_IDS:
-#         msh.SetBoundaryLayer(1,int(v),1,2,[0.8,0.8])
-# for v in CAP_IDS:
-#     msh.SetBoundaryLayer(1,int(v),1,2,[0.8,0.8])
+#         print("wall local edge size {}".format(v))
+#         msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
+
+print("pre boundary layer")
+if BOUNDARY_LAYER:
+    print("boundary layer")
+    for v in WALL_IDS:
+        msh.SetBoundaryLayer(1,int(v),1,4,[0.5,0.5,0])
+    for v in CAP_IDS:
+        msh.SetBoundaryLayer(1,int(v),1,4,[0.5,0.5,0])
+
 # RADIUS = True
 # if RADIUS_MESH:
 #     msh.SetMeshOptions('UseMMG',[0])
