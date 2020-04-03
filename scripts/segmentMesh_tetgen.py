@@ -92,6 +92,7 @@ msh.LoadModel(EXTERIOR_FILE)
 if BOUNDARY_LAYER:
     print("get boundary faces")
     msh.GetBoundaryFaces(80.)
+    print(msh.GetModelFaceInfo())
     print("set walls")
     msh.SetWalls(WALL_IDS)
 #msh.GetBoundaryFaces(80)
@@ -101,7 +102,6 @@ print("new mesh")
 
 msh.NewMesh()
 print("face info")
-print(msh.GetModelFaceInfo())
 
 msh.SetMeshOptions('SurfaceMeshFlag',[1])
 msh.SetMeshOptions('VolumeMeshFlag',[1])
