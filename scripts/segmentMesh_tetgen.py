@@ -89,13 +89,13 @@ msh.NewObject('mesh')
 
 #Load Model
 msh.LoadModel(EXTERIOR_FILE)
+msh.GetBoundaryFaces(80.)
+msh.SetWalls(WALL_IDS)
 #msh.GetBoundaryFaces(80)
-#msh.SetWalls(WALL_IDS)
 #Create new mesha
 #msh.SetVtkPolyData(model_polydata_name)
 msh.NewMesh()
-#msh.GetBoundaryFaces(60)
-#print(msh.GetModelFaceInfo())
+print(msh.GetModelFaceInfo())
 
 msh.SetMeshOptions('SurfaceMeshFlag',[1])
 msh.SetMeshOptions('VolumeMeshFlag',[1])
