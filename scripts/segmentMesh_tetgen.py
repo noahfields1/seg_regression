@@ -91,7 +91,7 @@ msh.NewObject('mesh')
 msh.LoadModel(EXTERIOR_FILE)
 if BOUNDARY_LAYER:
     print("get boundary faces")
-    msh.GetBoundaryFaces(60.)
+    msh.GetBoundaryFaces(80.)
     print("set walls")
     msh.SetWalls(WALL_IDS)
 #msh.GetBoundaryFaces(80)
@@ -130,9 +130,9 @@ print("pre boundary layer")
 if BOUNDARY_LAYER:
     print("boundary layer")
     for v in WALL_IDS:
-        msh.SetBoundaryLayer(0,int(v),0,4,[0.5,0.5,0])
+        msh.SetBoundaryLayer(0,int(v),0,4,[0.5,0.5,1])
     for v in CAP_IDS:
-        msh.SetBoundaryLayer(0,int(v),0,4,[0.5,0.5,0])
+        msh.SetBoundaryLayer(0,int(v),0,4,[0.5,0.5,1])
 
 # RADIUS = True
 # if RADIUS_MESH:
