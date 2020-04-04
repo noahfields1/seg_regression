@@ -7,7 +7,7 @@
 
 "INTERVAL":15,
 
-"NUM_RUNS":3,
+"NUM_RUNS":10,
 
 "MODES":5,
 
@@ -82,7 +82,7 @@
   "RADIUS":[
     3.5,
     2,
-    0.35
+    0.4
   ]
 },
 
