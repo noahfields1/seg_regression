@@ -76,7 +76,8 @@ for i,m in enumerate(MERGE_NAMES[2:]):
     solid.Union("model_"+str(i+1), "model_"+str(i), m)
 
 solid.GetPolyData("model_pd")
-
+solid.GetBoundaryFaces(80)
+solid.GetFaceIds()
 #solid.GetPolyData(s3)
 print("remeshing")
 sv.MeshUtil.Remesh("model_pd", "model_remesh", REMESH_SIZE,REMESH_SIZE)
