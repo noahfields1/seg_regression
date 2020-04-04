@@ -129,7 +129,6 @@ msh.SetMeshOptions('UseMMG',[1])
 
 print("pre boundary layer")
 if BOUNDARY_LAYER:
-    msh.SetMeshOptions('UseMMG',[0])
     print("boundary layer")
     for v in WALL_IDS:
         msh.SetBoundaryLayer(0,int(v),0,4,[0.5,0.5,1])
