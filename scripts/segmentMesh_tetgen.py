@@ -91,7 +91,7 @@ msh.NewObject('mesh')
 msh.LoadModel(EXTERIOR_FILE)
 if BOUNDARY_LAYER:
     print("get boundary faces")
-    msh.GetBoundaryFaces(40)
+    msh.GetBoundaryFaces(37)
     print("set walls")
     msh.SetWalls(WALL_IDS)
 #msh.GetBoundaryFaces(80)
