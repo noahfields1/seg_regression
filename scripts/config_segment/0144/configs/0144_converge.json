@@ -15,7 +15,8 @@
   "coarse":0.2,
   "medium":0.15,
   "fine":0.125,
-  "fine_2":0.1
+  "fine_2":0.11,
+  "fine_3":0.1
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",
@@ -79,13 +80,17 @@
 "LOCAL_SMOOTH":{
   "POINTS":[
     [0.88,15.74,-43.04],
-    [0.78,16.34,-55.04]
+    [0.78,16.34,-55.04],
+    [-5.19,14.05,-4.84]
   ],
   "RADIUS":[
-    4,
-    2
+    3.5,
+    2,
+    0.4
   ]
 },
+
+"BOUNDARY_LAYER":true,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"

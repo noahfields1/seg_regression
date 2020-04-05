@@ -14,7 +14,8 @@
   "medium":0.33,
   "fine":0.22,
   "fine_2":0.15,
-  "fine_3":0.1
+  "fine_3":0.11,
+  "fine_4":0.1
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/correct.json",
@@ -58,6 +59,8 @@
     3
   ]
 },
+
+"BOUNDARY_LAYER":true,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
