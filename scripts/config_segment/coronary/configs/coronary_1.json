@@ -1,0 +1,85 @@
+{
+"IMAGE":"/media/marsdenlab/Data1/UQ/coronary/model_files/image.mha",
+
+"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
+
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/coronary/generations/1",
+
+"INTERVAL":10,
+
+"NUM_RUNS":50,
+
+"EDGE_SIZES":{
+  "coarse":0.15
+},
+
+"CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
+
+"DELETE_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/delete.json",
+
+"PATH_FILES":[
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/aorta.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1_sub1.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1_sub2.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1_sub3.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc2.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc2_sub1.txt"
+],
+
+"NAMES":[
+    "aorta",
+    "lc1",
+    "lc1_sub1",
+    "lc1_sub2",
+    "lc1_sub3",
+    "lc2",
+    "lc2_sub1"
+],
+
+"CAP_NAMES":[
+  "aorta_cap",
+  "aorta_2_cap",
+  "lc1_cap",
+  "lc1_sub1_cap",
+  "lc1_sub2_cap",
+  "lc1_sub3_cap",
+  "lc2_cap",
+  "lc2_sub1_cap"
+],
+
+"INTERSECTS":[
+  "aorta_cap",
+  "lc1_cap",
+  "lc1_sub1_cap",
+  "lc1_sub2_cap",
+  "lc1_sub3_cap",
+  "lc2_cap",
+  "lc2_sub1_cap"
+],
+
+"CAP_LOCS":{
+  "cap_aorta":[-6.751593,8.018986,-1.132788],
+  "cap_aorta_2":[-8.20084,7.86217,-5.24662],
+  "cap_lc1":[-14.2143,8.1819,-10.2054],
+  "cap_lc1_sub1":[-10.473994,4.547448,-7.274289],
+  "cap_lc1_sub2":[-13.05326,7.141619,-10.801831],
+  "cap_lc1_sub3":[-13.652077,7.448669,-10.599745],
+  "cap_lc2":[-12.313407,11.932967,-13.199225],
+  "cap_lc2_sub1":[-14.662931,9.178132,-8.052651]
+},
+
+"REMESH_SIZE":0.1,
+
+"LOCAL_SMOOTH":{
+  "POINTS":[
+    [0.93,3.09,-7.95]
+  ],
+  "RADIUS":[
+    3
+  ]
+},
+
+"SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
+"SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
+}

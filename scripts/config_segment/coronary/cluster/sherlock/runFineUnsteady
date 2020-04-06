@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Name of your job
+#SBATCH --job-name=svFlowSolver
+#SBATCH --partition=amarsden
+
+# Specify the name of the output file. The %j specifies the job ID
+#SBATCH --output=log.o%j
+
+# Specify the name of the error file. The %j specifies the job ID
+#SBATCH --error=log.e%j
+
+# The walltime you require for your job
+#SBATCH --time=1:00:00
+
+# Job priority. Leave as normal for now
+#SBATCH --qos=normal
+
+# Number of nodes you are requesting for your job. You can have 24 processors per node
+#SBATCH --nodes=2
+
+# Amount of memory you require per node. The default is 4000 MB per node
+#SBATCH --mem=4000
+
+# Number of processors per node
+#SBATCH --ntasks-per-node=24
+
+# Send an email to this address when your job starts and finishes
+#SBATCH --mail-user=contact.gabriel.maher@gmail.com
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+
+# Run normal batch commands
+module load system
+module load gcc
+module load openmpi/3.1.2
+module load openblas
+module load llvm/4.0.0
+module load x11
+module load mesa
+
+# Name of the executable you want to run
+/share/PI/amarsden/sherlock_extern_executables/svpre.exe model_sim.svpre
+srun /share/PI/amarsden/sherlock_extern_executables/svsolver-openmpi.exe
+/share/PI/amarsden/sherlock_extern_executables/svpost.exe -indir 48-procs_case -outdir . -start 0 -stop 2000 -incr 5 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all

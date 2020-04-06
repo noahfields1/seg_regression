@@ -1,0 +1,11 @@
+{
+  "gen_dirs":[
+    "/media/marsdenlab/Data1/UQ/0110/generations/1",
+    "/media/marsdenlab/Data1/UQ/0110/generations/2",
+    "/media/marsdenlab/Data1/UQ/0110/generations/3",
+    "/media/marsdenlab/Data1/UQ/0110/generations/4"
+  ],
+  "mesh_dirs":["coarse","medium","fine"],
+  "num_models":50,
+  "sim_dir":"/media/marsdenlab/Data1/UQ/0110/model_files/sim_steady"
+}
