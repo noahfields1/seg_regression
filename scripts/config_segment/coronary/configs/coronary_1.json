@@ -10,7 +10,7 @@
 "NUM_RUNS":50,
 
 "EDGE_SIZES":{
-  "coarse":0.15
+  "coarse":0.1
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
@@ -73,10 +73,18 @@
 
 "LOCAL_SMOOTH":{
   "POINTS":[
-    [0.93,3.09,-7.95]
+    [-8.83,7.30,-3.81],
+    [-10.39,6.44,-4.81],
+    [-12.75,4.78,-7.81],
+    [-13.75,5.88,-9.31],
+    [-11.79,8.83,-4.25],
   ],
   "RADIUS":[
-    3
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5
   ]
 },
 
