@@ -10,7 +10,7 @@
 "NUM_RUNS":10,
 
 "EDGE_SIZES":{
-  "coarse":0.07
+  "coarse":0.05
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
@@ -69,7 +69,7 @@
   "cap_lc2_sub1":[-14.662931,9.178132,-8.052651]
 },
 
-"REMESH_SIZE":0.07,
+"REMESH_SIZE":0.05,
 
 "LOCAL_SMOOTH":{
   "POINTS":[
