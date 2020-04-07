@@ -88,6 +88,12 @@
   ]
 },
 
+"LOCAL_EDGE":true,
+"LOCAL_EDGE_SIZES":{
+  "cap_aorta":0.25,
+  "cap_aorta_2":0.25
+}
+
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
 }

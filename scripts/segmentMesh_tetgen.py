@@ -127,6 +127,13 @@ msh.SetMeshOptions('UseMMG',[1])
 #         print("wall local edge size {}".format(v))
 #         msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
 
+if LOCAL_EDGE:
+    sizes = cfg['LOCAL_EDGE_SIZES']
+
+    for name,size in sizes:
+        id = CAP_IDS[name]
+        msh.SetMeshOptions('LocalEdgeSize',[int(id),size])
+
 print("pre boundary layer")
 if BOUNDARY_LAYER:
     print("boundary layer")
