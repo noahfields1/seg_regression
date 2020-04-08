@@ -128,6 +128,7 @@ msh.SetMeshOptions('UseMMG',[1])
 #         msh.SetMeshOptions('LocalEdgeSize',[int(v),EDGE_SIZE*1.0/10])
 
 if LOCAL_EDGE:
+    msh.SetMeshOptions('UseMMG',[0])
     sizes = cfg['LOCAL_EDGE_SIZES']
 
     for name,size in sizes.items():
