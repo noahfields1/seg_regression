@@ -130,7 +130,7 @@ msh.SetMeshOptions('UseMMG',[1])
 if LOCAL_EDGE:
     sizes = cfg['LOCAL_EDGE_SIZES']
 
-    for name,size in sizes:
+    for name,size in sizes.items():
         id = CAP_IDS[name]
         msh.SetMeshOptions('LocalEdgeSize',[int(id),size])
 
