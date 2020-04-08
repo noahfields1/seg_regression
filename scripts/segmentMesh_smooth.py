@@ -96,7 +96,7 @@ if "LOCAL_SMOOTH" in cfg:
         s3 = "model_pd_smooth_{}".format(i+1)
         print(s1,s2,s3)
         sv.Geom.Set_array_for_local_op_sphere(s1,s2, r, p)
-        sv.Geom.Local_constrain_smooth(s2,s3, 10, 0.8)
+        sv.Geom.Local_constrain_smooth(s2,s3, 10, 0.5)
 
 print("done smoothing")
 
