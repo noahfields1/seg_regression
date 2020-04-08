@@ -80,18 +80,12 @@
     [-11.79,8.83,-4.25]
   ],
   "RADIUS":[
-    0.5,
+    0.35,
     0.5,
     0.5,
     0.5,
     0.5
   ]
-},
-
-"LOCAL_EDGE":true,
-"LOCAL_EDGE_SIZES":{
-  "cap_aorta":0.15,
-  "cap_aorta_2":0.15
 },
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
