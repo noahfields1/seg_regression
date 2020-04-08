@@ -76,11 +76,11 @@ import radius_mesh
 # # ################################################################################
 # # # #Set mesh kernel
 print("starting mesh")
-CAP_IDS = io.load_json(OUTPUT_DIR+'/cap_ids.json')
-CAP_IDS = [int(v) for k,v in CAP_IDS.items()]
+CAP_IDS_DICT = io.load_json(OUTPUT_DIR+'/cap_ids.json')
+CAP_IDS = [int(v) for k,v in CAP_IDS_DICT.items()]
 
-WALL_IDS = io.load_json(OUTPUT_DIR+'/wall_ids.json')
-WALL_IDS = [int(v) for v in WALL_IDS]
+WALL_IDS_DICT = io.load_json(OUTPUT_DIR+'/wall_ids.json')
+WALL_IDS = [int(v) for v in WALL_IDS_DICT]
 print(WALL_IDS)
 print(CAP_IDS)
 #Create mesh object
@@ -131,7 +131,7 @@ if LOCAL_EDGE:
     sizes = cfg['LOCAL_EDGE_SIZES']
 
     for name,size in sizes.items():
-        id = CAP_IDS[name]
+        id = CAP_IDS_DICT[name]
         msh.SetMeshOptions('LocalEdgeSize',[int(id),size])
 
 print("pre boundary layer")
