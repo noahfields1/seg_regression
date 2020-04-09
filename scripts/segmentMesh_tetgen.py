@@ -133,6 +133,7 @@ if LOCAL_EDGE:
 
     for name,size in sizes.items():
         id = CAP_IDS_DICT[name]
+        print(name,id,size)
         msh.SetMeshOptions('LocalEdgeSize',[int(id),size])
 
 print("pre boundary layer")
