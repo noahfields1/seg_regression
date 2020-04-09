@@ -117,7 +117,7 @@ for name,path,group in zip(NAMES, PATHS, GROUPS):
 ################################################################################
 # 3. Loft Segmentations
 ################################################################################
-numOutPtsInSegs = 150
+numOutPtsInSegs = 50
 numOutPtsAlongLength = 200
 numPtsInLinearSampleAlongLength = 240
 numLinearPtsAlongLength = 120
