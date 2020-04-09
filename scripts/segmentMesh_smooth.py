@@ -75,7 +75,7 @@ solid.Union("model_0", MERGE_NAMES[0], MERGE_NAMES[1])
 for i,m in enumerate(MERGE_NAMES[2:]):
     solid.Union("model_"+str(i+1), "model_"+str(i), m)
 
-solid.GetBoundaryFaces(40)
+solid.GetBoundaryFaces(30)
 solid.GetFaceIds()
 solid.GetPolyData("model_pd")
 
@@ -103,7 +103,7 @@ print("done smoothing")
 sv.Repository.WriteVtkPolyData(s3,"ascii",EXTERIOR_FILE)
 
 solid.SetVtkPolyData(s3)
-solid.GetBoundaryFaces(40)
+solid.GetBoundaryFaces(30)
 solid.GetFaceIds()
 
 #Extract boundary faces
