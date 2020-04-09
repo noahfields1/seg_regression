@@ -103,7 +103,7 @@ print("done smoothing")
 sv.Repository.WriteVtkPolyData(s3,"ascii",EXTERIOR_FILE)
 
 solid.SetVtkPolyData(s3)
-solid.GetBoundaryFaces(25)
+solid.GetBoundaryFaces(30)
 solid.GetFaceIds()
 
 #Extract boundary faces
