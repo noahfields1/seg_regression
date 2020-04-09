@@ -75,7 +75,7 @@ solid.Union("model_0", MERGE_NAMES[0], MERGE_NAMES[1])
 for i,m in enumerate(MERGE_NAMES[2:]):
     solid.Union("model_"+str(i+1), "model_"+str(i), m)
 
-solid.GetBoundaryFaces(25)
+solid.GetBoundaryFaces(30)
 solid.GetFaceIds()
 solid.GetPolyData("model_pd")
 
