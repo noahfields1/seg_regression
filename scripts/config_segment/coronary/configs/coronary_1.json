@@ -83,7 +83,7 @@
   ]
 },
 
-"BOUNDARY_LAYER":false,
+"BOUNDARY_LAYER":true,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"

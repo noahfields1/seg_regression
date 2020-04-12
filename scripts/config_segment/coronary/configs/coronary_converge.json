@@ -1,65 +1,93 @@
 {
-"IMAGE":"/media/marsdenlab/Data1/UQ/0110/model_files/image.mha",
+"IMAGE":"/media/marsdenlab/Data1/UQ/coronary/model_files/image.mha",
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
 
-"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0110/generations/converge",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/coronary/generations/converge",
 
 "INTERVAL":10,
 
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.2,
-  "medium":0.175,
-  "fine":0.125,
-  "fine_2":0.1,
-  "fine_3":0.08
+  "coarse":0.05,
+  "medium":0.04,
+  "fine":0.03,
+  "fine_2":0.025,
+  "fine_3":0.02
 },
 
-"CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/correct.json",
+"CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
 
-"DELETE_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/delete.json",
+"DELETE_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/delete.json",
 
 "PATH_FILES":[
- "/media/marsdenlab/Data1/UQ/0110/model_files/paths/aorta.txt",
- "/media/marsdenlab/Data1/UQ/0110/model_files/paths/right_iliac.txt"
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc2.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1_sub1.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1_sub2.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1_sub3.txt",
+ "/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc2_sub1.txt"
 ],
 
 "NAMES":[
-    "aorta",
-    "right_iliac"
+    "lc2",
+    "lc1",
+    "lc1_sub1",
+    "lc1_sub2",
+    "lc1_sub3",
+    "lc2_sub1"
 ],
 
 "CAP_NAMES":[
-  "aorta_cap",
-  "aorta_2_cap",
-  "right_iliac_cap"
+  "lc2_cap",
+  "lc2_cap_2",
+  "lc1_cap",
+  "lc1_sub1_cap",
+  "lc1_sub2_cap",
+  "lc1_sub3_cap",
+  "lc2_sub1_cap"
 ],
 
 "INTERSECTS":[
-  "aorta_cap",
-  "right_iliac_cap"
+  "lc2_cap",
+  "lc1_cap",
+  "lc1_sub1_cap",
+  "lc1_sub2_cap",
+  "lc1_sub3_cap",
+  "lc2_sub1_cap"
 ],
 
 "CAP_LOCS":{
-  "cap_aorta":[-2.939,-3.02,15.136],
-  "cap_aorta_2":[-6.235528,6.279334,-21.572036],
-  "cap_right_iliac":[8.226775,6.788543,-22.435208]
+  "cap_lc2":[-8.117416,7.589738,-3.931653],
+  "cap_lc2_2":[-12.20178,13.534349,-11.26139],
+  "cap_lc1":[-14.2143,8.1819,-10.2054],
+  "cap_lc1_sub1":[-10.473994,4.547448,-7.274289],
+  "cap_lc1_sub2":[-13.05326,7.141619,-10.801831],
+  "cap_lc1_sub3":[-13.652077,7.448669,-10.599745],
+  "cap_lc2_sub1":[-14.662931,9.178132,-8.052651]
 },
 
-"REMESH_SIZE":0.25,
+"REMESH_SIZE":0.05,
 
 "LOCAL_SMOOTH":{
   "POINTS":[
-    [0.93,3.09,-7.95]
+    [-8.96,7.14,-4.06],
+    [-10.39,6.44,-4.81],
+    [-12.75,4.78,-7.81],
+    [-13.75,5.88,-9.31],
+    [-11.79,8.83,-4.25]
   ],
   "RADIUS":[
-    3
+    0.35,
+    0.5,
+    0.5,
+    0.5,
+    0.5
   ]
 },
 
-"BOUNDARY_LAYER":true,
+"BOUNDARY_LAYER":false,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
