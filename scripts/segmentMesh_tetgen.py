@@ -140,9 +140,9 @@ print("pre boundary layer")
 if BOUNDARY_LAYER:
     print("boundary layer")
     for v in WALL_IDS:
-        msh.SetBoundaryLayer(0,int(v),0,5,[0.75,0.65,0])
+        msh.SetBoundaryLayer(0,int(v),0,4,[0.7,0.6,0])
     for v in CAP_IDS:
-        msh.SetBoundaryLayer(0,int(v),0,5,[0.75,0.65,0])
+        msh.SetBoundaryLayer(0,int(v),0,4,[0.7,0.6,0])
 
 # RADIUS = True
 # if RADIUS_MESH:
