@@ -84,15 +84,17 @@ for id in ids:
         centroids[-1][1] += (coo[0][1]+coo[1][1]+coo[2][1])*1.0/(3*n)
         centroids[-1][2] += (coo[0][2]+coo[1][2]+coo[2][2])*1.0/(3*n)
 
+for name,p in cap_locs.items():
+    dist = 1e6
+    for id,pi in zip(ids,centroids):
+        new_dist = ((pi[0]-p[0])**2+(pi[1]-p[1])**2+(pi[2]-p[2])**2)**0.5
+        if new_dist < dist:
+            cap_ids[name] = id
+            dist = new_dist
+
+    print(name,p,cap_ids[name])
 
 import pdb; pdb.set_trace()
-
-for name,p in cap_locs.items():
-    id,coord,weights = sv.vtkPdFindCellId(pd,p)
-
-    model_face_id = pd_ids.GetTuple(id)[0]
-    print(name,p,model_face_id)
-    cap_ids[name] = model_face_id
 
 wall_ids = list(set([pd_ids.GetTuple(i)[0] for i in range(N)]))
 wall_ids = [s for s in wall_ids if not any([s == v for k,v in cap_ids.items()])]
