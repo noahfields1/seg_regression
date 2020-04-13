@@ -101,16 +101,9 @@ cap_locs = cfg['CAP_LOCS']
 pd_ids   = pd.GetCellData().GetArray("ModelFaceID")
 N        = pd.GetNumberOfCells()
 
-cap_ids  = {}
+cap_ids = io.load_json(OUTPUT_DIR+'/cap_ids.json')
 
-for name,p in cap_locs.items():
-    id,coord,weights = sv.vtkPdFindCellId(pd,p)
-
-    model_face_id = pd_ids.GetTuple(id)[0]
-    cap_ids[name] = model_face_id
-
-wall_ids = list(set([pd_ids.GetTuple(i)[0] for i in range(N)]))
-wall_ids = [s for s in wall_ids if not any([s == v for k,v in cap_ids.items()])]
+wall_ids = io.load_json(OUTPUT_DIR+'/wall_ids.json')
 
 ################################################################################
 # 4 Output everything
@@ -118,7 +111,7 @@ wall_ids = [s for s in wall_ids if not any([s == v for k,v in cap_ids.items()])]
 #walls combined
 appender = vtk.vtkAppendPolyData()
 appender.UserManagedInputsOff()
-for id in wall_ids:
+for k,id in wall_ids.items():
     w_pd = thresholdPolyData(pd, "ModelFaceID", (id,id))
     appender.AddInputData(w_pd)
 
@@ -143,3 +136,4 @@ for k,v in cap_ids.items():
     pdwriter.SetFileName(fn)
     pdwriter.SetInputDataObject(c_pd)
     pdwriter.Write()
+import pdb; pdb.set_trace()

@@ -94,8 +94,6 @@ for name,p in cap_locs.items():
 
     print(name,p,cap_ids[name])
 
-import pdb; pdb.set_trace()
-
 wall_ids = list(set([pd_ids.GetTuple(i)[0] for i in range(N)]))
 wall_ids = [s for s in wall_ids if not any([s == v for k,v in cap_ids.items()])]
 
