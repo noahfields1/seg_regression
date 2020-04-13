@@ -111,7 +111,7 @@ wall_ids = io.load_json(OUTPUT_DIR+'/wall_ids.json')
 #walls combined
 appender = vtk.vtkAppendPolyData()
 appender.UserManagedInputsOff()
-for k,id in wall_ids.items():
+for id in wall_ids:
     w_pd = thresholdPolyData(pd, "ModelFaceID", (id,id))
     appender.AddInputData(w_pd)
 
@@ -136,4 +136,3 @@ for k,v in cap_ids.items():
     pdwriter.SetFileName(fn)
     pdwriter.SetInputDataObject(c_pd)
     pdwriter.Write()
-import pdb; pdb.set_trace()
