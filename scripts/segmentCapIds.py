@@ -48,10 +48,10 @@ N        = pd.GetNumberOfCells()
 cap_ids  = {}
 
 for name,p in cap_locs.items():
-    print(name,p)
     id,coord,weights = sv.vtkPdFindCellId(pd,p)
 
     model_face_id = pd_ids.GetTuple(id)[0]
+    print(name,p,model_face_id)
     cap_ids[name] = model_face_id
 
 wall_ids = list(set([pd_ids.GetTuple(i)[0] for i in range(N)]))
