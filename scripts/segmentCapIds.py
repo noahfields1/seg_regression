@@ -80,9 +80,9 @@ for id in ids:
 
         coo = [points.GetPoint(j) for j in range(3)]
 
-        centroids[-1][0] += (coo[0][0]+coo[1][0]+coo[2][0])*1.0/3
-        centroids[-1][1] += (coo[0][1]+coo[1][1]+coo[2][1])*1.0/3
-        centroids[-1][2] += (coo[0][2]+coo[1][2]+coo[2][2])*1.0/3
+        centroids[-1][0] += (coo[0][0]+coo[1][0]+coo[2][0])*1.0/(3*n)
+        centroids[-1][1] += (coo[0][1]+coo[1][1]+coo[2][1])*1.0/(3*n)
+        centroids[-1][2] += (coo[0][2]+coo[1][2]+coo[2][2])*1.0/(3*n)
 
 
 import pdb; pdb.set_trace()
