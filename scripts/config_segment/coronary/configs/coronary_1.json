@@ -10,7 +10,7 @@
 "NUM_RUNS":5,
 
 "EDGE_SIZES":{
-  "coarse":0.065
+  "coarse":0.05
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
@@ -83,7 +83,7 @@
   ]
 },
 
-"BOUNDARY_LAYER":true,
+"BOUNDARY_LAYER":false,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
