@@ -10,7 +10,7 @@
 "NUM_RUNS":5,
 
 "EDGE_SIZES":{
-  "coarse":0.05
+  "coarse":0.075
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
