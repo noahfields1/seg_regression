@@ -7,7 +7,7 @@
 
 "INTERVAL":10,
 
-"NUM_RUNS":50,
+"NUM_RUNS":160,
 
 "EDGE_SIZES":{
   "coarse":0.15
@@ -54,6 +54,8 @@
     3
   ]
 },
+
+"BOUNDARY_LAYER":true,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
