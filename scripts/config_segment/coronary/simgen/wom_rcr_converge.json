@@ -2,7 +2,7 @@
   "gen_dirs":[
     "/media/marsdenlab/Data1/UQ/coronary/generations/converge"
   ],
-  "mesh_dirs":["coarse","medium","fine","fine_2"],
+  "mesh_dirs":["coarse","medium","fine","fine_2","fine_3"],
   "num_models":1,
   "sim_dir":"/media/marsdenlab/Data1/UQ/coronary/model_files/sim_cor_inflow"
 }
