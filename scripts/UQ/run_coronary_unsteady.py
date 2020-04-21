@@ -5,12 +5,12 @@ CONFIGS = [
 ]
 
 TUBES = [
-'lc1',
-'lc1_sub1',
-'lc1_sub2',
-'lc1_sub3',
-'lc2',
-'lc2_sub1'
+'lc1'
+#'lc1_sub1',
+#'lc1_sub2',
+#'lc1_sub3',
+#'lc2',
+#'lc2_sub1'
 ]
 
 
