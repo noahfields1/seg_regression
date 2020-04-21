@@ -3,6 +3,6 @@
     "/media/marsdenlab/Data1/UQ/0144/generations/1"
   ],
   "mesh_dirs":["coarse"],
-  "num_models":160,
+  "num_models":500,
   "sim_dir":"/media/marsdenlab/Data1/UQ/0144/model_files/sim_wom_rcr"
 }
