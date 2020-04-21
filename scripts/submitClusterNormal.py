@@ -31,7 +31,12 @@ for d in RUNS_DIRS:
     rf = [str(d+'/'+f) for f in rf]
     run_folders+=rf
 
-for i,f in enumerate(run_folders):
+if "num_models" in cfg:
+    n = cfg['num_models']
+else:
+    n = len(run_folders)
+
+for i,f in enumerate(run_folders[:n]):
     print(f)
 
     try:
