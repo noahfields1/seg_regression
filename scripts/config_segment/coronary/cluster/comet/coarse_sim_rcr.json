@@ -3,7 +3,7 @@
   "runs_folders":[
     "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/1/coarse"
   ],
-  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/coronary/cluster/comet/runCoarseUnsteady.sh",
+  "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/coronary/cluster/comet/runConvergeUnsteady.sh",
   "sleep_batch":15,
   "num_batch":30,
   "num_models":400
