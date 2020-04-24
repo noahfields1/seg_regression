@@ -3,6 +3,6 @@
     "/media/marsdenlab/Data1/UQ/coronary/generations/1"
   ],
   "mesh_dirs":["coarse"],
-  "num_models":120,
+  "num_models":500,
   "sim_dir":"/media/marsdenlab/Data1/UQ/coronary/model_files/sim_cor_inflow"
 }
