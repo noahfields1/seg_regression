@@ -45,7 +45,7 @@ data = []
 
 vtu_fn = args.vtu
 print(vtu_fn)
-if not os.path.exists(vtu_fn): continue
+if not os.path.exists(vtu_fn): sys.exit()
 
 pd = sv.read_vtu(vtu_fn)
 
