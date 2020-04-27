@@ -62,7 +62,7 @@ for j,p,n,r in zip(N, POINTS, NORMALS, RADIUSES):
     for i in range(cfg['start'], cfg['end'], cfg['incr']):
         d = {"generation":1,
             "mesh":"coarse",
-            "model":args.id,
+            "model":output_dir.split('/')[-2],
             "path":PATH,
             "point":j,
             "time":i,
