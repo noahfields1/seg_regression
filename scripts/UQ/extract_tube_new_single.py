@@ -16,6 +16,8 @@ parser.add_argument('-tube_file')
 parser.add_argument('-vtu')
 args = parser.parse_args()
 
+output_dir = os.path.dirname(args.vtu)
+
 cfg = io.load_json(args.config)
 
 DIR          = cfg['dir']
@@ -39,7 +41,7 @@ RADIUSES = sv.interp_list(RADIUSES,cfg['scale'])
 PATH      = TUBE_FILE['path']
 N         = range(len(POINTS))
 
-OUTPUT_FN = PATH+'.{}.csv'
+OUTPUT_FN = output_dir+'/'+PATH+'.csv'
 
 data = []
 
