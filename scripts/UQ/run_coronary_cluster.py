@@ -27,7 +27,7 @@ for cfg in CONFIGS:
         print(cfg, p)
         name = cfg.split('/')[-1].replace('.json','')
 
-        os.system("python extract_tube_new.py -config {} \
+        os.system("python3.6 extract_tube_new.py -config {} \
         -tube_file {} \
         -vtu {}".format(cfg,p,args.vtu)
         )
