@@ -10,8 +10,8 @@ CONFIGS = [
 ]
 
 TUBES = [
-'/home/gdmaher/seg_regression/scripts/config_segment/tubes/aorta.json',
-'/home/gdmaher/seg_regression/scripts/config_segment/tubes/right_iliac.json',
+'/home/gdmaher/seg_regression/scripts/config_segment/0110/tubes/aorta.json',
+'/home/gdmaher/seg_regression/scripts/config_segment/0110/tubes/right_iliac.json',
 ]
 
 for cfg in CONFIGS:
