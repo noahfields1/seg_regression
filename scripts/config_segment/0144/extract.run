@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --job-name="extract 0110"
+#SBATCH --output="/home/gdmaher/output/singularity.%j.out"
+#SBATCH --error="/home/gdmaher/output/singularity.%j.err"
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --time=10:00:00
+#SBATCH --partition=shared
+
+module load singularity
+
+CONTAINER=/home/gdmaher/tf.img
+
+VTU=$(pwd)/all_results.vtu
+
+echo "Starting job with vtu ${VTU}"
+cd /home/gdmaher/seg_regression/scripts/config_segment/0144
+singularity exec --bind /oasis:/oasis ${CONTAINER} ./extract.sh ${VTU}
