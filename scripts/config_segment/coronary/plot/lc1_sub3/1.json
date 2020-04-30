@@ -1,0 +1,24 @@
+{
+  "path_files":"/media/marsdenlab/Data1/UQ/coronary/model_files/paths/lc1_sub3.txt",
+  "image_fn":"/media/marsdenlab/Data1/UQ/coronary/model_files/image.mha",
+  "group_files":[
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/0/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/1/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/2/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/3/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/5/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/6/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/7/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/8/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/9/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/10/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/11/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/12/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/13/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/14/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/15/lc1_sub3.json",
+    "/media/marsdenlab/Data1/UQ/coronary/generations/1/models/16/lc1_sub3.json"
+  ],
+  "color":"r",
+  "out_dir":"/media/marsdenlab/Data1/UQ/coronary/figures/groups/1/lc1_sub3"
+}
