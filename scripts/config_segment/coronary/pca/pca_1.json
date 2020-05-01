@@ -4,7 +4,7 @@
     "lc1_sub2_corrected.json",
     "lc1_sub3_corrected.json",
     "lc2_corrected.json",
-    "lc2_sub1_corrected.json",
+    "lc2_sub1_corrected.json"
   ],
   "input_dir":"/media/marsdenlab/Data1/UQ/coronary/generations/1/models",
   "output_dir":"/media/marsdenlab/Data1/UQ/coronary/pca/1",
