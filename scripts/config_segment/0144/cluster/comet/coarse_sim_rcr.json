@@ -1,10 +1,10 @@
 {
   "sim_name":"sim_wom_rcr",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/temp_project/0144/generations/1/coarse"
+    "/oasis/scratch/comet/gdmaher/temp_project/0144/generations/2/coarse"
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0144/cluster/comet/runConvergeUnsteady.sh",
   "sleep_batch":15,
   "num_batch":30,
-  "num_models":160
+  "num_models":110
 }

@@ -1,10 +1,10 @@
 {
   "sim_name":"sim_cor_inflow",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/1/coarse"
+    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/2/coarse"
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/coronary/extract.run",
   "sleep_batch":15,
   "num_batch":30,
-  "num_models":500
+  "num_models":200
 }
