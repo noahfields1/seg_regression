@@ -1,18 +1,18 @@
 {
 "IMAGE":"/media/marsdenlab/Data1/UQ/0144/model_files/image.mha",
 
-"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq2.yaml",
+"NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq3.yaml",
 
 "OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0144/generations/2",
 
 "INTERVAL":15,
 
-"NUM_RUNS":80,
+"NUM_RUNS":150,
 
 "MODES":5,
 
 "EDGE_SIZES":{
-  "coarse":0.15
+  "coarse":0.125
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0144/model_files/correct.json",
@@ -83,6 +83,8 @@
     2
   ]
 },
+
+"BOUNDARY_LAYER":true,
 
 "SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
 "SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"

@@ -66,7 +66,7 @@ h = (bounds[5]-bounds[4])
 offset = 1.5*h
 print(x,y,z,h)
 
-camera.SetPosition(x, -int(y-2*offset), int(z))
+camera.SetPosition(x, -int(y-4*offset), int(z))
 camera.SetFocalPoint(x, y, z);
 
 ren.SetActiveCamera(camera)
