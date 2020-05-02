@@ -44,5 +44,5 @@ module load boost
 # Name of the executable you want to run
 /home/gdmaher/svSolver/build/svSolver-build/bin/svpre sim.svpre
 ibrun /home/gdmaher/svsolver_old/svsolver-mpich.exe
-/home/gdmaher/svSolver/build/svSolver-build/bin/svpost -indir 23-procs_case -outdir . -start 3000 -stop 4000 -incr 25 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
+/home/gdmaher/svSolver/build/svSolver-build/bin/svpost -indir 23-procs_case -outdir . -start 4000 -stop 6000 -incr 50 -vtu all_results.vtu -vtp all_results.vtp -vtkcombo -all
 rm -rf *procs_case
