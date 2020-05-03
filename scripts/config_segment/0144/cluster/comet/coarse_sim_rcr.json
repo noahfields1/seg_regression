@@ -6,5 +6,5 @@
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0144/cluster/comet/runConvergeUnsteady.sh",
   "sleep_batch":15,
   "num_batch":30,
-  "num_models":110
+  "num_models":160
 }
