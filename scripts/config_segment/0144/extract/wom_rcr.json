@@ -12,8 +12,8 @@
     "velocity",
     "vWSS"
   ],
-  "start":3500,
-  "end":4005,
+  "start":1500,
+  "end":2010,
   "incr":10,
   "scale":1
 }
