@@ -3,14 +3,19 @@
 
 "NN_CONFIG":"/home/marsdenlab/projects/seg_regression/config/uq/googlenet_c30_train300k_aug10_clean_uq1.yaml",
 
-"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0110/generations/test",
+"OUTPUT_DIR":"/media/marsdenlab/Data1/UQ/0110/generations/converge",
 
 "INTERVAL":10,
 
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.25
+  "coarse":0.5,
+  "medium":0.33,
+  "fine":0.22,
+  "fine_2":0.15,
+  "fine_3":0.11,
+  "fine_4":0.1
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/0110/model_files/correct.json",
@@ -55,6 +60,8 @@
   ]
 },
 
-"SV_PATH": "/usr/local/sv/simvascular/2019-08-09/Python3.5/site-packages",
-"SV_BUILD_PATH":"/usr/local/sv/simvascular/2019-08-09/lib"
+"BOUNDARY_LAYER":true,
+
+"SV_PATH": "/home/marsdenlab/projects/SV/fork/SimVascular/Python/site-packages",
+"SV_BUILD_PATH":"/home/marsdenlab/projects/SV/fork/build/SimVascular-build/lib"
 }
