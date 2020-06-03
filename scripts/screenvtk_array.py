@@ -63,7 +63,7 @@ z = (bounds[4]+bounds[5])*1.0/2
 
 h = (bounds[5]-bounds[4])
 
-offset = 1.5*h
+offset = 1.75*h
 print(x,y,z,h)
 
 camera.SetPosition(x, -int(y+offset), int(z))
