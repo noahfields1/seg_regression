@@ -28,6 +28,8 @@ def get(config):
         return nn.GoogleNetUQ(config)
     elif mod == "UNet":
         return nn.UNet(config)
+    elif mod == "UNetUQ":
+        return nn.UNetUQ(config)
     elif mod == "pretrained":
         return nn.PretrainedNet(config)
 
