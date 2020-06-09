@@ -10,11 +10,13 @@
 "NUM_RUNS":1,
 
 "EDGE_SIZES":{
-  "coarse":0.05,
-  "medium":0.04,
-  "fine":0.03,
-  "fine_2":0.025,
-  "fine_3":0.02
+  "1":0.055,
+  "2":0.05,
+  "3":0.045,
+  "4":0.04,
+  "6":0.035,
+  "7":0.03,
+  "8":0.025
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
