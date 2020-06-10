@@ -1,14 +1,7 @@
 {
   "sim_name":"sim_wom_rcr",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/1",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/2",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/3",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/4",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/5",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/6",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/7",
-    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge/8"
+    "/oasis/scratch/comet/gdmaher/temp_project/0110/generations/converge"
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/0110/cluster/comet/runConvergeUnsteady.sh",
   "sleep_batch":15,

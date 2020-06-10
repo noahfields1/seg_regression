@@ -1,14 +1,7 @@
 {
   "sim_name":"sim_cor_inflow",
   "runs_folders":[
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/1",
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/2",
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/3",
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/4",
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/5",
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/6",
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/7",
-    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge/8"
+    "/oasis/scratch/comet/gdmaher/temp_project/coronary/generations/converge"
   ],
   "run_file":"/home/gdmaher/seg_regression/scripts/config_segment/coronary/cluster/comet/runConvergeUnsteady.sh",
   "sleep_batch":15,
