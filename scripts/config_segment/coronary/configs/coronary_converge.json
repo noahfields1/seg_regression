@@ -16,7 +16,8 @@
   "4":0.04,
   "5":0.035,
   "6":0.03,
-  "7":0.025
+  "7":0.025,
+  "8":0.02
 },
 
 "CORRECT_FILE":"/media/marsdenlab/Data1/UQ/coronary/model_files/correct.json",
