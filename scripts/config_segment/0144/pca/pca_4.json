@@ -10,6 +10,6 @@
   "output_dir":"/media/marsdenlab/Data1/UQ/0144/pca/4",
   "num_points":33,
   "modes":5,
-  "coeffs":[-20,-17,17,20],
+  "coeffs":[-17,-12,12,17],
   "group_contents_file":"/media/marsdenlab/Data1/UQ/0144/model_files/group_contents.tcl"
 }
