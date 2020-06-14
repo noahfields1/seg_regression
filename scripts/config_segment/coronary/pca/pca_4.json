@@ -1,9 +1,15 @@
 {
-  "group_files":["aorta_corrected.json","right_iliac_corrected.json"],
-  "input_dir":"/media/marsdenlab/Data1/UQ/0110/generations/4/models",
-  "output_dir":"/media/marsdenlab/Data1/UQ/0110/pca/4",
+  "group_files":["lc1_corrected.json",
+    "lc1_sub1_corrected.json",
+    "lc1_sub2_corrected.json",
+    "lc1_sub3_corrected.json",
+    "lc2_corrected.json",
+    "lc2_sub1_corrected.json"
+  ],
+  "input_dir":"/media/marsdenlab/Data1/UQ/coronary/generations/4/models",
+  "output_dir":"/media/marsdenlab/Data1/UQ/coronary/pca/4",
   "num_points":33,
   "modes":10,
-  "coeffs":[-17,-14,14,17],
-  "group_contents_file":"/media/marsdenlab/Data1/UQ/0110/model_files/group_contents.tcl"
+  "coeffs":[-17,-10,10,17],
+  "group_contents_file":"/media/marsdenlab/Data1/UQ/coronary/model_files/group_contents.tcl"
 }
