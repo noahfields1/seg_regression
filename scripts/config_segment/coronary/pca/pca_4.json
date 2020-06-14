@@ -10,6 +10,6 @@
   "output_dir":"/media/marsdenlab/Data1/UQ/coronary/pca/4",
   "num_points":33,
   "modes":10,
-  "coeffs":[-10,-5,-2,2,5,10],
+  "coeffs":[-2,-1,1,2],
   "group_contents_file":"/media/marsdenlab/Data1/UQ/coronary/model_files/group_contents.tcl"
 }
