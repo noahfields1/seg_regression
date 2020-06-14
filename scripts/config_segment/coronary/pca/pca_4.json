@@ -6,7 +6,7 @@
     "lc2_corrected.json",
     "lc2_sub1_corrected.json"
   ],
-  "input_dir":"/media/marsdenlab/Data1/UQ/coronary/generations/4/models",
+  "input_dir":"/media/marsdenlab/Data1/UQ/coronary/generations/2/models",
   "output_dir":"/media/marsdenlab/Data1/UQ/coronary/pca/4",
   "num_points":33,
   "modes":10,
