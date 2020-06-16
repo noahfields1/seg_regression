@@ -3,7 +3,7 @@ import os
 CONFIGS = [
 #"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady.json",
 #"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady_real.json",
-"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady_real_out.json"
+"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/wom_rcr_converge.json"
 #"/home/marsdenlab/projects/seg_regression/scripts/config_segment/0110/extract/steady_real_in.json"
 ]
 
