@@ -183,7 +183,6 @@ def get_dataset(config, key="TRAIN"):
         try:
             c,p = distance_contour(Y_[i],cd,config['NUM_CONTOUR_POINTS'])
             if outlier(c) and not "OUTLIER" in config:
-               print("outlier")
                continue
 
             contours.append(c)
