@@ -53,6 +53,10 @@ fn = args.output_dir+'/'+name+'.json'
 data = {}
 for i,p in enumerate(points):
     print("{}, {}".format(name,i))
+    if "DROPOUT_UQ_ID" in cfg:
+        print("sampling net with dropout p {}".format(cfg['DROPOUT_UQ']))
+        net.model.sample(p=cfg['DROPOUT_UQ'])
+
     c = net.segment_normal(p[1:4], p[7:], p[4:7], modes=args.modes)
 
     pos = int(p[0])
