@@ -28,7 +28,7 @@ class Model(AbstractModel):
         self.iters = []
 
     def train_step(self,x,y):
-        self.global_step = self.global_step+1
+        #self.global_step = self.global_step+1 This line makes code run exponentially slowly
 
         if np.sum(np.isnan(x)) > 0: return
         if np.sum(np.isnan(y)) > 0: return
