@@ -14,9 +14,10 @@ def read_T(id):
     meta_data = load_yaml(id)
     meta_data['radius_real'] = meta_data['radius']*meta_data['spacing']
     X         = np.load(meta_data['X'])
-    Y         = np.load(meta_data['Y'])
+    #Y         = np.load(meta_data['Y'])
     Yc        = np.load(meta_data['Yc'])
-    return (X,Y,Yc,meta_data)
+    #return (X,Y,Yc,meta_data)
+    return (X,Yc,meta_data)
 
 def radius_balance(X,Y,meta, r_thresh, Nsample):
     N = X.shape[0]
@@ -85,7 +86,7 @@ def get_dataset(config, key="TRAIN"):
 
     data = [read_T(s) for s in files]
 
-    meta = [d[3] for d in data]
+    meta = [d[2] for d in data]
 
     X    = np.array([d[0] for d in data])
 
@@ -93,7 +94,7 @@ def get_dataset(config, key="TRAIN"):
     cc   = int(config['CENTER_DIMS']/2)
     cd   = int(config['CROP_DIMS']/2)
 
-    Yc   = np.array([d[2] for d in data])
+    Yc   = np.array([d[1] for d in data])
 
     r_thresh = config['R_SMALL']
     radiuses = [m['radius']*m['spacing'] for m in meta]
